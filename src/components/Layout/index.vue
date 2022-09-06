@@ -18,3 +18,9 @@ export default defineComponent({
   components: { Header, Footer, Menu }
 })
 </script>
+<style lang="less" scoped>
+.layout {
+  width: 100%;
+  box-sizing: border-box;
+}
+</style>
