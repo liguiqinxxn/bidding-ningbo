@@ -10,10 +10,12 @@
       text-color="#fff"
       active-text-color="#fff"
       @select="handleSelect"
-    > <template
+    > 
+    <template
         v-for="items in columnList"
         :key="items.id"
-      > <template v-if="items.son && items.son.length">
+      > 
+      <template v-if="items.son && items.son.length">
           <el-sub-menu :index="items.path"> <template #title>{{ items.name }}</template>
             <el-menu-item
               :index="item.path"
@@ -22,10 +24,10 @@
             >{{ item.name }}</el-menu-item>
           </el-sub-menu>
         </template> <template v-else>
-          <el-menu-item
-            :index="items.path"
-          >{{ items.name }}</el-menu-item>
-        </template> </template> </el-menu>
+          <el-menu-item :index="items.path">{{ items.name }}</el-menu-item>
+        </template> 
+      </template> 
+    </el-menu>
   </div>
 </template>
 
@@ -37,10 +39,10 @@ import { getColumnList } from "@/api/index.js"
 export default defineComponent({
   setup() {
     interface props {
-      activeIndex: Number
+      activeIndex: any
       columnList?: Array<any>
     }
-    let state: props = reactive({ activeIndex: 0, columnList: [] })
+    let state: props = reactive({ activeIndex: '0', columnList: [] })
 
     // 获取栏目
     getColumnList().then((res: any) => {

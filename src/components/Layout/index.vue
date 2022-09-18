@@ -2,6 +2,7 @@
   <div class="layout">
     <Header></Header>
     <Menu></Menu>
+    <Carousel></Carousel>
     <router-view></router-view>
     <Footer></Footer>
   </div>
@@ -11,11 +12,12 @@ import { defineComponent } from 'vue'
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Menu from './components/Menu.vue';
+import Carousel from './components/Carousel.vue';
 
 export default defineComponent({
   setup() {
   },
-  components: { Header, Footer, Menu }
+  components: { Header, Footer, Menu, Carousel }
 })
 </script>
 <style lang="less" scoped>

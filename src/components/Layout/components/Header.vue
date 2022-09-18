@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="container">
-      <div class="logo"> <img class="logoImg" :src="logo" /> <img class="logoTitle" :src="logoTitle" /> </div>
+      <div class="logo"> <img class="logoImg" :src="logo" alt="logo"/> <img class="logoTitle" :src="logoTitle" alt="logo"/> </div>
       <div class="search">
         <el-input v-model="keywords" placeholder="请输入你要搜索的内容" :prefix-icon="Search"> <template #append>搜索</template>
         </el-input>
@@ -22,7 +22,7 @@ export default defineComponent({
   },
 })
 </script>
-  <styles lang="less" scoped>
+<style lang="less">
   .header {
     width: 100%;
     height: 200px;
@@ -103,5 +103,5 @@ export default defineComponent({
     }
   
   }
-  </styles>
+</style>
   
