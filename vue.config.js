@@ -25,7 +25,8 @@ module.exports = {
       preProcessor: 'less',
       patterns: [
         // 引入公共文件
-        path.resolve(__dirname, "./src/assets/less/common.less")
+        path.resolve(__dirname, "./src/assets/less/common.less"),
+        path.resolve(__dirname, "./src/assets/less/element.less"),
       ]
     }
   },
