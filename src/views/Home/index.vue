@@ -4,7 +4,26 @@
 
       <div class="content">
 
-        <div class="left"> </div>
+        <div class="left"> 
+
+          <div class="box">
+            <div class="sub-title">会员风采</div>
+            <div class="members">
+              <div class="member">
+                <span class="title">常务理事</span>
+                <span class="more">更多&gt;&gt;</span>
+              </div>
+              <div class="member">
+                <span class="title">理事单位</span>
+                <span class="more">更多&gt;&gt;</span>
+              </div>
+              <div class="member">
+                <span class="title">会员单位</span>
+                <span class="more">更多&gt;&gt;</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="right">
           <div class="box">
@@ -118,7 +137,71 @@ export default defineComponent({
         flex-direction: row;
         .left{
           width: calc(100% - 332px);
+          padding: 0 16px;
           height: 100px;
+          .members{
+            background-image: url('../../assets/images/member_bg.png');
+            background-size: 100% 100%;
+            .member{
+              border-bottom: 2px solid #c6c6c6;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: flex-end;
+              .title{
+                font-size: 19px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #5C5C5C;
+                line-height: 98px;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                margin-left: 40px;
+              }
+            
+              .more{
+                font-size: 16px;
+                font-family: SimSun;
+                font-weight: 400;
+                color: #5C5C5C;
+                line-height: 42px;
+              }
+            }
+            .member:nth-child(1) {
+              .title::after{
+                content: '';
+                width: 800px;
+                height: 98px;
+                display: inline-block;
+                background-image: url('../../assets/images/member_icons.png');
+                background-position: 60px 10px;
+                background-repeat: no-repeat;
+              }
+            }
+            .member:nth-child(2) {
+              .title::after{
+                content: '';
+                width: 800px;
+                height: 98px;
+                display: inline-block;
+                background-image: url('../../assets/images/member_icons.png');
+                background-position: 60px -76px;
+                background-repeat: no-repeat;
+              }
+            }
+            .member:nth-child(3) {
+              .title::after{
+                content: '';
+                width: 800px;
+                height: 98px;
+                display: inline-block;
+                background-image: url('../../assets/images/member_icons.png');
+                background-position: 60px -162px;
+                background-repeat: no-repeat;
+              }
+            }
+          }
         }
         .right{
           width: 332px;
@@ -126,6 +209,7 @@ export default defineComponent({
           box-sizing: border-box;
           /deep/ .el-form{
             padding: 10px 24px;
+            margin-top: 20px;
             .el-form-item{
               margin-bottom: 30px;
             }
@@ -232,13 +316,13 @@ export default defineComponent({
         font-weight: 600;
         line-height: 46px;
         border-bottom: 2px solid #c6c6c6;
-        margin-bottom: 20px;
       }
       
       .links{
         img{
           width: 100%;
           height: 100%;
+          margin-top: 20px;
         }
       }
     }
