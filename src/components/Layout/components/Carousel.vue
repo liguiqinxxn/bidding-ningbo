@@ -13,12 +13,12 @@
   
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
-import bg01 from "@/assets/images/bg_01.png"
-import bg02 from "@/assets/images/bg_02.png"
+import img01 from "@/assets/images/img01.png"
+import img02 from "@/assets/images/img02.png"
 
 export default defineComponent({
   setup() {
-    let state = reactive({imgs:[bg01,bg02]})
+    let state = reactive({imgs:[ img01, img02 ]})
 
     return { ...toRefs(state)}
   }
