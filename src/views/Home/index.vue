@@ -5,6 +5,18 @@
       <div class="content">
 
         <div class="left"> 
+          <div class="box" style="width: 50%;">
+            <el-carousel height="400px" arrow="never">
+              <!-- indicator-position="outside" -->
+              <el-carousel-item
+                v-for="item in imgs"
+                :key="item"
+              >
+                <img class="carousel-img" :src="item" alt="image"/>
+                <p class="title">协会荣获示范单位称号</p>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
 
           <div class="box">
             <div class="sub-title">会员风采</div>
@@ -100,6 +112,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 import { getLogin } from "@/api/index.js"
 import linkImg from "assets/images/links.png"
+import honor from "assets/images/honor.png"
 import { Iphone, Lock } from '@element-plus/icons-vue'
 export default defineComponent({
   setup() {
@@ -107,7 +120,8 @@ export default defineComponent({
       form:{
         username:'',
         password:'',
-      }
+      },
+      imgs: [honor, honor, honor]
     })
     const login = () => {
       getLogin(state.form).then((res: any) => {
@@ -139,6 +153,39 @@ export default defineComponent({
           width: calc(100% - 332px);
           padding: 0 16px;
           height: 100px;
+
+          .el-carousel{
+            .carousel-img{
+              width: 100%;
+              height: 90%;
+              padding-right: 20px;
+            }
+            .title{
+              width: calc(100% - 38px);
+              position: absolute;
+              bottom: -10px;
+              text-align: center;
+              font-size: 16px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #FFFFFF;
+              background-color: #19478b;
+              line-height: 36px;
+              padding-bottom: 30px;
+              margin-left: 36px;
+            }
+            .el-carousel__indicators{
+              background: transparent;
+            }
+            /deep/ .el-carousel__button{
+              width: 5px;
+              height: 5px;
+            }
+            /deep/ .is-active .el-carousel__button{
+              width: 10px;
+              height: 10px;
+            }
+          }
           .members{
             background-image: url('../../assets/images/member_bg.png');
             background-size: 100% 100%;
