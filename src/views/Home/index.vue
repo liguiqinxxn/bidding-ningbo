@@ -3,50 +3,87 @@
     <div class="container">
       <div class="content">
         <div class="left">
-          <div
-            class="box"
-            style="width: 50%;"
-          >
-            <el-carousel
-              height="400px"
-              arrow="never"
-            >
-              <!-- indicator-position="outside" -->
-              <el-carousel-item
-                v-for="item in imgs"
-                :key="item"
-              > <img
-                  class="carousel-img"
-                  :src="item"
-                  alt="image"
-                />
-                <p class="title">协会荣获示范单位称号</p>
-              </el-carousel-item>
-            </el-carousel>
-          </div>
           <div class="box">
-            <div class="sub-title">会员风采</div>
-            <div class="members">
-              <div class="member"> <span class="title">常务理事</span> <span class="more">更多&gt;&gt;</span> </div>
-              <div class="member"> <span class="title">理事单位</span> <span class="more">更多&gt;&gt;</span> </div>
-              <div class="member"> <span class="title">会员单位</span> <span class="more">更多&gt;&gt;</span> </div>
-            </div>
+            <el-row :gutter="20">
+              <!-- 荣誉证书 -->
+              <el-col :span="12">
+                <el-carousel height="400px" arrow="never">
+                  <!-- indicator-position="outside" -->
+                  <el-carousel-item v-for="item in imgs" :key="item">
+                    <img class="carousel-img" :src="item" alt="image" />
+                    <p class="title">协会荣获示范单位称号</p>
+                  </el-carousel-item>
+                </el-carousel>
+              </el-col>
+
+              <!-- 活动动态|工作动态 -->
+              <el-col :span="12">
+                <div class="box-header">
+                  <div class="tabs">
+                    <span
+                      class="tab"
+                      :class="{ active: activeKey == 1 }"
+                      @click="tabClick(1)"
+                      >活动动态</span
+                    >|<span
+                      class="tab"
+                      :class="{ active: activeKey == 2 }"
+                      @click="tabClick(2)"
+                      >工作动态</span
+                    >
+                  </div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <div v-if="activeKey == 1 && activityData?.length" class="model-list">
+                  <div class="model-item" v-for="item in activityData">
+                    <span class="title">{{ item.title }}</span>
+                    <span class="time">{{ item.time }}</span>
+                  </div>
+                </div>
+                <div v-else-if="activeKey == 2 && workData?.length" class="model-list">
+                  <div class="model-item" v-for="item in workData">
+                    <span class="title">{{ item.title }}</span>
+                    <span class="time">{{ item.time }}</span>
+                  </div>
+                </div>
+                <el-empty v-else :image-size="150" description="没有数据"/>
+              </el-col>
+
+              <!-- 会员风采 -->
+              <el-col :span="24">
+                <div class="sub-title">会员风采</div>
+                <div class="members">
+                  <div class="member">
+                    <span class="title">常务理事</span>
+                    <span class="more">更多&gt;&gt;</span>
+                  </div>
+                  <div class="member">
+                    <span class="title">理事单位</span>
+                    <span class="more">更多&gt;&gt;</span>
+                  </div>
+                  <div class="member">
+                    <span class="title">会员单位</span>
+                    <span class="more">更多&gt;&gt;</span>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
           </div>
         </div>
         <div class="right">
           <div class="box">
             <div class="sub-title">会员登录</div>
             <div v-if="$store.state.userInfo.uid" class="user-info">
-              <span class="level">{{ level[Number($store.state.userInfo.level)-1 || 0] }}</span>
+              <span class="level">{{
+                level[Number($store.state.userInfo.level) - 1 || 0]
+              }}</span>
               <img class="logo" :src="$store.state.userInfo.logo" />
-              <p class="info">{{$store.state.userInfo.info}}</p>
-              <p class="info_link"><span>【个人中心】</span>/<span>【退出】</span></p>
+              <p class="info">{{ $store.state.userInfo.info }}</p>
+              <p class="info_link">
+                <span>【个人中心】</span>/<span>【退出】</span>
+              </p>
             </div>
-            <el-form
-              :model="form"
-              label-width="0px"
-              v-else
-            >
+            <el-form :model="form" label-width="0px" v-else>
               <el-form-item label="">
                 <el-input
                   v-model="form.username"
@@ -64,34 +101,51 @@
                 />
               </el-form-item>
               <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="login"
-                >登录</el-button>
+                <el-button type="primary" @click="login">登录</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="info">
-            <div class="info-item membership-application"> <span class="title">入会申请</span> <span>Membership
-                Application</span> </div>
-            <div class="info-item tenderee-column"> <span class="title">招标师专栏</span> <span>Tenderee column</span> </div>
-            <div class="info-item laws-regulations"> <span class="title">招标采购常用法规速查</span> <span>Quick check of common
-                laws and <br /> regulations for bidding procurement</span> </div>
-            <div class="info-item recruitment-info"> <span class="title">招聘信息</span> <span>Recruitment
-                information</span> </div>
-            <div class="info-item complaint-supervision"> <span class="title">投诉监督</span> <span>Complaint
-                supervision</span> </div>
-            <div class="info-item contact-us"> <span class="title">联系我们</span> <span>Contact us</span>
-              <div class="contact"> <span>办公室： 0574-87187928</span> <span>会员部： 0574-87187122</span> <span>信息部：
-                  0574-87187759</span> <span>邮&nbsp;&nbsp;&nbsp;编： 315040</span> <span>传&nbsp;&nbsp;&nbsp;真：
-                  0574-87187123</span> <span>邮&nbsp;&nbsp;&nbsp;箱： nbztbxh@sina.com</span> </div>
+            <div class="info-item membership-application">
+              <span class="title">入会申请</span>
+              <span>Membership Application</span>
+            </div>
+            <div class="info-item tenderee-column">
+              <span class="title">招标师专栏</span> <span>Tenderee column</span>
+            </div>
+            <div class="info-item laws-regulations">
+              <span class="title">招标采购常用法规速查</span>
+              <span
+                >Quick check of common laws and <br />
+                regulations for bidding procurement</span
+              >
+            </div>
+            <div class="info-item recruitment-info">
+              <span class="title">招聘信息</span>
+              <span>Recruitment information</span>
+            </div>
+            <div class="info-item complaint-supervision">
+              <span class="title">投诉监督</span>
+              <span>Complaint supervision</span>
+            </div>
+            <div class="info-item contact-us">
+              <span class="title">联系我们</span> <span>Contact us</span>
+              <div class="contact">
+                <span>办公室： 0574-87187928</span>
+                <span>会员部： 0574-87187122</span>
+                <span>信息部： 0574-87187759</span>
+                <span>邮&nbsp;&nbsp;&nbsp;编： 315040</span>
+                <span>传&nbsp;&nbsp;&nbsp;真： 0574-87187123</span>
+                <span>邮&nbsp;&nbsp;&nbsp;箱： nbztbxh@sina.com</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="links">
         <div class="box">
-          <div class="sub-title">友情链接</div> <img :src="linkImg" />
+          <div class="sub-title">友情链接</div>
+          <img :src="linkImg" />
         </div>
       </div>
     </div>
@@ -99,61 +153,113 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted} from 'vue'
-import { useStore } from 'vuex' 
-import _store from '@/store'
-import { getLogin, getUserInfo} from "@/api/index.js"
-import linkImg from "assets/images/links.png"
-import honor from "assets/images/honor.png"
-import { Iphone, Lock } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-import { setToken, getToken, setUid, getUid } from '@/utils/cookies.js'
+import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import { useStore } from "vuex";
+import _store from "@/store";
+import { getLogin, getUserInfo, getModelList } from "@/api/index.js";
+import linkImg from "assets/images/links.png";
+import honor from "assets/images/honor.png";
+import { Iphone, Lock } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
+import { setToken, getToken, setUid, getUid } from "@/utils/cookies.js";
 
 export default defineComponent({
   setup() {
-    let state = reactive({
+    interface props {
+      form?: any;
+      imgs?: any;
+      activeKey?: any;
+      level?: Array<any>;
+      activityData?: any;
+      workData?: any;
+    }
+    let state: props = reactive({
       form: {
-        username: '',
-        password: '',
+        username: "",
+        password: "",
       },
       imgs: [honor, honor, honor],
-      level: ['会员单位' ,'理事单位', '常务理事']
-    })
+      activeKey: 1,
+      level: ["会员单位", "理事单位", "常务理事"],
+      activityData: [],
+      workData: [],
+    });
 
     onMounted(() => {
-      if(getToken() && getUid() ){
+      if (getToken() && getUid()) {
         const params = {
           uid: parseInt(getUid()),
-          tokenid: getToken()
-        }
-        userInfo(params)
+          tokenid: getToken(),
+        };
+        userInfo(params);
       }
-    })
-    const login = () => {
-      getLogin(state.form).then((res: any) => {
-        if (res.code == '0') {
-          ElMessage({
-            message: '登录成功！',
-            type: 'success',
-          })
-          setToken(res.data.tokenid)
-          setUid(res.data.uid)
-          userInfo(res.data)
-        }
-      })
-    }
+    });
 
-    const userInfo = (data:any) =>{
-      getUserInfo(data).then((res:any)=>{
-        if(res.code == '0'){
-          const store = useStore() || _store;
-          store.commit('setUserInfo', res.data)
+    const login = () => {
+      let formData = new FormData();
+      formData.append("username", state.form.username);
+      formData.append("password", state.form.password);
+      getLogin(formData).then((res: any) => {
+        if (res.code == "0") {
+          ElMessage({
+            message: "登录成功！",
+            type: "success",
+          });
+          setToken(res.data.tokenid);
+          setUid(res.data.uid);
+          userInfo(res.data);
         }
-      })
-    }
-    return { ...toRefs(state), linkImg, Iphone, Lock, login, }
-  }
-})
+      });
+    };
+
+    const userInfo = (data: any) => {
+      getUserInfo(data).then((res: any) => {
+        if (res.code == "0") {
+          const store = useStore() || _store;
+          store.commit("setUserInfo", res.data);
+        }
+      });
+    };
+
+    const tabClick = (key: any) => {
+      state.activeKey = key;
+    };
+
+    const modelList = async (params: any) => {
+      return await getModelList(params).then((res: any) => {
+        if (res.code == "0") {
+          return res.data || [];
+        }
+      });
+    };
+
+    const params = {
+      type: "12",
+      page: 1,
+      limit: 10,
+    };
+
+    // 活动动态
+    let activityParams = new FormData();
+    activityParams.append("type", "12");
+    activityParams.append("page", "1");
+    activityParams.append("limit", "10");
+    modelList(activityParams).then((data) => {
+      state.activityData = data;
+    });
+
+    // 工作动态
+    let workParams = new FormData();
+    workParams.append("type", "13");
+    workParams.append("page", "1");
+    workParams.append("limit", "10");
+    modelList(workParams).then((data) => {
+      state.workData = data;
+    });
+
+    return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick };
+  },
+});
 </script>
 <style lang="less" scoped>
 .home {
@@ -173,10 +279,13 @@ export default defineComponent({
       display: flex;
       flex-direction: row;
 
-      .left {
+      & > .left {
         width: calc(100% - 332px);
         padding: 0 16px;
         height: 100px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
 
         .el-carousel {
           .carousel-img {
@@ -193,7 +302,7 @@ export default defineComponent({
             font-size: 16px;
             font-family: Microsoft YaHei;
             font-weight: 400;
-            color: #FFFFFF;
+            color: #ffffff;
             background-color: #19478b;
             line-height: 36px;
             padding-bottom: 30px;
@@ -215,8 +324,63 @@ export default defineComponent({
           }
         }
 
+        .box-header {
+          border-bottom: 2px solid #c6c6c6;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-end;
+          .tabs {
+            font-size: 20px;
+            .tab {
+              font-size: 20px;
+              font-weight: 600;
+              line-height: 48px;
+              font-family: Microsoft YaHei;
+              color: #757575;
+              padding: 0 10px;
+            }
+
+            .tab.active {
+              color: #19478b;
+            }
+          }
+          .more {
+            font-size: 16px;
+            font-family: SimSun;
+            font-weight: 400;
+            color: #5c5c5c;
+            line-height: 42px;
+          }
+        }
+        .model-list {
+          .model-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 4px 10px;
+            box-sizing: border-box;
+            .title {
+              width: calc(100% - 130px);
+              font-size: 14px;
+              line-height: 30px;
+              color: #0c0c0c;
+              display: block;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .time {
+              width: 120px;
+              font-size: 12px;
+              line-height: 28px;
+              color: #bdbdbd;
+            }
+          }
+        }
+
         .members {
-          background-image: url('../../assets/images/member_bg.png');
+          background-image: url("../../assets/images/member_bg.png");
           background-size: 100% 100%;
 
           .member {
@@ -230,7 +394,7 @@ export default defineComponent({
               font-size: 19px;
               font-family: Microsoft YaHei;
               font-weight: 400;
-              color: #5C5C5C;
+              color: #5c5c5c;
               line-height: 98px;
               display: flex;
               flex-direction: row;
@@ -242,18 +406,18 @@ export default defineComponent({
               font-size: 16px;
               font-family: SimSun;
               font-weight: 400;
-              color: #5C5C5C;
+              color: #5c5c5c;
               line-height: 42px;
             }
           }
 
           .member:nth-child(1) {
             .title::after {
-              content: '';
+              content: "";
               width: 800px;
               height: 98px;
               display: inline-block;
-              background-image: url('../../assets/images/member_icons.png');
+              background-image: url("../../assets/images/member_icons.png");
               background-position: 60px 10px;
               background-repeat: no-repeat;
             }
@@ -261,11 +425,11 @@ export default defineComponent({
 
           .member:nth-child(2) {
             .title::after {
-              content: '';
+              content: "";
               width: 800px;
               height: 98px;
               display: inline-block;
-              background-image: url('../../assets/images/member_icons.png');
+              background-image: url("../../assets/images/member_icons.png");
               background-position: 60px -76px;
               background-repeat: no-repeat;
             }
@@ -273,11 +437,11 @@ export default defineComponent({
 
           .member:nth-child(3) {
             .title::after {
-              content: '';
+              content: "";
               width: 800px;
               height: 98px;
               display: inline-block;
-              background-image: url('../../assets/images/member_icons.png');
+              background-image: url("../../assets/images/member_icons.png");
               background-position: 60px -162px;
               background-repeat: no-repeat;
             }
@@ -285,7 +449,7 @@ export default defineComponent({
         }
       }
 
-      .right {
+      & > .right {
         width: 332px;
         padding: 0 16px;
         box-sizing: border-box;
@@ -295,7 +459,8 @@ export default defineComponent({
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          .level{
+
+          .level {
             width: 100%;
             height: 54px;
             color: #fff;
@@ -306,10 +471,12 @@ export default defineComponent({
             box-sizing: border-box;
             margin-bottom: 10px;
           }
+
           .logo {
             width: 90px;
             height: 90px;
           }
+
           .info {
             font-family: Microsoft YaHei;
             font-size: 16px;
@@ -318,7 +485,8 @@ export default defineComponent({
             font-weight: 900;
             padding: 20px;
           }
-          .info_link{
+
+          .info_link {
             color: #0662b7;
             margin-bottom: 20px;
             cursor: pointer;
@@ -394,9 +562,9 @@ export default defineComponent({
               font-size: 15px;
               font-family: Microsoft YaHei;
               font-weight: 400;
-              color: #FFFFFF;
+              color: #ffffff;
               line-height: 19px;
-              text-shadow: 0px 1px 1px #031F52;
+              text-shadow: 0px 1px 1px #031f52;
             }
 
             .title {
@@ -407,34 +575,33 @@ export default defineComponent({
           }
 
           .membership-application {
-            background-image: url('../../assets/images/bg01.png');
+            background-image: url("../../assets/images/bg01.png");
           }
 
           .tenderee-column {
-            background-image: url('../../assets/images/bg02.png');
+            background-image: url("../../assets/images/bg02.png");
           }
 
           .laws-regulations {
-            background-image: url('../../assets/images/bg03.png');
+            background-image: url("../../assets/images/bg03.png");
 
             .title {
               font-size: 26px;
             }
-
           }
 
           .recruitment-info {
-            background-image: url('../../assets/images/bg04.png');
+            background-image: url("../../assets/images/bg04.png");
             background-size: 100% 100%;
           }
 
           .complaint-supervision {
-            background-image: url('../../assets/images/bg05.png');
+            background-image: url("../../assets/images/bg05.png");
           }
 
           .contact-us {
             height: 208px;
-            background-image: url('../../assets/images/bg06.png');
+            background-image: url("../../assets/images/bg06.png");
 
             .contact {
               display: flex;
@@ -447,11 +614,11 @@ export default defineComponent({
     }
 
     .sub-title {
-      color: #19478B;
+      color: #19478b;
       font-size: 20px;
       font-family: Microsoft YaHei;
       font-weight: 600;
-      line-height: 46px;
+      line-height: 48px;
       border-bottom: 2px solid #c6c6c6;
     }
 
@@ -461,6 +628,10 @@ export default defineComponent({
         height: 100%;
         margin-top: 20px;
       }
+    }
+
+    .el-empty{
+      margin-top: 10%;
     }
   }
 }
