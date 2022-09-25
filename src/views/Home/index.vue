@@ -204,7 +204,9 @@
           <div class="box-header">
             <div class="sub-title">友情链接</div>
           </div>
-          <img :src="linkImg" />
+          <div class="linklist">
+            <img v-for="item in linkList" :src="item.logo" />
+          </div>
         </div>
       </div>
     </div>
@@ -215,7 +217,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import _store from "@/store";
-import { getLogin, getUserInfo } from "@/api/index.js";
+import { getLogin, getUserInfo, getLinksList } from "@/api/index.js";
 import linkImg from "assets/images/links.png";
 import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
@@ -233,15 +235,15 @@ import ModelList from "./components/ModelList.vue";
 export default defineComponent({
   setup() {
     interface props {
+      keyword?: string;
       form?: any;
       imgs?: any;
       activeKey?: any;
       level?: Array<any>;
-      activityData?: any;
-      workData?: any;
-      policiesRegData?: any;
+      linkList?: Array<any>;
     }
     let state: props = reactive({
+      keyword: "",
       form: {
         username: "",
         password: "",
@@ -249,9 +251,7 @@ export default defineComponent({
       imgs: [honor, honor, honor],
       activeKey: 1,
       level: ["会员单位", "理事单位", "常务理事"],
-      activityData: [],
-      workData: [],
-      policiesRegData: [],
+      linkList: [],
     });
     onMounted(() => {
       if (getToken() && getUid()) {
@@ -289,6 +289,18 @@ export default defineComponent({
     const tabClick = (key: any) => {
       state.activeKey = key;
     };
+
+    const linkParams = {
+      keyword: state.keyword,
+    };
+    const linkListFn = (params: any) => {
+      getLinksList(params).then((res: any) => {
+        if (res.code == "0") {
+          state.linkList = res.data;
+        }
+      });
+    };
+    linkListFn(linkParams);
 
     return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick };
   },
@@ -644,10 +656,16 @@ export default defineComponent({
 
     .links {
       position: relative;
-      img {
-        width: 100%;
-        height: 100%;
-        margin-top: 20px;
+      .linklist{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        img {
+          width: 100%;
+          height: 80px;
+          margin-top: 20px;
+          padding: 10px;
+        }
       }
     }
   }
