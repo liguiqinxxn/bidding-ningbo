@@ -205,7 +205,11 @@
             <div class="sub-title">友情链接</div>
           </div>
           <div class="linklist">
-            <img v-for="item in linkList" :src="item.logo" />
+            <img
+              v-for="item in linkList"
+              :src="item.logo"
+              @click="toLink(item.url)"
+            />
           </div>
         </div>
       </div>
@@ -290,8 +294,8 @@ export default defineComponent({
       state.activeKey = key;
     };
 
-    const linkParams = {
-      keyword: state.keyword,
+    const toLink = (url: any) => {
+      window.open(url);
     };
     const linkListFn = (params: any) => {
       getLinksList(params).then((res: any) => {
@@ -300,9 +304,12 @@ export default defineComponent({
         }
       });
     };
+    const linkParams = {
+      keyword: state.keyword,
+    };
     linkListFn(linkParams);
 
-    return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick };
+    return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick, toLink };
   },
   components: { ModelList },
 });
@@ -656,7 +663,7 @@ export default defineComponent({
 
     .links {
       position: relative;
-      .linklist{
+      .linklist {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
