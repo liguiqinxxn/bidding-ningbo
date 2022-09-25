@@ -8,7 +8,6 @@
             <el-col :span="12">
               <div class="box">
                 <el-carousel height="400px" arrow="never">
-                  <!-- indicator-position="outside" -->
                   <el-carousel-item v-for="item in imgs" :key="item">
                     <img class="carousel-img" :src="item" alt="image" />
                     <p class="title">协会荣获示范单位称号</p>
@@ -135,7 +134,7 @@
               <img class="logo" :src="$store.state.userInfo.logo" />
               <p class="info">{{ $store.state.userInfo.info }}</p>
               <p class="info_link">
-                <span>【个人中心】</span>/<span>【退出】</span>
+                <span>【个人中心】</span>/<span @click="logout">【退出】</span>
               </p>
             </div>
             <el-form :model="form" label-width="0px" v-else>
@@ -221,7 +220,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import _store from "@/store";
-import { getLogin, getUserInfo, getLinksList } from "@/api/index.js";
+import { getLogin, getLogout, getUserInfo, getLinksList } from "@/api/index.js";
 import linkImg from "assets/images/links.png";
 import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
@@ -235,6 +234,7 @@ import {
   removeUid,
 } from "@/utils/cookies.js";
 import ModelList from "./components/ModelList.vue";
+import store from "@/store";
 
 export default defineComponent({
   setup() {
@@ -276,9 +276,23 @@ export default defineComponent({
           setToken(res.data.tokenid);
           setUid(res.data.uid);
           userInfo(res.data);
-        } else {
+        }
+      });
+    };
+    const logout = () => {
+      const params = {
+        uid: getUid(),
+        tokenid: getToken(),
+      };
+      getLogout(params).then((res: any) => {
+        if (res.code == "0") {
+          ElMessage({
+            message: "退出成功！",
+            type: "success",
+          });
           removeToken();
           removeUid();
+          store.commit("setUserInfo", {});
         }
       });
     };
@@ -287,6 +301,9 @@ export default defineComponent({
         if (res.code == "0") {
           const store = useStore() || _store;
           store.commit("setUserInfo", res.data);
+        } else {
+          removeToken();
+          removeUid();
         }
       });
     };
@@ -309,7 +326,16 @@ export default defineComponent({
     };
     linkListFn(linkParams);
 
-    return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick, toLink };
+    return {
+      ...toRefs(state),
+      linkImg,
+      Iphone,
+      Lock,
+      login,
+      logout,
+      tabClick,
+      toLink,
+    };
   },
   components: { ModelList },
 });

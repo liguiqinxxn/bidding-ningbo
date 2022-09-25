@@ -7,6 +7,14 @@ export const getLogin = (data) => {
   );
 };
 
+// 退出登录
+export const getLogout = (data) => {
+  return Interface.post("/Home/Login/logout",
+    data
+  );
+};
+
+
 // 获取个人中心详情
 export const getUser = (data) => {
   return Interface.post("/Home/User/user",
