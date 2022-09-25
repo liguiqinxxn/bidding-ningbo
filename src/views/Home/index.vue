@@ -3,10 +3,10 @@
     <div class="container">
       <div class="content">
         <div class="left">
-          <div class="box">
-            <el-row :gutter="20">
-              <!-- 荣誉证书 -->
-              <el-col :span="12">
+          <el-row :gutter="20">
+            <!-- 荣誉证书 -->
+            <el-col :span="12">
+              <div class="box">
                 <el-carousel height="400px" arrow="never">
                   <!-- indicator-position="outside" -->
                   <el-carousel-item v-for="item in imgs" :key="item">
@@ -14,10 +14,12 @@
                     <p class="title">协会荣获示范单位称号</p>
                   </el-carousel-item>
                 </el-carousel>
-              </el-col>
+              </div>
+            </el-col>
 
-              <!-- 活动动态|工作动态 -->
-              <el-col :span="12">
+            <!-- 活动动态|工作动态 -->
+            <el-col :span="12">
+              <div class="box">
                 <div class="box-header">
                   <div class="tabs">
                     <span
@@ -34,24 +36,74 @@
                   </div>
                   <span class="more">更多&gt;&gt;</span>
                 </div>
-                <div v-if="activeKey == 1 && activityData?.length" class="model-list">
-                  <div class="model-item" v-for="item in activityData">
-                    <span class="title">{{ item.title }}</span>
-                    <span class="time">{{ item.time }}</span>
-                  </div>
-                </div>
-                <div v-else-if="activeKey == 2 && workData?.length" class="model-list">
-                  <div class="model-item" v-for="item in workData">
-                    <span class="title">{{ item.title }}</span>
-                    <span class="time">{{ item.time }}</span>
-                  </div>
-                </div>
-                <el-empty v-else :image-size="150" description="没有数据"/>
-              </el-col>
 
-              <!-- 会员风采 -->
-              <el-col :span="24">
-                <div class="sub-title">会员风采</div>
+                <!-- 活动动态 -->
+                <ModelList v-if="activeKey == 1" type="8"></ModelList>
+                <!-- 工作动态 -->
+                <ModelList v-else type="9"></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 政策法规 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">政策法规</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <ModelList type="11"></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 诚信自律 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">诚信自律</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <ModelList type="18"></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 电子会刊 -->
+            <el-col :span="16">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">电子会刊</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <el-row>
+                  <el-col :span="12">
+                    <div class="model-title">中国招标投标</div>
+                    <ModelList type="17"></ModelList>
+                  </el-col>
+                  <el-col :span="12">
+                    <div class="model-title">宁波招标投标</div>
+                    <ModelList type="16"></ModelList>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-col>
+
+            <!-- 知识问答 -->
+            <el-col :span="8">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">知识问答</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <div class="model-title">&nbsp;</div>
+                <ModelList type="14"></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 会员风采 -->
+            <el-col :span="24">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">会员风采</div>
+                </div>
                 <div class="members">
                   <div class="member">
                     <span class="title">常务理事</span>
@@ -66,13 +118,16 @@
                     <span class="more">更多&gt;&gt;</span>
                   </div>
                 </div>
-              </el-col>
-            </el-row>
-          </div>
+              </div>
+            </el-col>
+          </el-row>
         </div>
+
         <div class="right">
           <div class="box">
-            <div class="sub-title">会员登录</div>
+            <div class="box-header">
+              <div class="sub-title">会员登录</div>
+            </div>
             <div v-if="$store.state.userInfo.uid" class="user-info">
               <span class="level">{{
                 level[Number($store.state.userInfo.level) - 1 || 0]
@@ -142,9 +197,13 @@
           </div>
         </div>
       </div>
+
+      <!-- 友情链接 -->
       <div class="links">
         <div class="box">
-          <div class="sub-title">友情链接</div>
+          <div class="box-header">
+            <div class="sub-title">友情链接</div>
+          </div>
           <img :src="linkImg" />
         </div>
       </div>
@@ -156,12 +215,20 @@
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import _store from "@/store";
-import { getLogin, getUserInfo, getModelList } from "@/api/index.js";
+import { getLogin, getUserInfo } from "@/api/index.js";
 import linkImg from "assets/images/links.png";
 import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
-import { setToken, getToken, setUid, getUid } from "@/utils/cookies.js";
+import {
+  setToken,
+  getToken,
+  removeToken,
+  setUid,
+  getUid,
+  removeUid,
+} from "@/utils/cookies.js";
+import ModelList from "./components/ModelList.vue";
 
 export default defineComponent({
   setup() {
@@ -172,6 +239,7 @@ export default defineComponent({
       level?: Array<any>;
       activityData?: any;
       workData?: any;
+      policiesRegData?: any;
     }
     let state: props = reactive({
       form: {
@@ -183,8 +251,8 @@ export default defineComponent({
       level: ["会员单位", "理事单位", "常务理事"],
       activityData: [],
       workData: [],
+      policiesRegData: [],
     });
-
     onMounted(() => {
       if (getToken() && getUid()) {
         const params = {
@@ -194,12 +262,8 @@ export default defineComponent({
         userInfo(params);
       }
     });
-
     const login = () => {
-      let formData = new FormData();
-      formData.append("username", state.form.username);
-      formData.append("password", state.form.password);
-      getLogin(formData).then((res: any) => {
+      getLogin(state.form).then((res: any) => {
         if (res.code == "0") {
           ElMessage({
             message: "登录成功！",
@@ -208,10 +272,12 @@ export default defineComponent({
           setToken(res.data.tokenid);
           setUid(res.data.uid);
           userInfo(res.data);
+        } else {
+          removeToken();
+          removeUid();
         }
       });
     };
-
     const userInfo = (data: any) => {
       getUserInfo(data).then((res: any) => {
         if (res.code == "0") {
@@ -220,57 +286,29 @@ export default defineComponent({
         }
       });
     };
-
     const tabClick = (key: any) => {
       state.activeKey = key;
     };
 
-    const modelList = async (params: any) => {
-      return await getModelList(params).then((res: any) => {
-        if (res.code == "0") {
-          return res.data || [];
-        }
-      });
-    };
-
-    const params = {
-      type: "12",
-      page: 1,
-      limit: 10,
-    };
-
-    // 活动动态
-    let activityParams = new FormData();
-    activityParams.append("type", "12");
-    activityParams.append("page", "1");
-    activityParams.append("limit", "10");
-    modelList(activityParams).then((data) => {
-      state.activityData = data;
-    });
-
-    // 工作动态
-    let workParams = new FormData();
-    workParams.append("type", "13");
-    workParams.append("page", "1");
-    workParams.append("limit", "10");
-    modelList(workParams).then((data) => {
-      state.workData = data;
-    });
-
     return { ...toRefs(state), linkImg, Iphone, Lock, login, tabClick };
   },
+  components: { ModelList },
 });
 </script>
 <style lang="less" scoped>
+.box {
+  margin: 10px 0;
+}
 .home {
   width: 100%;
+  height: auto;
   background: #fff;
   box-sizing: border-box;
 
   .container {
     width: 100%;
     max-width: 1440px;
-    height: 100%;
+    height: auto;
     margin: 0 auto;
     padding: 30px 16px;
     box-sizing: border-box;
@@ -282,7 +320,6 @@ export default defineComponent({
       & > .left {
         width: calc(100% - 332px);
         padding: 0 16px;
-        height: 100px;
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
@@ -324,59 +361,13 @@ export default defineComponent({
           }
         }
 
-        .box-header {
-          border-bottom: 2px solid #c6c6c6;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-end;
-          .tabs {
-            font-size: 20px;
-            .tab {
-              font-size: 20px;
-              font-weight: 600;
-              line-height: 48px;
-              font-family: Microsoft YaHei;
-              color: #757575;
-              padding: 0 10px;
-            }
-
-            .tab.active {
-              color: #19478b;
-            }
-          }
-          .more {
-            font-size: 16px;
-            font-family: SimSun;
-            font-weight: 400;
-            color: #5c5c5c;
-            line-height: 42px;
-          }
-        }
-        .model-list {
-          .model-item {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 4px 10px;
-            box-sizing: border-box;
-            .title {
-              width: calc(100% - 130px);
-              font-size: 14px;
-              line-height: 30px;
-              color: #0c0c0c;
-              display: block;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .time {
-              width: 120px;
-              font-size: 12px;
-              line-height: 28px;
-              color: #bdbdbd;
-            }
-          }
+        .model-title {
+          font-size: 14px;
+          line-height: 30px;
+          font-family: Microsoft YaHei;
+          color: #000;
+          font-weight: 900;
+          padding: 10px;
         }
 
         .members {
@@ -613,25 +604,51 @@ export default defineComponent({
       }
     }
 
-    .sub-title {
-      color: #19478b;
-      font-size: 20px;
-      font-family: Microsoft YaHei;
-      font-weight: 600;
-      line-height: 48px;
+    .box-header {
       border-bottom: 2px solid #c6c6c6;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      .tabs {
+        font-size: 20px;
+        .tab {
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 48px;
+          font-family: Microsoft YaHei;
+          color: #757575;
+          padding: 0 10px;
+        }
+
+        .tab.active {
+          color: #19478b;
+        }
+      }
+
+      .sub-title {
+        color: #19478b;
+        font-size: 20px;
+        font-family: Microsoft YaHei;
+        font-weight: 600;
+        line-height: 48px;
+      }
+      .more {
+        font-size: 16px;
+        font-family: SimSun;
+        font-weight: 400;
+        color: #5c5c5c;
+        line-height: 42px;
+      }
     }
 
     .links {
+      position: relative;
       img {
         width: 100%;
         height: 100%;
         margin-top: 20px;
       }
-    }
-
-    .el-empty{
-      margin-top: 10%;
     }
   }
 }
