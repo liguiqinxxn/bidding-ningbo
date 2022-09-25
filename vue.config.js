@@ -14,6 +14,13 @@ module.exports = {
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Home': ""
         }
+      },
+      '/Public': {
+        target: "http://zbxh.nbbidding.com/Public",
+        changeOrigin: true, // 是否跨域
+        pathRewrite: { // pathRewrite 的作用是把实际
+          '^/Public': ""
+        }
       }
     }
   },
