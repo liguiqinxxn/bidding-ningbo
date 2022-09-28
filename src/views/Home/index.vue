@@ -104,16 +104,18 @@
                   <div class="sub-title">会员风采</div>
                 </div>
                 <div class="members">
-                  <div class="member">
-                    <span class="title">常务理事</span>
-                    <span class="more">更多&gt;&gt;</span>
-                  </div>
-                  <div class="member">
-                    <span class="title">理事单位</span>
-                    <span class="more">更多&gt;&gt;</span>
-                  </div>
-                  <div class="member">
-                    <span class="title">会员单位</span>
+                  {{ memberList }}
+                  <div class="member" v-for="item,i in memberList">
+                    <span class="title" v-if="i == 0">常务理事</span>
+                    <span class="title" v-if="i == 1">理事单位</span>
+                    <span class="title" v-if="i == 2">会员单位</span>
+                    <div class="imgs">
+                      <imgr
+                        v-for="r in item"
+                        :src="r.logo"
+                        @click="toLink(r.url)"
+                      />
+                    </div>
                     <span class="more">更多&gt;&gt;</span>
                   </div>
                 </div>
@@ -220,11 +222,17 @@
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "vuex";
 import _store from "@/store";
-import { getLogin, getLogout, getUserInfo, getLinksList } from "@/api/index.js";
+import {
+  getLogin,
+  getLogout,
+  getUserInfo,
+  getMemberList,
+  getLinksList,
+} from "@/api/index.js";
 import linkImg from "assets/images/links.png";
 import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   setToken,
   getToken,
@@ -244,6 +252,7 @@ export default defineComponent({
       imgs?: any;
       activeKey?: any;
       level?: Array<any>;
+      memberList?: Array<any>;
       linkList?: Array<any>;
     }
     let state: props = reactive({
@@ -255,6 +264,7 @@ export default defineComponent({
       imgs: [honor, honor, honor],
       activeKey: 1,
       level: ["会员单位", "理事单位", "常务理事"],
+      memberList: [],
       linkList: [],
     });
     onMounted(() => {
@@ -280,21 +290,34 @@ export default defineComponent({
       });
     };
     const logout = () => {
-      const params = {
-        uid: getUid(),
-        tokenid: getToken(),
-      };
-      getLogout(params).then((res: any) => {
-        if (res.code == "0") {
-          ElMessage({
-            message: "退出成功！",
-            type: "success",
+      ElMessageBox.confirm("请确认退出？", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          const params = {
+            uid: getUid(),
+            tokenid: getToken(),
+          };
+          getLogout(params).then((res: any) => {
+            if (res.code == "0") {
+              ElMessage({
+                message: "退出成功！",
+                type: "success",
+              });
+              removeToken();
+              removeUid();
+              store.commit("setUserInfo", {});
+            }
           });
-          removeToken();
-          removeUid();
-          store.commit("setUserInfo", {});
-        }
-      });
+        })
+        .catch(() => {
+          ElMessage({
+            type: "info",
+            message: "取消",
+          });
+        });
     };
     const userInfo = (data: any) => {
       getUserInfo(data).then((res: any) => {
@@ -310,6 +333,27 @@ export default defineComponent({
     const tabClick = (key: any) => {
       state.activeKey = key;
     };
+
+    const memberListFn = async (params: any) => {
+      return await getMemberList(params).then((res: any) => {
+        if (res.code == "0") {
+          return res.data || [];
+        }
+      });
+    };
+    const levels = ["3", "2", "1"]; // 常务理事、理事单位、会员单位
+    const lists = levels.map((level: any) => {
+      const memberParams = {
+        level,
+        keyword: "",
+        page: 1,
+        limit: 10,
+      };
+      return memberListFn(memberParams).then();
+    });
+    Promise.all(lists).then((res: any) => {
+      state.memberList = res;
+    });
 
     const toLink = (url: any) => {
       window.open(url);
@@ -447,41 +491,41 @@ export default defineComponent({
             }
           }
 
-          .member:nth-child(1) {
-            .title::after {
-              content: "";
-              width: 800px;
-              height: 98px;
-              display: inline-block;
-              background-image: url("../../assets/images/member_icons.png");
-              background-position: 60px 10px;
-              background-repeat: no-repeat;
-            }
-          }
+          // .member:nth-child(1) {
+          //   .title::after {
+          //     content: "";
+          //     width: 800px;
+          //     height: 98px;
+          //     display: inline-block;
+          //     background-image: url("../../assets/images/member_icons.png");
+          //     background-position: 60px 10px;
+          //     background-repeat: no-repeat;
+          //   }
+          // }
 
-          .member:nth-child(2) {
-            .title::after {
-              content: "";
-              width: 800px;
-              height: 98px;
-              display: inline-block;
-              background-image: url("../../assets/images/member_icons.png");
-              background-position: 60px -76px;
-              background-repeat: no-repeat;
-            }
-          }
+          // .member:nth-child(2) {
+          //   .title::after {
+          //     content: "";
+          //     width: 800px;
+          //     height: 98px;
+          //     display: inline-block;
+          //     background-image: url("../../assets/images/member_icons.png");
+          //     background-position: 60px -76px;
+          //     background-repeat: no-repeat;
+          //   }
+          // }
 
-          .member:nth-child(3) {
-            .title::after {
-              content: "";
-              width: 800px;
-              height: 98px;
-              display: inline-block;
-              background-image: url("../../assets/images/member_icons.png");
-              background-position: 60px -162px;
-              background-repeat: no-repeat;
-            }
-          }
+          // .member:nth-child(3) {
+          //   .title::after {
+          //     content: "";
+          //     width: 800px;
+          //     height: 98px;
+          //     display: inline-block;
+          //     background-image: url("../../assets/images/member_icons.png");
+          //     background-position: 60px -162px;
+          //     background-repeat: no-repeat;
+          //   }
+          // }
         }
       }
 

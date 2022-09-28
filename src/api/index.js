@@ -38,14 +38,21 @@ export const getColumnList = (data) => {
 
 // 模块详情列表
 export const getModelList = (data) => {
-  return Interface.post("Home/Index/model_list",
+  return Interface.post("/Home/Index/model_list",
+    data
+  );
+};
+
+// 会员名单
+export const getMemberList = (data) => {
+  return Interface.post("/Home/Index/member_list",
     data
   );
 };
 
 // 友情链接
 export const getLinksList = (data) => {
-  return Interface.post("Home/Index/links_list",
+  return Interface.post("/Home/Index/links_list",
     data
   );
 };

@@ -6,7 +6,7 @@
         <span class="time">{{ item.time }}</span>
       </div>
     </div>
-    <el-empty v-else :image-size="150" description="没有数据" />
+    <el-empty v-else :image-size="150" description="暂无数据" />
   </div>
 </template>
 <script lang="ts">

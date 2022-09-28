@@ -11,7 +11,15 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "home",
+        name: "首页",
         component: Home,
+      },
+      {
+        path: "membershiplist",
+        name: "会员名单",
+        component: import(
+          /* membershiplist */ "../views/MemberShipList/index.vue"
+        ),
       },
     ],
   },
