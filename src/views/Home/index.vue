@@ -104,13 +104,15 @@
                   <div class="sub-title">会员风采</div>
                 </div>
                 <div class="members">
-                  {{ memberList }}
-                  <div class="member" v-for="item,i in memberList">
-                    <span class="title" v-if="i == 0">常务理事</span>
-                    <span class="title" v-if="i == 1">理事单位</span>
-                    <span class="title" v-if="i == 2">会员单位</span>
+                  <div
+                    class="member"
+                    v-for="(item, i) in memberList"
+                    @click="toMembers(levels[i])"
+                  >
+                    <span class="title">{{ levels[i].name }}</span>
                     <div class="imgs">
-                      <imgr
+                      <img
+                        class="img"
                         v-for="r in item"
                         :src="r.logo"
                         @click="toLink(r.url)"
@@ -131,7 +133,8 @@
             </div>
             <div v-if="$store.state.userInfo.uid" class="user-info">
               <span class="level">{{
-                level[Number($store.state.userInfo.level) - 1 || 0]
+                levels?.filter((r) => r.level == $store.state.userInfo.level)[0]
+                  .name
               }}</span>
               <img class="logo" :src="$store.state.userInfo.logo" />
               <p class="info">{{ $store.state.userInfo.info }}</p>
@@ -243,6 +246,7 @@ import {
 } from "@/utils/cookies.js";
 import ModelList from "./components/ModelList.vue";
 import store from "@/store";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -251,7 +255,6 @@ export default defineComponent({
       form?: any;
       imgs?: any;
       activeKey?: any;
-      level?: Array<any>;
       memberList?: Array<any>;
       linkList?: Array<any>;
     }
@@ -263,10 +266,15 @@ export default defineComponent({
       },
       imgs: [honor, honor, honor],
       activeKey: 1,
-      level: ["会员单位", "理事单位", "常务理事"],
       memberList: [],
       linkList: [],
     });
+    const levels = [
+      { name: "常务理事", level: "3" },
+      { name: "理事单位", level: "2" },
+      { name: "会员单位", level: "1" },
+    ];
+
     onMounted(() => {
       if (getToken() && getUid()) {
         const params = {
@@ -341,10 +349,9 @@ export default defineComponent({
         }
       });
     };
-    const levels = ["3", "2", "1"]; // 常务理事、理事单位、会员单位
-    const lists = levels.map((level: any) => {
+    const lists = levels.map((item: any) => {
       const memberParams = {
-        level,
+        level: item.level,
         keyword: "",
         page: 1,
         limit: 10,
@@ -354,6 +361,11 @@ export default defineComponent({
     Promise.all(lists).then((res: any) => {
       state.memberList = res;
     });
+
+    const router = useRouter();
+    const toMembers = (item: any) => {
+      router.push({ path: "membershiplist", query: { level: item.level } });
+    };
 
     const toLink = (url: any) => {
       window.open(url);
@@ -372,12 +384,14 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      levels,
       linkImg,
       Iphone,
       Lock,
       login,
       logout,
       tabClick,
+      toMembers,
       toLink,
     };
   },
@@ -488,6 +502,18 @@ export default defineComponent({
               font-weight: 400;
               color: #5c5c5c;
               line-height: 42px;
+            }
+          }
+          .imgs {
+            width: calc(100% - 300px);
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 24px;
+            .img {
+              width: 52px;
+              height: 52px;
             }
           }
 
