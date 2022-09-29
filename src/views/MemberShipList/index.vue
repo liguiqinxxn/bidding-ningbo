@@ -7,12 +7,13 @@
             :dataSource="memberShipList"
             title="会员风采"
             subTitle="Member style"
+            :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>
         </div>
         <div class="right">
           <div class="content-header">
-            <div class="title">常务理事</div>
+            <div class="title">{{ memberShipList[activeIndex].name }}</div>
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
@@ -52,10 +53,18 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, watch } from "vue";
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  toRefs,
+  watch,
+  computed,
+} from "vue";
 import { getMemberList } from "@/api/index.js";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
+import { useRoute } from "vue-router";
 export default defineComponent({
   setup() {
     interface props {
@@ -77,6 +86,23 @@ export default defineComponent({
       { name: "理事单位", level: "2" },
       { name: "会员单位", level: "1" },
     ];
+
+    const activeIndex = computed(() => {
+      let index = 0;
+      memberShipList.map((r, i) => {
+        if (r.level == state.level) {
+          index = i;
+        }
+      });
+      return index;
+    });
+
+    const $route = useRoute();
+    onMounted(() => {
+      if ($route.query.level) {
+        state.level = $route.query.level;
+      }
+    });
 
     const sidebarclick = (item: any) => {
       state.level = item.level;
@@ -121,6 +147,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      activeIndex,
       sidebarclick,
       memberShipList,
       currentChange,
@@ -143,7 +170,7 @@ export default defineComponent({
     margin: 0 auto;
     padding: 30px 16px;
     box-sizing: border-box;
-    .content {
+    & > .content {
       display: flex;
       flex-direction: row;
       & > .left {
@@ -194,9 +221,10 @@ export default defineComponent({
           bottom: -3px;
         }
 
-        .content {
+        & > .content {
           display: flex;
           flex-direction: column;
+          padding: 30px 0;
           .member-list {
             width: 100%;
             min-height: 300px;
@@ -207,6 +235,7 @@ export default defineComponent({
               flex-direction: row;
               align-items: center;
               border-bottom: 1px solid #f4f4f4;
+              cursor: pointer;
               .triangle {
                 width: 14px;
                 height: 14px;

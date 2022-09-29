@@ -23,18 +23,17 @@ export default defineComponent({
     dataSource: Array,
     title: String,
     subTitle: String,
+    activeIndex: Number,
   },
   setup(props, { emit }) {
-    interface props {
-      activeIndex?: any;
+    interface propsType {
       data?: Array<any>;
     }
-    let state = reactive({
-      activeIndex: 0,
+    let state: propsType = reactive({
       data: props.dataSource,
     });
+
     const sidebarclick = (item: any, index: any) => {
-      state.activeIndex = index;
       emit("sidebarclick", item);
     };
     return { ...toRefs(state), sidebarclick };
@@ -97,6 +96,7 @@ export default defineComponent({
       line-height: 52px;
       text-align: center;
       border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
     }
     .sidebar-item.active,
     .sidebar-item:hover {

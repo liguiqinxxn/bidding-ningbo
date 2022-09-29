@@ -362,9 +362,9 @@ export default defineComponent({
       state.memberList = res;
     });
 
-    const router = useRouter();
+    const $router = useRouter();
     const toMembers = (item: any) => {
-      router.push({ path: "membershiplist", query: { level: item.level } });
+      $router.push({ path: "membershiplist", query: { level: item.level } });
     };
 
     const toLink = (url: any) => {
