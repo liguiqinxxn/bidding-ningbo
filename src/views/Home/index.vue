@@ -398,6 +398,7 @@ export default defineComponent({
   components: { ModelList },
 });
 </script>
+
 <style lang="less" scoped>
 .box {
   margin: 10px 0;
@@ -416,7 +417,7 @@ export default defineComponent({
     padding: 30px 16px;
     box-sizing: border-box;
 
-    .content {
+    & >.content {
       display: flex;
       flex-direction: row;
 

@@ -8,17 +8,18 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import Menu from './components/Menu.vue';
-import Carousel from './components/Carousel.vue';
+import { defineComponent } from "vue";
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import Menu from "./components/Menu.vue";
+import Carousel from "./components/Carousel.vue";
 
 export default defineComponent({
   setup() {
+    return {};
   },
-  components: { Header, Footer, Menu, Carousel }
-})
+  components: { Header, Footer, Menu, Carousel },
+});
 </script>
 <style lang="less" scoped>
 .layout {

@@ -31,11 +31,10 @@ module.exports = {
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
-      patterns: [
-        // 引入公共文件
-        path.resolve(__dirname, "./src/assets/less/common.less"),
-        path.resolve(__dirname, "./src/assets/less/element.less"),
-      ]
+      patterns: [path.resolve(__dirname, './src/assets/less/common.less')]
+      // patterns: [
+      //   'D:\\Code\\bidding-ningbo\\src\\assets\\less\\common.less',
+      // ]
     }
   },
   chainWebpack: (config) => {

@@ -261,8 +261,6 @@ export default defineComponent({
             display: flex;
             flex-direction: row;
             justify-content: center;
-            .el-pagination {
-            }
           }
         }
       }

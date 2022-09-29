@@ -4,63 +4,81 @@
       :default-active="activeIndex"
       :ellipsis="false"
       class="el-menu"
-      router
+      :router="true"
       mode="horizontal"
       background-color="#19478b"
       text-color="#fff"
       active-text-color="#fff"
-      @select="handleSelect"
-    > 
-    <template
-        v-for="items in columnList"
-        :key="items.id"
-      > 
-      <template v-if="items.son && items.son.length">
-          <el-sub-menu :index="items.path"> <template #title>{{ items.name }}</template>
+    >
+      <template v-for="items in columnList" :key="items.id">
+        <template v-if="items.son && items.son.length">
+          <el-sub-menu :index="'/' + items.path">
+            <template #title>{{ items.name }}</template>
             <el-menu-item
               :index="item.path"
               v-for="item in items.son"
               :key="item.id"
-            >{{ item.name }}</el-menu-item>
+              >{{ item.name }}</el-menu-item
+            >
           </el-sub-menu>
-        </template> <template v-else>
-          <el-menu-item :index="items.path">{{ items.name }}</el-menu-item>
-        </template> 
-      </template> 
+        </template>
+        <template v-else>
+          <el-menu-item :index="'/' + items.path">{{
+            items.name
+          }}</el-menu-item>
+        </template>
+      </template>
     </el-menu>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue'
-import { ElMessage } from "element-plus"
-import { getColumnList } from "@/api/index.js"
+import {
+  defineComponent,
+  reactive,
+  ref,
+  toRefs,
+  onUnmounted,
+  onMounted,
+} from "vue";
+import { ElMessage } from "element-plus";
+import { getColumnList } from "@/api/index.js";
+import { useRouter, useRoute } from "vue-router";
 
 export default defineComponent({
   setup() {
     interface props {
-      activeIndex: any
-      columnList?: Array<any>
+      activeIndex: any;
+      columnList?: Array<any>;
     }
-    let state: props = reactive({ activeIndex: '0', columnList: [] })
+    const $router = useRouter();
+    const $route = useRoute();
+    let state: props = reactive({ activeIndex: "/home", columnList: [] });
 
     // 获取栏目
     getColumnList().then((res: any) => {
-      if (res.code == '0') {
-        state.columnList = res.data
+      if (res.code == "0") {
+        state.columnList = res.data;
       } else {
-        ElMessage.error(res.msg)
+        ElMessage.error(res.msg);
       }
-    })
+    });
+    onMounted(() => {
+      state.activeIndex = $route.path;
+    });
 
-    const handleSelect = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
+    const unwatch = $router.beforeEach((to, from, next) => {
+      next();
+      state.activeIndex = to.path;
+    });
 
-    return { ...toRefs(state), handleSelect }
+    onUnmounted(() => {
+      unwatch();
+    });
 
-  }
-})
+    return { ...toRefs(state) };
+  },
+});
 </script>
 
 <style lang="less" scoped>
@@ -88,9 +106,6 @@ export default defineComponent({
       background: #3c70be !important;
       border: none !important;
     }
-
   }
-
-
 }
 </style>
