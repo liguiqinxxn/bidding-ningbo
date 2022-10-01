@@ -32,10 +32,19 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [path.resolve(__dirname, './src/assets/less/common.less')]
-      // patterns: [
-      //   'D:\\Code\\bidding-ningbo\\src\\assets\\less\\common.less',
-      // ]
     }
+  },
+  css: {
+    loaderOptions: {
+      less: {
+        lessOptions: {
+          modifyVars: {
+            'primary-color': '#ec6800'
+          },
+          javascriptEnabled: true,
+        },
+      },
+    },
   },
   chainWebpack: (config) => {
     config.resolve.alias
