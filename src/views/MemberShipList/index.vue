@@ -25,26 +25,74 @@
             </div>
           </div>
           <div class="content">
-            <div class="member-list">
-              <div
-                v-if="memberList?.length"
-                class="member-item"
-                v-for="item in memberList"
-              >
-                <img class="triangle" :src="triangleIcon" />
+            <div v-if="!isShow">
+              <div class="member-list">
+                <div
+                  v-if="memberList?.length"
+                  class="member-item"
+                  v-for="item in memberList"
+                  @click="openDetails(item)"
+                >
+                  <img class="triangle" :src="triangleIcon" />
 
-                <img class="logo" :src="item.logo" />
-                <span class="name">{{ item.name }}</span>
+                  <img class="logo" :src="item.logo" />
+                  <span class="name">{{ item.name }}</span>
+                </div>
+                <el-empty v-else :image-size="150" description="暂无数据" />
               </div>
-              <el-empty v-else :image-size="150" description="暂无数据" />
+
+              <div v-if="total" class="pagination">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :total="total"
+                  @current-change="currentChange"
+                />
+              </div>
             </div>
-            <div v-if="total" class="pagination">
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :total="total"
-                @current-change="currentChange"
-              />
+            <div v-else class="details">
+              <div class="details-title">
+                <img :src="currentItem?.logo" alt="logo" />
+                <span>{{ currentItem?.name }}</span>
+              </div>
+              <div class="details-info">
+                <div class="sub-title">
+                  <span>企业简介</span>
+                </div>
+                <p class="info">{{ currentItem?.info }}</p>
+              </div>
+              <div class="business-scope">
+                <div class="sub-title">
+                  <span>业务范围</span>
+                </div>
+                <!-- <p>{{currentItem?.}}</p> -->
+              </div>
+              <div class="team">
+                <div class="sub-title">
+                  <span>团队风采</span>
+                </div>
+                <div class="imgs">
+                  <img
+                    :src="item"
+                    v-for="item in currentItem?.team_style.split(';')"
+                    alt="team"
+                  />
+                </div>
+              </div>
+              <div class="team">
+                <div class="sub-title">
+                  <span>荣誉资质</span>
+                </div>
+                <div class="imgs">
+                  <img
+                    :src="item"
+                    v-for="item in currentItem?.honors_qualifications.split(
+                      ';'
+                    )"
+                    alt="honors"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -73,6 +121,8 @@ export default defineComponent({
       total?: any;
       page?: any;
       limit?: any;
+      isShow?: boolean;
+      currentItem?: object;
     }
     let state: props = reactive({
       level: "3",
@@ -80,6 +130,8 @@ export default defineComponent({
       total: 0,
       page: 1,
       limit: 10,
+      isShow: false,
+      currentItem: {},
     });
     const memberShipList = [
       { name: "常务理事", level: "3" },
@@ -106,6 +158,7 @@ export default defineComponent({
 
     const sidebarclick = (item: any) => {
       state.level = item.level;
+      state.isShow = false;
     };
 
     const memberListFn = async (level: any) => {
@@ -145,13 +198,19 @@ export default defineComponent({
       }
     );
 
+    const openDetails = (item: any) => {
+      state.isShow = true;
+      state.currentItem = item;
+    };
+
     return {
       ...toRefs(state),
+      triangleIcon,
       activeIndex,
       sidebarclick,
       memberShipList,
       currentChange,
-      triangleIcon,
+      openDetails,
     };
   },
   components: { Sidebar },
@@ -173,15 +232,16 @@ export default defineComponent({
     & > .content {
       display: flex;
       flex-direction: row;
+      height: auto;
       & > .left {
         width: 320px;
         height: auto;
       }
       & > .right {
         width: calc(100% - 320px);
-        height: 500px;
         padding: 0 20px;
         box-sizing: border-box;
+        position: relative;
         .content-header {
           width: 100%;
           height: 52px;
@@ -222,6 +282,8 @@ export default defineComponent({
         }
 
         & > .content {
+          width: 100%;
+          height: auto;
           display: flex;
           flex-direction: column;
           padding: 30px 0;
@@ -261,6 +323,74 @@ export default defineComponent({
             display: flex;
             flex-direction: row;
             justify-content: center;
+          }
+
+          .details {
+            width: 100%;
+            position: relative;
+            padding: 0 20px;
+            box-sizing: border-box;
+            .details-title {
+              text-align: center;
+              img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin: 0 20px;
+              }
+              span {
+                font-size: 20px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #000000;
+                line-height: 60px;
+              }
+            }
+            .sub-title {
+              width: 100%;
+              line-height: 52px;
+              display: block;
+              position: relative;
+              span {
+                font-size: 14px;
+                font-family: SimSun;
+                font-weight: 600;
+                color: #000000;
+                line-height: 24px;
+                background: #e7e7e7;
+                display: inline-block;
+                padding: 0 10px;
+                position: relative;
+              }
+            }
+            .sub-title::before {
+              content: "";
+              width: 100%;
+              height: 1px;
+              background: #e6e6e6;
+              display: block;
+              position: absolute;
+              top: 26px;
+              z-index: 0;
+            }
+            .info {
+              font-size: 12px;
+              line-height: 40px;
+              color: #000000;
+              font-weight: 400;
+              padding: 20px;
+            }
+            .imgs {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              padding: 20px;
+              box-sizing: border-box;
+              img {
+                width: 30%;
+              }
+            }
           }
         }
       }
