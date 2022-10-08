@@ -50,6 +50,13 @@ export const getModelList = (data) => {
   );
 };
 
+// 文章详情
+export const getModelInfo = (data) => {
+  return Interface.post("/Home/Index/model_info",
+    data
+  );
+};
+
 // 会员名单
 export const getMemberList = (data) => {
   return Interface.post("/Home/Index/member_list",

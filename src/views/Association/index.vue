@@ -11,7 +11,51 @@
             @sidebarclick="sidebarclick"
           ></Sidebar>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <div class="content-header">
+            <div class="title">
+              {{ associationMenu && associationMenu[activeIndex]?.name }}
+            </div>
+            <div class="breadcrumb">
+              <span>您的当前位置：</span>
+              <el-breadcrumb separator=">>">
+                <el-breadcrumb-item :to="{ path: '/home' }"
+                  >首页</el-breadcrumb-item
+                >
+                <el-breadcrumb-item>关于协会</el-breadcrumb-item>
+              </el-breadcrumb>
+            </div>
+          </div>
+          <div class="content">
+            <div v-if="!isShow">
+              <div class="list">
+                <div
+                  v-if="associationList?.length"
+                  class="item"
+                  v-for="item in associationList"
+                  @click="openDetails(item)"
+                >
+                  <img class="triangle" :src="triangleIcon" />
+
+                  <span class="title">{{ item.title }}</span>
+                  <span class="time">{{ item.time }}</span>
+                </div>
+                <el-empty v-else :image-size="150" description="暂无数据" />
+              </div>
+              <div v-if="total" class="pagination">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :total="total"
+                  @current-change="currentChange"
+                />
+              </div>
+            </div>
+            <div v-else class="details">
+              <p v-html="currentItem?.content"></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -25,23 +69,32 @@ import {
   onMounted,
   watch,
 } from "vue";
-import { getColumnOneList } from "@/api/index.js";
+import { getColumnOneList, getModelList, getModelInfo } from "@/api/index.js";
 import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
+import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   setup() {
     interface props {
-      id?: any;
+      type?: any;
       associationMenu?: Array<any>;
       associationList?: Array<any>;
+      total?: any;
+      page?: any;
+      limit?: any;
       isShow?: boolean;
+      currentItem?: object;
     }
     let state: props = reactive({
-      id: "0",
+      type: "0",
       associationMenu: [],
       associationList: [],
+      total: 0,
+      page: 1,
+      limit: 10,
       isShow: false,
+      currentItem: {},
     });
 
     // 获取关于协会栏目
@@ -56,7 +109,7 @@ export default defineComponent({
     const activeIndex = computed(() => {
       let index = 0;
       state.associationMenu?.map((r, i) => {
-        if (r.id == state.id) {
+        if (r.type == state.type) {
           index = i;
         }
       });
@@ -68,9 +121,9 @@ export default defineComponent({
     watch(
       () => $route.query,
       (newQuery, oldQuery) => {
-        if (newQuery?.id !== oldQuery?.id) {
-          if ($route.query.id) {
-            state.id = $route.query.id;
+        if (newQuery?.type !== oldQuery?.type) {
+          if ($route.query.type) {
+            state.type = $route.query.type;
           }
         }
       },
@@ -78,12 +131,67 @@ export default defineComponent({
     );
 
     const sidebarclick = (item: any) => {
-      state.id = item.id;
-      $router.push({ query: ($route.query, { id: item.id }) });
+      state.type = item.type;
+      $router.push({ query: ($route.query, { type: item.type }) });
       state.isShow = false;
     };
 
-    return { ...toRefs(state), activeIndex, sidebarclick };
+    const modelListFn = async (type: any) => {
+      const params = {
+        type,
+        keyword: "",
+        page: state.page,
+        limit: state.limit,
+      };
+      return await getModelList(params).then((res: any) => {
+        if (res.code == "0") {
+          return res;
+        }
+      });
+    };
+
+    const init = () => {
+      modelListFn(state.type).then((res) => {
+        state.associationList = res.data || [];
+        state.total = Number(res.count);
+      });
+    };
+
+    const currentChange = (page: any) => {
+      state.page = page;
+      init();
+    };
+
+    init(); // 获取数据
+
+    watch(
+      () => state.type,
+      (type, prevType) => {
+        if (type != prevType) {
+          init();
+        }
+      }
+    );
+
+    const ModelInfo = (id: any) => {
+      getModelInfo({ id }).then((res: any) => {
+        state.currentItem = res.data;
+      });
+    };
+
+    const openDetails = (item: any) => {
+      state.isShow = true;
+      ModelInfo(item.id);
+    };
+
+    return {
+      ...toRefs(state),
+      triangleIcon,
+      activeIndex,
+      sidebarclick,
+      currentChange,
+      openDetails,
+    };
   },
   components: { Sidebar },
 });
@@ -114,6 +222,91 @@ export default defineComponent({
         padding: 0 20px;
         box-sizing: border-box;
         position: relative;
+        .content-header {
+          width: 100%;
+          height: 52px;
+          border-bottom: 1px solid #e5e5e5;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          .title {
+            font-size: 20px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #000000;
+            line-height: 50px;
+            padding: 0 6px;
+          }
+          .breadcrumb {
+            font-size: 16px;
+            font-family: SimSun;
+            font-weight: 400;
+            color: #010101;
+            line-height: 50px;
+            .el-breadcrumb {
+              display: inline-block;
+            }
+          }
+        }
+        .content-header::after {
+          content: "";
+          width: 254px;
+          height: 5px;
+          background: url(../../assets/images/title_line.png) no-repeat;
+          background-size: auto;
+          position: absolute;
+          left: 6px;
+          bottom: -3px;
+        }
+
+        & > .content {
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          padding: 30px 0;
+          .list {
+            width: 100%;
+            min-height: 300px;
+            .item {
+              width: 100%;
+              height: 48px;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              border-bottom: 1px solid #f4f4f4;
+              cursor: pointer;
+              .triangle {
+                width: 14px;
+                height: 14px;
+                padding: 0 20px;
+              }
+              .title {
+                width: calc(100% - 194px);
+                font-size: 14px;
+                line-height: 40px;
+                color: #000000;
+              }
+              .time {
+                width: 180px;
+                font-size: 14px;
+                line-height: 40px;
+                color: #000000;
+                text-align: right;
+              }
+            }
+            .el-empty {
+              margin-top: 60px;
+            }
+          }
+          .pagination {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+          }
+        }
       }
     }
   }

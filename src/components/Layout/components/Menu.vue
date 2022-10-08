@@ -20,7 +20,7 @@
               :index="item.path"
               v-for="item in items.son"
               :key="item.id"
-              :route="{ path: item.path, query: { id: item.id } }"
+              :route="{ path: item.path, query: { type: item.type } }"
               >{{ item.name }}</el-menu-item
             >
           </el-sub-menu>

@@ -26,10 +26,10 @@
           </div>
           <div class="content">
             <div v-if="!isShow">
-              <div class="member-list">
+              <div class="list">
                 <div
                   v-if="memberList?.length"
-                  class="member-item"
+                  class="item"
                   v-for="item in memberList"
                   @click="openDetails(item)"
                 >
@@ -287,10 +287,10 @@ export default defineComponent({
           display: flex;
           flex-direction: column;
           padding: 30px 0;
-          .member-list {
+          .list {
             width: 100%;
             min-height: 300px;
-            .member-item {
+            .item {
               width: 100%;
               height: 48px;
               display: flex;
