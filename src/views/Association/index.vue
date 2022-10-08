@@ -17,30 +17,45 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, onMounted } from "vue";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+  onMounted,
+  watch,
+} from "vue";
+import { getColumnOneList } from "@/api/index.js";
+import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   setup() {
     interface props {
-      id?: Number;
+      id?: any;
+      associationMenu?: Array<any>;
       associationList?: Array<any>;
       isShow?: boolean;
     }
-    let state = reactive({ id: 0, associationList: [], isShow: false });
-    const associationMenu = [
-      { name: "协会简介", id: 1, type: "2" },
-      { name: "协会章程", id: 2, type: "3" },
-      { name: "协会领导", id: 3, type: "4" },
-      { name: "组织机构", id: 4, type: "5" },
-      { name: "业务范围", id: 5, type: "6" },
-      { name: "协会制度", id: 6, type: "23" },
-      { name: "会员名单", id: 0, tyep: "26" },
-      { name: "联系我们", id: 7, type: "7" },
-    ];
+    let state: props = reactive({
+      id: "0",
+      associationMenu: [],
+      associationList: [],
+      isShow: false,
+    });
+
+    // 获取关于协会栏目
+    getColumnOneList({ pid: 4 }).then((res: any) => {
+      if (res.code == "0") {
+        state.associationMenu = [...res.data];
+      } else {
+        ElMessage.error(res.msg);
+      }
+    });
+
     const activeIndex = computed(() => {
       let index = 0;
-      associationMenu.map((r, i) => {
+      state.associationMenu?.map((r, i) => {
         if (r.id == state.id) {
           index = i;
         }
@@ -49,17 +64,26 @@ export default defineComponent({
     });
 
     const $route = useRoute();
-    onMounted(() => {
-      if ($route.query.id) {
-        state.id = Number($route.query.id);
-      }
-    });
+    const $router = useRouter();
+    watch(
+      () => $route.query,
+      (newQuery, oldQuery) => {
+        if (newQuery?.id !== oldQuery?.id) {
+          if ($route.query.id) {
+            state.id = $route.query.id;
+          }
+        }
+      },
+      { immediate: true }
+    );
 
     const sidebarclick = (item: any) => {
       state.id = item.id;
+      $router.push({ query: ($route.query, { id: item.id }) });
       state.isShow = false;
     };
-    return { ...toRefs(state), activeIndex, associationMenu, sidebarclick };
+
+    return { ...toRefs(state), activeIndex, sidebarclick };
   },
   components: { Sidebar },
 });

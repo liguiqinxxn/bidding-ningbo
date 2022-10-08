@@ -12,12 +12,15 @@
     >
       <template v-for="items in columnList" :key="items.id">
         <template v-if="items.son && items.son.length">
-          <el-sub-menu :index="'/' + items.path">
+          <el-sub-menu
+            :index="'/' + items.path"
+          >
             <template #title>{{ items.name }}</template>
             <el-menu-item
               :index="item.path"
               v-for="item in items.son"
               :key="item.id"
+              :route="{ path: item.path, query: { id: item.id } }"
               >{{ item.name }}</el-menu-item
             >
           </el-sub-menu>

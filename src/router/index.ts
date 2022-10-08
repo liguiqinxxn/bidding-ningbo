@@ -17,64 +17,52 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/userlist",
         name: "关于协会-会员名单",
-        component: import(/* userlist */ "../views/Association/index.vue"),
+        redirect: "/association",
       },
       {
         path: "/associationProfile",
         name: "会员简介",
-        component: import(
-          /* associationProfile */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
         path: "/associationArticles",
         name: "协会章程",
-        component: import(
-          /* associationArticles */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
         path: "/associationLeader",
         name: "协会领导",
-        component: import(
-          /* associationLeader */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
         path: "/associationOrganization",
         name: "组织机构",
-        component: import(
-          /* associationOrganization */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
-        path: "/associationsystem",
+        path: "/associationBusiness",
         name: "业务范围",
-        component: import(
-          /* associationsystem */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
         path: "/associationsystem",
         name: "协会制度",
-        component: import(
-          /* associationsystem */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
       {
         path: "/associationContact",
         name: "联系我们",
-        component: import(
-          /* associationContact */ "../views/Association/index.vue"
-        ),
+        redirect: "/association",
       },
-
       {
         path: "/membershiplist",
         name: "会员名单",
-        component: import(
-          /* membershiplist */ "../views/MemberShipList/index.vue"
-        ),
+        redirect: "/association",
+      },
+      {
+        path: "/association",
+        name: "关于协会",
+        component: import(/* association */ "../views/Association/index.vue"),
       },
     ],
   },

@@ -36,6 +36,13 @@ export const getColumnList = (data) => {
   );
 };
 
+// 单个一级栏目下的子栏目
+export const getColumnOneList = (data) => {
+  return Interface.post("/Home/Index/column_one_list",
+    data
+  );
+};
+
 // 模块详情列表
 export const getModelList = (data) => {
   return Interface.post("/Home/Index/model_list",

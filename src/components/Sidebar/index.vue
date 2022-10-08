@@ -17,7 +17,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, reactive, toRefs, watch } from "vue";
 export default defineComponent({
   props: {
     dataSource: Array,
@@ -33,9 +33,14 @@ export default defineComponent({
       data: props.dataSource,
     });
 
+    watch(props, (props, prevProps) => {
+      state.data = props?.dataSource;
+    });
+
     const sidebarclick = (item: any, index: any) => {
       emit("sidebarclick", item);
     };
+
     return { ...toRefs(state), sidebarclick };
   },
 });
