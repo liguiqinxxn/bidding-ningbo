@@ -22,6 +22,13 @@ module.exports = {
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Public': ""
         }
+      },
+      '/ueditor': {
+        target: "http://zbxh.nbbidding.com/ueditor",
+        changeOrigin: true, // 是否跨域
+        pathRewrite: { // pathRewrite 的作用是把实际
+          '^/ueditor': ""
+        }
       }
     }
   },

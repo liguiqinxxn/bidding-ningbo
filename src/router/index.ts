@@ -55,14 +55,113 @@ const routes: Array<RouteRecordRaw> = [
         redirect: "/association",
       },
       {
-        path: "/membershiplist",
-        name: "会员名单",
-        redirect: "/association",
-      },
-      {
         path: "/association",
         name: "关于协会",
         component: import(/* association */ "../views/Association/index.vue"),
+      },
+
+      {
+        path: "/activityDynamics",
+        name: "活动动态",
+        redirect: "/dynamics",
+      },
+      {
+        path: "/workDynamics",
+        name: "工作动态",
+        redirect: "/dynamics",
+      },
+      {
+        path: "/dynamics",
+        name: "协会动态",
+        component: import(/* dynamics */ "../views/Dynamics/index.vue"),
+      },
+
+      {
+        path: "/membershiplist",
+        name: "会员名单",
+        component: import(
+          /* membershiplist */ "../views/MemberShipList/index.vue"
+        ),
+      },
+
+      {
+        path: "/nationaRegulations",
+        name: "国家法规",
+        redirect: "/policiesRegulations",
+      },
+      {
+        path: "/provincialRegulations",
+        name: "省市法规",
+        redirect: "/policiesRegulations",
+      },
+      {
+        path: "/departmentRegulations",
+        name: "部门规章制度",
+        redirect: "/policiesRegulations",
+      },
+      {
+        path: "/policiesRegulations",
+        name: "政策法规",
+        component: import(
+          /* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"
+        ),
+      },
+
+      {
+        path: "/disciplineConvention",
+        name: "自律公约",
+        redirect: "/integritySelfDiscipline",
+      },
+      {
+        path: "/excellenceCommendation",
+        name: "优秀表彰",
+        redirect: "/integritySelfDiscipline",
+      },
+      {
+        path: "/integritySelfDiscipline",
+        name: "诚信自律",
+        component: import(
+          /* IntegritySelfDiscipline */ "../views/IntegritySelfDiscipline/index.vue"
+        ),
+      },
+
+      {
+        path: "/nbProceedings",
+        name: "宁波招标投标",
+        redirect: "/proceedings",
+      },
+      {
+        path: "/countryProceedings",
+        name: "中国招标投标",
+        redirect: "/proceedings",
+      },
+      {
+        path: "/proceedings",
+        name: "电子会刊",
+        component: import(
+          /* PoliciesRegulations */ "../views/Proceedings/index.vue"
+        ),
+      },
+
+      {
+        path: "/memberNotice",
+        name: "入会须知",
+        redirect: "/member",
+      },
+      {
+        path: "/memberStandard",
+        name: "入会标准",
+        redirect: "/member",
+      },
+      {
+        path: "/memberFee",
+        name: "会费标准",
+        redirect: "/member",
+      },
+      {
+        path: "/member",
+        name: "会员之家",
+        component: import(/* Member */ "../views/Member/index.vue"),
       },
     ],
   },

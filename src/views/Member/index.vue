@@ -1,12 +1,12 @@
 <template>
-  <div class="association-profile">
+  <div class="member">
     <div class="container">
       <div class="content">
         <div class="left">
           <Sidebar
             :dataSource="menuList"
-            title="关于协会"
-            subTitle="About associations"
+            title="会员之家"
+            subTitle="Member"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>
@@ -22,7 +22,7 @@
                 <el-breadcrumb-item :to="{ path: '/home' }"
                   >首页</el-breadcrumb-item
                 >
-                <el-breadcrumb-item>关于协会</el-breadcrumb-item>
+                <el-breadcrumb-item>会员之家</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
           </div>
@@ -90,8 +90,8 @@ export default defineComponent({
       currentItem: {},
     });
 
-    // 获取关于协会栏目
-    getColumnOneList({ pid: 4 }).then((res: any) => {
+    // 获取会员之家栏目
+    getColumnOneList({ pid: 30 }).then((res: any) => {
       if (res.code == "0") {
         state.menuList = [...res.data];
       } else {
@@ -190,7 +190,7 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
-.association-profile {
+.member {
   width: 100%;
   height: auto;
   background: #fff;

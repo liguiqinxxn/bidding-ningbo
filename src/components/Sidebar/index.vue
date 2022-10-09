@@ -109,7 +109,7 @@ export default defineComponent({
       background-image: url(../../assets/images/triangle_icon.png);
       background-repeat: no-repeat;
       background-size: 14px 14px;
-      background-position: 80px center;
+      background-position: 60px center;
     }
   }
 }
