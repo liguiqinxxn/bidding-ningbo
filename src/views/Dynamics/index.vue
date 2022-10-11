@@ -6,7 +6,7 @@
           <Sidebar
             :dataSource="menuList"
             title="协会动态"
-            subTitle="Association of dynamic"
+            subTitle="Association Of Dynamic"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>

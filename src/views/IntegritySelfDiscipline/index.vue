@@ -6,7 +6,7 @@
           <Sidebar
             :dataSource="menuList"
             title="诚信自律"
-            subTitle="Integrity self-discipline"
+            subTitle="Integrity Self-Discipline"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>

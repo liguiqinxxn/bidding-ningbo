@@ -163,17 +163,22 @@ const routes: Array<RouteRecordRaw> = [
         name: "会员之家",
         component: import(/* Member */ "../views/Member/index.vue"),
       },
+      {
+        path: "/personalCenter",
+        name: "个人中心",
+        component: import(/* Member */ "../views/PersonalCenter/index.vue"),
+      },
     ],
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+  // {P
+  //   path: "/about",
+  //   name: "About",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  // },
 ];
 
 const router = createRouter({

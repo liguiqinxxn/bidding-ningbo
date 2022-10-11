@@ -139,7 +139,10 @@
               <img class="logo" :src="$store.state.userInfo.logo" />
               <p class="info">{{ $store.state.userInfo.info }}</p>
               <p class="info_link">
-                <span>【个人中心】</span>/<span @click="logout">【退出】</span>
+                <span @click="toPersonalCenter">【个人中心】</span>/<span
+                  @click="logout"
+                  >【退出】</span
+                >
               </p>
             </div>
             <el-form :model="form" label-width="0px" v-else>
@@ -223,20 +226,20 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
-import { useStore } from "vuex";
-import _store from "@/store";
+import linkImg from "assets/images/links.png";
+import honor from "assets/images/honor.png";
+import { Iphone, Lock } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import ModelList from "./components/ModelList.vue";
+import store from "@/store";
+import { useRouter } from "vue-router";
 import {
   getLogin,
   getLogout,
   getUserInfo,
   getMemberList,
   getLinksList,
-} from "@/api/index.js";
-import linkImg from "assets/images/links.png";
-import honor from "assets/images/honor.png";
-import { Iphone, Lock } from "@element-plus/icons-vue";
-import { ElMessage, ElMessageBox } from "element-plus";
-import {
+} from "@/api/index.js";import {
   setToken,
   getToken,
   removeToken,
@@ -244,9 +247,6 @@ import {
   getUid,
   removeUid,
 } from "@/utils/cookies.js";
-import ModelList from "./components/ModelList.vue";
-import store from "@/store";
-import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -274,6 +274,7 @@ export default defineComponent({
       { name: "理事单位", level: "2" },
       { name: "会员单位", level: "1" },
     ];
+    const $router = useRouter();
 
     onMounted(() => {
       if (getToken() && getUid()) {
@@ -296,6 +297,9 @@ export default defineComponent({
           userInfo(res.data);
         }
       });
+    };
+    const toPersonalCenter = () => {
+      $router.push({ path: "personalCenter" });
     };
     const logout = () => {
       ElMessageBox.confirm("请确认退出？", {
@@ -330,7 +334,6 @@ export default defineComponent({
     const userInfo = (data: any) => {
       getUserInfo(data).then((res: any) => {
         if (res.code == "0") {
-          const store = useStore() || _store;
           store.commit("setUserInfo", res.data);
         } else {
           removeToken();
@@ -362,7 +365,6 @@ export default defineComponent({
       state.memberList = res;
     });
 
-    const $router = useRouter();
     const toMembers = (item: any) => {
       $router.push({ path: "membershiplist", query: { level: item.level } });
     };
@@ -389,6 +391,7 @@ export default defineComponent({
       Iphone,
       Lock,
       login,
+      toPersonalCenter,
       logout,
       tabClick,
       toMembers,
@@ -417,7 +420,7 @@ export default defineComponent({
     padding: 30px 16px;
     box-sizing: border-box;
 
-    & >.content {
+    & > .content {
       display: flex;
       flex-direction: row;
 

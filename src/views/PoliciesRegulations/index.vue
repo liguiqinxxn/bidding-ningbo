@@ -6,7 +6,7 @@
             <Sidebar
               :dataSource="menuList"
               title="政策法规"
-              subTitle="Policies regulations"
+              subTitle="Policies Regulations"
               :activeIndex="activeIndex"
               @sidebarclick="sidebarclick"
             ></Sidebar>
