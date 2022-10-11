@@ -183,7 +183,7 @@ export default defineComponent({
             padding-bottom: 20px;
             border-bottom: 2px solid #e7e7e7;
             .logo {
-              padding: 40px 0;
+              padding: 30px 0;
               img {
                 width: 68px;
                 height: 68px;
