@@ -3,6 +3,11 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     userInfo: {
+      uid: "",
+      level: "",
+      logo: "",
+      info: "",
+      name: "",
     },
   },
   mutations: {

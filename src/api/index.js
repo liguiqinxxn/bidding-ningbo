@@ -29,6 +29,13 @@ export const getUserInfo = (data) => {
   );
 };
 
+// 获取所有企业个人信息
+export const getUserInfoAll = (data) => {
+  return Interface.post("/Home/User/user_info_all",
+    data
+  );
+};
+
 // 栏目列表
 export const getColumnList = (data) => {
   return Interface.post("/Home/Index/column_list",

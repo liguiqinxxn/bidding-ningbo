@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/association",
         name: "关于协会",
-        component: import(/* association */ "../views/Association/index.vue"),
+        component: () => import(/* association */ "../views/Association/index.vue"),
       },
 
       {
@@ -73,15 +73,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/dynamics",
         name: "协会动态",
-        component: import(/* dynamics */ "../views/Dynamics/index.vue"),
+        component: () => import(/* dynamics */ "../views/Dynamics/index.vue"),
       },
 
       {
         path: "/membershiplist",
         name: "会员名单",
-        component: import(
-          /* membershiplist */ "../views/MemberShipList/index.vue"
-        ),
+        component: () =>
+          import(/* membershiplist */ "../views/MemberShipList/index.vue"),
       },
 
       {
@@ -102,9 +101,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/policiesRegulations",
         name: "政策法规",
-        component: import(
-          /* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"
-        ),
+        component: () =>
+          import(
+            /* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"
+          ),
       },
 
       {
@@ -120,9 +120,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/integritySelfDiscipline",
         name: "诚信自律",
-        component: import(
-          /* IntegritySelfDiscipline */ "../views/IntegritySelfDiscipline/index.vue"
-        ),
+        component: () =>
+          import(
+            /* IntegritySelfDiscipline */ "../views/IntegritySelfDiscipline/index.vue"
+          ),
       },
 
       {
@@ -138,9 +139,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/proceedings",
         name: "电子会刊",
-        component: import(
-          /* PoliciesRegulations */ "../views/Proceedings/index.vue"
-        ),
+        component: () =>
+          import(/* PoliciesRegulations */ "../views/Proceedings/index.vue"),
       },
 
       {
@@ -161,12 +161,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/member",
         name: "会员之家",
-        component: import(/* Member */ "../views/Member/index.vue"),
+        component: () => import(/* Member */ "../views/Member/index.vue"),
       },
       {
         path: "/personalCenter",
         name: "个人中心",
-        component: import(/* Member */ "../views/PersonalCenter/index.vue"),
+        component: () =>
+          import(/* Member */ "../views/PersonalCenter/index.vue"),
       },
     ],
   },

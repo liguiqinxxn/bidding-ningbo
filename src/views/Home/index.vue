@@ -131,13 +131,13 @@
             <div class="box-header">
               <div class="sub-title">会员登录</div>
             </div>
-            <div v-if="$store.state.userInfo.uid" class="user-info">
+            <div v-if="store.state.userInfo.uid" class="user-info">
               <span class="level">{{
-                levels?.filter((r) => r.level == $store.state.userInfo.level)[0]
+                levels?.filter((r) => r.level == store.state.userInfo.level)[0]
                   .name
               }}</span>
-              <img class="logo" :src="$store.state.userInfo.logo" />
-              <p class="info">{{ $store.state.userInfo.info }}</p>
+              <img class="logo" :src="store.state.userInfo.logo" />
+              <p class="info">{{ store.state.userInfo.info }}</p>
               <p class="info_link">
                 <span @click="toPersonalCenter">【个人中心】</span>/<span
                   @click="logout"
@@ -231,15 +231,18 @@ import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import ModelList from "./components/ModelList.vue";
+import _store from "@/store";
 import store from "@/store";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import {
   getLogin,
   getLogout,
-  getUserInfo,
+  getUserInfoAll,
   getMemberList,
   getLinksList,
-} from "@/api/index.js";import {
+} from "@/api/index.js";
+import {
   setToken,
   getToken,
   removeToken,
@@ -252,7 +255,7 @@ export default defineComponent({
   setup() {
     interface props {
       keyword?: string;
-      form?: any;
+      form: { username: any; password: any };
       imgs?: any;
       activeKey?: any;
       memberList?: Array<any>;
@@ -282,9 +285,10 @@ export default defineComponent({
           uid: parseInt(getUid()),
           tokenid: getToken(),
         };
-        userInfo(params);
+        userInfoAll(params);
       }
     });
+
     const login = () => {
       getLogin(state.form).then((res: any) => {
         if (res.code == "0") {
@@ -294,7 +298,7 @@ export default defineComponent({
           });
           setToken(res.data.tokenid);
           setUid(res.data.uid);
-          userInfo(res.data);
+          userInfoAll(res.data);
         }
       });
     };
@@ -331,10 +335,16 @@ export default defineComponent({
           });
         });
     };
-    const userInfo = (data: any) => {
-      getUserInfo(data).then((res: any) => {
+    const userInfoAll = (data: any) => {
+      getUserInfoAll(data).then((res: any) => {
         if (res.code == "0") {
-          store.commit("setUserInfo", res.data);
+          const store = useStore() || _store;
+          const userInfo = {
+            ...res.data.user,
+            ...res.data.user_info,
+            ...res.data.user_mailing_info,
+          };
+          store.commit("setUserInfo", userInfo);
         } else {
           removeToken();
           removeUid();
@@ -390,6 +400,7 @@ export default defineComponent({
       linkImg,
       Iphone,
       Lock,
+      store,
       login,
       toPersonalCenter,
       logout,

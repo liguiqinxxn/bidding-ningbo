@@ -52,7 +52,7 @@
               </div>
             </div>
             <div v-else class="details">
-              <p v-html="currentItem?.content"></p>
+              <p v-html="currentItem.content"></p>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
-      currentItem?: object;
+      currentItem: { content: any };
     }
     let state: props = reactive({
       type: "0",
@@ -87,7 +87,7 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
-      currentItem: {},
+      currentItem: { content: "" },
     });
 
     // 获取协会动态栏目

@@ -31,17 +31,58 @@
               </el-breadcrumb>
             </div>
           </div>
+          <div class="content">
+            <el-form :inline="true" :model="userInfo" class="demo-form-inline">
+              <el-form-item label="法定代表人">
+                <el-input
+                  v-model="userInfo.legal_person_name"
+                  placeholder="法定代表人"
+                />
+              </el-form-item>
+              <el-form-item label="电话">
+                <el-input
+                  v-model="userInfo.legal_person_tel"
+                  placeholder="电话"
+                />
+              </el-form-item>
+              <el-form-item label="主管负责人">
+                <el-input
+                  v-model="userInfo.person_charge_name"
+                  placeholder="主管负责人"
+                />
+              </el-form-item>
+              <el-form-item label="电话">
+                <el-input
+                  v-model="userInfo.person_charge_tel"
+                  placeholder="电话"
+                />
+              </el-form-item>
+              <el-form-item label="联系人">
+                <el-input
+                  v-model="userInfo.contacts_name"
+                  placeholder="联系人"
+                />
+              </el-form-item>
+              <el-form-item label="电话">
+                <el-input v-model="userInfo.contacts_tel" placeholder="电话" />
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="save">保存</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent, reactive, toRefs, computed, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import store from "@/store";
-import { getLogout, getUserInfo } from "@/api/index.js";
+import { getLogout, getUserInfoAll } from "@/api/index.js";
 import { getToken, removeToken, getUid, removeUid } from "@/utils/cookies.js";
+import router from "@/router";
 export default defineComponent({
   setup() {
     interface props {
@@ -49,13 +90,25 @@ export default defineComponent({
         name: string;
         logo: string;
         level: string;
+        legal_person_name: string;
+        legal_person_tel: string;
+        person_charge_name: string;
+        person_charge_tel: string;
+        contacts_name: string;
+        contacts_tel: string;
       };
     }
     let state: props = reactive({
       userInfo: {
-        name: "宁波市****有限公司",
-        logo: "http://nbtba.org.cn/uploadfiles/9ui13uan9en%E5%85%AC%E5%85%83cai_13_2_20132603092626%E6%9D%AD%E5%B7%9E%E6%B9%BE%E5%A4%A7%E6%A1%A5%EF%BC%88%E8%B7%A8%E8%B6%8A%E5%A4%A9%E5%A0%91%EF%BC%89.jpg",
-        level: "1",
+        name: "",
+        logo: "",
+        level: "",
+        legal_person_name: "",
+        legal_person_tel: "",
+        person_charge_name: "",
+        person_charge_tel: "",
+        contacts_name: "",
+        contacts_tel: "",
       },
     });
     const levels = [
@@ -73,6 +126,33 @@ export default defineComponent({
       });
       return name;
     });
+
+    onMounted(() => {
+      if (getToken() && getUid()) {
+        const params = {
+          uid: parseInt(getUid()),
+          tokenid: getToken(),
+        };
+        userInfoAll(params);
+      }
+    });
+
+    const userInfoAll = (params: any) => {
+      getUserInfoAll(params).then((res: any) => {
+        if (res.code == "0") {
+          const userInfo = {
+            ...res.data.user,
+            ...res.data.user_info,
+            ...res.data.user_mailing_info,
+          };
+          store.commit("setUserInfo", userInfo);
+          state.userInfo = userInfo;
+        } else {
+          removeToken();
+          removeUid();
+        }
+      });
+    };
 
     const logout = () => {
       ElMessageBox.confirm("请确认退出？", {
@@ -94,6 +174,8 @@ export default defineComponent({
               removeToken();
               removeUid();
               store.commit("setUserInfo", {});
+              store.commit("setUserInfoAll", {});
+              router.push({ path: "home" });
             }
           });
         })
@@ -105,7 +187,11 @@ export default defineComponent({
         });
     };
 
-    return { ...toRefs(state), levelName, logout };
+    const save = () => {
+      debugger;
+    };
+
+    return { ...toRefs(state), levelName, logout, save };
   },
 });
 </script>
