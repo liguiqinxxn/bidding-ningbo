@@ -32,57 +32,249 @@
             </div>
           </div>
           <div class="content">
-            <el-form :inline="true" :model="userInfo" class="demo-form-inline">
-              <el-form-item label="法定代表人">
-                <el-input
-                  v-model="userInfo.legal_person_name"
-                  placeholder="法定代表人"
-                />
-              </el-form-item>
-              <el-form-item label="电话">
-                <el-input
-                  v-model="userInfo.legal_person_tel"
-                  placeholder="电话"
-                />
-              </el-form-item>
-              <el-form-item label="主管负责人">
-                <el-input
-                  v-model="userInfo.person_charge_name"
-                  placeholder="主管负责人"
-                />
-              </el-form-item>
-              <el-form-item label="电话">
-                <el-input
-                  v-model="userInfo.person_charge_tel"
-                  placeholder="电话"
-                />
-              </el-form-item>
-              <el-form-item label="联系人">
-                <el-input
-                  v-model="userInfo.contacts_name"
-                  placeholder="联系人"
-                />
-              </el-form-item>
-              <el-form-item label="电话">
-                <el-input v-model="userInfo.contacts_tel" placeholder="电话" />
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="save">保存</el-button>
-              </el-form-item>
+            <el-form
+              ref="ruleFormRef"
+              :inline="true"
+              :model="userInfo"
+              :rules="rules"
+              class="form"
+              label-position="right"
+              label-width="180px"
+            >
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="法定代表人" prop="legal_person_name">
+                    <el-input
+                      v-model="userInfo.legal_person_name"
+                      placeholder="法定代表人"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" " label-width="50px">
+                    <el-input
+                      v-model="userInfo.legal_person_tel"
+                      placeholder="电话"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="主管负责人" prop="person_charge_name">
+                    <el-input
+                      v-model="userInfo.person_charge_name"
+                      placeholder="主管负责人"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" " label-width="50px">
+                    <el-input
+                      v-model="userInfo.person_charge_tel"
+                      placeholder="电话"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="联系人" prop="contacts_name">
+                    <el-input
+                      v-model="userInfo.contacts_name"
+                      placeholder="联系人"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" " label-width="50px">
+                    <el-input
+                      v-model="userInfo.contacts_tel"
+                      placeholder="电话"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" ">
+                    <el-input v-model="userInfo.website" placeholder="网址" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" " label-width="50px">
+                    <el-input v-model="userInfo.email" placeholder="邮箱" />
+                  </el-form-item>
+                </el-col>
+                <!-- <el-col :span="12">
+                  <el-form-item label="注册所在区域">
+                    <el-select v-model="userInfo.region" placeholder="请选择">
+                      <el-option label="Zone one" value="shanghai" />
+                      <el-option label="Zone two" value="beijing" />
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label=" " label-width="50px">
+                    <el-select v-model="userInfo.region" placeholder="请选择">
+                      <el-option label="Zone one" value="shanghai" />
+                      <el-option label="Zone two" value="beijing" />
+                    </el-select>
+                  </el-form-item>
+                </el-col> -->
+                <el-col :span="24">
+                  <h4 class="billing-info">开票信息：</h4>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="统一社会信用代码" prop="duty_paragraph">
+                    <el-input
+                      v-model="userInfo.duty_paragraph"
+                      placeholder="统一社会信用代码"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="开户银行" prop="bank">
+                    <el-input v-model="userInfo.bank" placeholder="名称" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="开户银行账号" prop="bank_number">
+                    <el-input
+                      v-model="userInfo.bank_number"
+                      placeholder="账号"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="联系电话" prop="landline">
+                    <el-input v-model="userInfo.landline" placeholder="电话" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="注册地址" prop="area_info">
+                    <el-input
+                      v-model="userInfo.area_info"
+                      placeholder="请输入营业执照上营业上的注册地址"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="邮寄地址" prop="mailing_area">
+                    <el-input
+                      v-model="userInfo.mailing_area"
+                      placeholder="请输入省市区详细收件地址"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="公司logo" prop="logo">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="/Home/Upload/upload"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload"
+                    >
+                      <img
+                        v-if="userInfo.logo"
+                        :src="userInfo.logo"
+                        class="avatar"
+                      />
+                      <el-icon v-else class="avatar-uploader-icon"
+                        ><Plus
+                      /></el-icon>
+                    </el-upload>
+                    <p class="tips">请上传图片，每张最大500k</p>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="团队风采" prop="team_style_arr">
+                    <el-upload
+                      :file-list="team_style_arr"
+                      list-type="picture-card"
+                      action="/Home/Upload/upload"
+                      :on-preview="handlePictureCardPreview"
+                      :on-success="handleTeamSuccess"
+                      :on-remove="handleRemove"
+                      :before-upload="beforeTeamUpload"
+                    >
+                      <el-icon><Plus /></el-icon>
+                    </el-upload>
+                    <p class="tips">请上传图片，每张最大500k</p>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item
+                    label="荣誉资质"
+                    prop="honors_qualifications_arr"
+                  >
+                    <el-upload
+                      :file-list="honors_qualifications_arr"
+                      list-type="picture-card"
+                      action="/Home/Upload/upload"
+                      :on-preview="handlePictureCardPreview"
+                      :on-success="handleHonorsSuccess"
+                      :on-remove="handleRemove"
+                      :before-upload="beforeHonorsUpload"
+                    >
+                      <el-icon><Plus /></el-icon>
+                    </el-upload>
+                    <p class="tips">请上传图片，每张最大500k</p>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="企业简介" prop="info">
+                    <el-input
+                      v-model="userInfo.info"
+                      type="textarea"
+                      :rows="6"
+                      maxlength="1000"
+                      show-word-limit
+                      placeholder="请输入企业简介"
+                    />
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label=" ">
+                    <el-button type="primary" @click="save(ruleFormRef)"
+                      >保存</el-button
+                    >
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-form>
           </div>
         </div>
       </div>
+      <el-dialog v-model="dialogVisible">
+        <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      </el-dialog>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, onMounted } from "vue";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+  onMounted,
+  ref,
+} from "vue";
+import {
+  getLogout,
+  getUserInfoAll,
+  saveUserInfoAll,
+  upload,
+} from "@/api/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import store from "@/store";
-import { getLogout, getUserInfoAll } from "@/api/index.js";
 import { getToken, removeToken, getUid, removeUid } from "@/utils/cookies.js";
 import router from "@/router";
+import type {
+  FormInstance,
+  FormRules,
+  UploadProps,
+  UploadUserFile,
+} from "element-plus";
+import { Plus } from "@element-plus/icons-vue";
+
 export default defineComponent({
   setup() {
     interface props {
@@ -96,6 +288,17 @@ export default defineComponent({
         person_charge_tel: string;
         contacts_name: string;
         contacts_tel: string;
+        website: string;
+        email: string;
+        duty_paragraph: string;
+        bank: string;
+        bank_number: string;
+        landline: string;
+        area_info: string;
+        mailing_area: string;
+        team_style: string;
+        honors_qualifications: string;
+        info: string;
       };
     }
     let state: props = reactive({
@@ -109,13 +312,98 @@ export default defineComponent({
         person_charge_tel: "",
         contacts_name: "",
         contacts_tel: "",
+        website: "",
+        email: "",
+        duty_paragraph: "",
+        bank: "",
+        bank_number: "",
+        landline: "",
+        area_info: "",
+        mailing_area: "",
+        team_style: "",
+        honors_qualifications: "",
+        info: "",
       },
     });
+    const ruleFormRef = ref<FormInstance>();
     const levels = [
       { name: "常务理事", level: "3" },
       { name: "理事单位", level: "2" },
       { name: "会员单位", level: "1" },
     ];
+
+    const rules = reactive<FormRules>({
+      legal_person_name: [
+        {
+          required: true,
+          message: "请输入法定代表人",
+          trigger: "blur",
+        },
+      ],
+      person_charge_name: [
+        {
+          required: true,
+          message: "请输入主管负责人",
+          trigger: "blur",
+        },
+      ],
+      contacts_name: [
+        {
+          required: true,
+          message: "请输入联系人",
+          trigger: "blur",
+        },
+      ],
+      duty_paragraph: [
+        {
+          required: true,
+          message: "请输入统一社会信用代码",
+          trigger: "blur",
+        },
+      ],
+      bank: [
+        {
+          required: true,
+          message: "请输入开户银行",
+          trigger: "blur",
+        },
+      ],
+      bank_number: [
+        {
+          required: true,
+          message: "请输入开户银行账号",
+          trigger: "blur",
+        },
+      ],
+      landline: [
+        {
+          required: true,
+          message: "请输入联系电话",
+          trigger: "blur",
+        },
+      ],
+      area_info: [
+        {
+          required: true,
+          message: "请输入注册地址",
+          trigger: "blur",
+        },
+      ],
+      mailing_area: [
+        {
+          required: true,
+          message: "请输入邮寄地址",
+          trigger: "blur",
+        },
+      ],
+      info: [
+        {
+          required: true,
+          message: "请输入企业简介",
+          trigger: "blur",
+        },
+      ],
+    });
 
     const levelName = computed(() => {
       let name = "";
@@ -126,6 +414,27 @@ export default defineComponent({
       });
       return name;
     });
+    const team_style_arr = ref<UploadUserFile[]>([]);
+    const honors_qualifications_arr = ref<UploadUserFile[]>([]);
+
+    // const team_style_arr = computed(() => {
+    //   return state.userInfo?.team_style?.split(";").map((r, index) => {
+    //     return {
+    //       name: "name" + index,
+    //       url: r,
+    //     };
+    //   });
+    // });
+    // const honors_qualifications_arr = computed(() => {
+    //   return state.userInfo?.honors_qualifications
+    //     ?.split(";")
+    //     .map((r, index) => {
+    //       return {
+    //         name: "name" + index,
+    //         url: r,
+    //       };
+    //     });
+    // });
 
     onMounted(() => {
       if (getToken() && getUid()) {
@@ -134,6 +443,8 @@ export default defineComponent({
           tokenid: getToken(),
         };
         userInfoAll(params);
+      } else {
+        router.push({ path: "home" });
       }
     });
 
@@ -145,6 +456,22 @@ export default defineComponent({
             ...res.data.user_info,
             ...res.data.user_mailing_info,
           };
+          team_style_arr.value = userInfo.team_style
+            ?.split(";")
+            .map((r: any, index: Number) => {
+              return {
+                name: "name" + index,
+                url: r,
+              };
+            });
+          honors_qualifications_arr.value = userInfo.honors_qualifications
+            ?.split(";")
+            .map((r: any, index: Number) => {
+              return {
+                name: "name" + index,
+                url: r,
+              };
+            });
           store.commit("setUserInfo", userInfo);
           state.userInfo = userInfo;
         } else {
@@ -187,12 +514,152 @@ export default defineComponent({
         });
     };
 
-    const save = () => {
-      debugger;
+    const handleAvatarSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
+      if (res.code == 0) {
+        state.userInfo.logo = res.data.file.path_url;
+      }
     };
 
-    return { ...toRefs(state), levelName, logout, save };
+    const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
+      // if (rawFile.type !== "image/jpeg") {
+      //   ElMessage.error("Avatar picture must be JPG format!");
+      //   return false;
+      // } else
+      if (rawFile.size / 1024 > 500) {
+        ElMessage.error("每张图片不超过500k!");
+        return false;
+      }
+      return true;
+    };
+
+    const handleTeamSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
+      debugger;
+      if (res.code == 0) {
+        team_style_arr.value.push({
+          name: res.data.file.name,
+          url: res.data.file.path_url,
+        });
+      }
+    };
+
+    const handleHonorsSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
+      if (res.code == 0) {
+        honors_qualifications_arr.value.push({
+          name: res.data.file.name,
+          url: res.data.file.path_url,
+        });
+      }
+    };
+
+    // // 重写上传程序
+    // const uploadTeamFile = async (params: any) => {
+    //   var { file } = params;
+    //   var formData = new FormData();
+    //   formData.append("file", file);
+    //   let res = await upload(formData);
+    //   if (res.code == 0) {
+    //     team_style_arr.value.push({
+    //       name: res.data.file.name,
+    //       url: res.data.file.path_url,
+    //     });
+    //   }
+    // };
+
+    const beforeTeamUpload: UploadProps["beforeUpload"] = (rawFile) => {
+      if (rawFile.size / 1024 > 500) {
+        ElMessage.error("每张图片不超过500k!");
+        return false;
+      }
+      return true;
+    };
+
+    // const uploadHonorsFile = async (params: any) => {
+    //   var { file } = params;
+    //   var formData = new FormData();
+    //   formData.append("file", file);
+    //   let res = await upload(formData);
+    //   if (res.code == 0) {
+    //     honors_qualifications_arr.value.push({
+    //       name: res.data.file.name,
+    //       url: res.data.file.path_url,
+    //     });
+    //   }
+    // };
+
+    const beforeHonorsUpload: UploadProps["beforeUpload"] = (rawFile) => {
+      debugger;
+      if (rawFile.size / 1024 > 500) {
+        debugger;
+        ElMessage.error("每张图片不超过500k!");
+        return false;
+      }
+      return true;
+    };
+
+    const dialogImageUrl = ref("");
+    const dialogVisible = ref(false);
+    const handleRemove: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
+      console.log(uploadFile, uploadFiles);
+    };
+
+    const handlePictureCardPreview: UploadProps["onPreview"] = (uploadFile) => {
+      dialogImageUrl.value = uploadFile.url!;
+      dialogVisible.value = true;
+    };
+
+    const save = async (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      await formEl.validate((valid, fields) => {
+        if (valid) {
+          const params = {
+            uid: getUid(),
+            tokenid: getToken(),
+            ...state.userInfo,
+            team_style: team_style_arr.value.map((r) => r.url).join(";"),
+            honors_qualifications: honors_qualifications_arr.value
+              .map((r) => r.url)
+              .join(";"),
+          };
+          saveUserInfoAll(params).then((res: any) => {
+            if (res.code == 0) {
+              ElMessage({
+                message: "保存成功！",
+                type: "success",
+              });
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+            }
+          });
+        }
+      });
+    };
+
+    return {
+      ...toRefs(state),
+      Plus,
+      levelName,
+      rules,
+      ruleFormRef,
+      dialogImageUrl,
+      dialogVisible,
+      team_style_arr,
+      honors_qualifications_arr,
+      logout,
+      handleAvatarSuccess,
+      beforeAvatarUpload,
+      handleTeamSuccess,
+      // uploadTeamFile,
+      beforeTeamUpload,
+      handleHonorsSuccess,
+      // uploadHonorsFile,
+      beforeHonorsUpload,
+      handleRemove,
+      handlePictureCardPreview,
+      save,
+    };
   },
+  components: { Plus },
 });
 </script>
 <style lang="less" scoped>
@@ -331,8 +798,70 @@ export default defineComponent({
           left: 6px;
           bottom: -3px;
         }
+
+        .content {
+          .form {
+            padding: 20px;
+            .el-form-item {
+              box-sizing: border-box;
+              padding: 18px 0;
+              display: flex;
+              flex-direction: row;
+            }
+            /deep/ .el-form-item__content {
+              min-width: 300px;
+              width: 100%;
+            }
+            .el-select {
+              width: 100%;
+            }
+          }
+          .billing-info {
+            width: 180px;
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+          }
+
+          .avatar-uploader .avatar {
+            width: 148px;
+            height: 148px;
+            display: block;
+          }
+          .tips {
+            position: absolute;
+            bottom: -32px;
+          }
+        }
       }
     }
   }
+}
+</style>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 148px;
+  height: 148px;
+  text-align: center;
+}
+.el-dialog__body img{
+  width: 100%;
+  height: auto;
 }
 </style>

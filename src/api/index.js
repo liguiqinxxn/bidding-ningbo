@@ -36,6 +36,15 @@ export const getUserInfoAll = (data) => {
   );
 };
 
+// 保存所有企业个人信息
+export const saveUserInfoAll = (data) => {
+  return Interface.post("/Home/User/user_info_save_all",
+    data
+  );
+};
+
+
+
 // 栏目列表
 export const getColumnList = (data) => {
   return Interface.post("/Home/Index/column_list",
@@ -74,6 +83,13 @@ export const getMemberList = (data) => {
 // 友情链接
 export const getLinksList = (data) => {
   return Interface.post("/Home/Index/links_list",
+    data
+  );
+};
+
+// 上传文件
+export const upload = (data) => {
+  return Interface.post("/Home/Upload/upload",
     data
   );
 };
