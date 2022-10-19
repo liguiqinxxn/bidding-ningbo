@@ -414,27 +414,9 @@ export default defineComponent({
       });
       return name;
     });
+
     const team_style_arr = ref<UploadUserFile[]>([]);
     const honors_qualifications_arr = ref<UploadUserFile[]>([]);
-
-    // const team_style_arr = computed(() => {
-    //   return state.userInfo?.team_style?.split(";").map((r, index) => {
-    //     return {
-    //       name: "name" + index,
-    //       url: r,
-    //     };
-    //   });
-    // });
-    // const honors_qualifications_arr = computed(() => {
-    //   return state.userInfo?.honors_qualifications
-    //     ?.split(";")
-    //     .map((r, index) => {
-    //       return {
-    //         name: "name" + index,
-    //         url: r,
-    //       };
-    //     });
-    // });
 
     onMounted(() => {
       if (getToken() && getUid()) {
@@ -448,6 +430,7 @@ export default defineComponent({
       }
     });
 
+    // 获取个人信息
     const userInfoAll = (params: any) => {
       getUserInfoAll(params).then((res: any) => {
         if (res.code == "0") {
@@ -481,6 +464,7 @@ export default defineComponent({
       });
     };
 
+    // 退出
     const logout = () => {
       ElMessageBox.confirm("请确认退出？", {
         confirmButtonText: "确认",
@@ -514,6 +498,7 @@ export default defineComponent({
         });
     };
 
+    // 头像logo上传成功
     const handleAvatarSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
       if (res.code == 0) {
         state.userInfo.logo = res.data.file.path_url;
@@ -532,8 +517,8 @@ export default defineComponent({
       return true;
     };
 
+    // 团队风采上传成功
     const handleTeamSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
-      debugger;
       if (res.code == 0) {
         team_style_arr.value.push({
           name: res.data.file.name,
@@ -541,29 +526,6 @@ export default defineComponent({
         });
       }
     };
-
-    const handleHonorsSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
-      if (res.code == 0) {
-        honors_qualifications_arr.value.push({
-          name: res.data.file.name,
-          url: res.data.file.path_url,
-        });
-      }
-    };
-
-    // // 重写上传程序
-    // const uploadTeamFile = async (params: any) => {
-    //   var { file } = params;
-    //   var formData = new FormData();
-    //   formData.append("file", file);
-    //   let res = await upload(formData);
-    //   if (res.code == 0) {
-    //     team_style_arr.value.push({
-    //       name: res.data.file.name,
-    //       url: res.data.file.path_url,
-    //     });
-    //   }
-    // };
 
     const beforeTeamUpload: UploadProps["beforeUpload"] = (rawFile) => {
       if (rawFile.size / 1024 > 500) {
@@ -573,40 +535,38 @@ export default defineComponent({
       return true;
     };
 
-    // const uploadHonorsFile = async (params: any) => {
-    //   var { file } = params;
-    //   var formData = new FormData();
-    //   formData.append("file", file);
-    //   let res = await upload(formData);
-    //   if (res.code == 0) {
-    //     honors_qualifications_arr.value.push({
-    //       name: res.data.file.name,
-    //       url: res.data.file.path_url,
-    //     });
-    //   }
-    // };
+    // 荣誉资质上传成功
+    const handleHonorsSuccess: UploadProps["onSuccess"] = (res, uploadFile) => {
+      if (res.code == 0) {
+        honors_qualifications_arr.value.push({
+          name: res.data.file.name,
+          url: res.data.file.path_url,
+        });
+      }
+    };
 
     const beforeHonorsUpload: UploadProps["beforeUpload"] = (rawFile) => {
-      debugger;
       if (rawFile.size / 1024 > 500) {
-        debugger;
         ElMessage.error("每张图片不超过500k!");
         return false;
       }
       return true;
     };
 
-    const dialogImageUrl = ref("");
-    const dialogVisible = ref(false);
+    // 删除图片
     const handleRemove: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
       console.log(uploadFile, uploadFiles);
     };
 
+    // 图片预览
+    const dialogImageUrl = ref("");
+    const dialogVisible = ref(false);
     const handlePictureCardPreview: UploadProps["onPreview"] = (uploadFile) => {
       dialogImageUrl.value = uploadFile.url!;
       dialogVisible.value = true;
     };
 
+    // 保存
     const save = async (formEl: FormInstance | undefined) => {
       if (!formEl) return;
       await formEl.validate((valid, fields) => {
@@ -649,10 +609,8 @@ export default defineComponent({
       handleAvatarSuccess,
       beforeAvatarUpload,
       handleTeamSuccess,
-      // uploadTeamFile,
       beforeTeamUpload,
       handleHonorsSuccess,
-      // uploadHonorsFile,
       beforeHonorsUpload,
       handleRemove,
       handlePictureCardPreview,
@@ -860,7 +818,7 @@ export default defineComponent({
   height: 148px;
   text-align: center;
 }
-.el-dialog__body img{
+.el-dialog__body img {
   width: 100%;
   height: auto;
 }
