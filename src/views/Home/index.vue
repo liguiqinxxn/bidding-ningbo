@@ -517,6 +517,7 @@ export default defineComponent({
               font-weight: 400;
               color: #5c5c5c;
               line-height: 42px;
+              cursor: pointer;
             }
           }
           .imgs {
@@ -769,6 +770,7 @@ export default defineComponent({
         font-weight: 400;
         color: #5c5c5c;
         line-height: 42px;
+        cursor: pointer;
       }
     }
 
