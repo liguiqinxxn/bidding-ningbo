@@ -57,7 +57,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/association",
         name: "关于协会",
-        component: () => import(/* association */ "../views/Association/index.vue"),
+        component: () =>
+          import(/* association */ "../views/Association/index.vue"),
       },
 
       {
@@ -81,6 +82,12 @@ const routes: Array<RouteRecordRaw> = [
         name: "会员名单",
         component: () =>
           import(/* membershiplist */ "../views/MemberShipList/index.vue"),
+      },
+      {
+        path: "/memberdynamics",
+        name: "会员动态",
+        component: () =>
+          import(/* memberdynamics */ "../views/MemberDynamics/index.vue"),
       },
 
       {
