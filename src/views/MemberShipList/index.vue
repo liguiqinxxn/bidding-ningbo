@@ -304,7 +304,7 @@ export default defineComponent({
                 padding: 0 20px;
               }
               .logo {
-                width: 60px;
+                width: auto;
                 height: 30px;
                 border: 1px solid #b6b5b5;
                 margin-right: 20px;
