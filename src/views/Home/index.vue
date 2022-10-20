@@ -137,7 +137,7 @@
                   .name
               }}</span>
               <img class="logo" :src="store.state.userInfo.logo" />
-              <p class="info">{{ store.state.userInfo.info }}</p>
+              <p class="name">{{ store.state.userInfo.name }}</p>
               <p class="info_link">
                 <span @click="toPersonalCenter">【个人中心】</span>/<span
                   @click="logout"
@@ -530,6 +530,7 @@ export default defineComponent({
             .img {
               width: 52px;
               height: 52px;
+              margin: 0 20px;
             }
           }
 
@@ -599,7 +600,7 @@ export default defineComponent({
             height: 90px;
           }
 
-          .info {
+          .name {
             font-family: Microsoft YaHei;
             font-size: 16px;
             line-height: 30px;

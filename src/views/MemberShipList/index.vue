@@ -384,11 +384,13 @@ export default defineComponent({
               width: 100%;
               display: flex;
               flex-direction: row;
-              justify-content: space-between;
+              justify-content: flex-start;
               padding: 20px;
               box-sizing: border-box;
+              flex-wrap: wrap;
               img {
                 width: 30%;
+                margin: 2% 1.5%;
               }
             }
           }
