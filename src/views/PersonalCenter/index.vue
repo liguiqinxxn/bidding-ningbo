@@ -34,10 +34,10 @@
           <div class="content">
             <el-form
               ref="ruleFormRef"
+              class="form"
               :inline="true"
               :model="userInfo"
               :rules="rules"
-              class="form"
               label-position="right"
               label-width="180px"
             >
@@ -762,7 +762,7 @@ export default defineComponent({
             padding: 20px;
             .el-form-item {
               box-sizing: border-box;
-              padding: 18px 0;
+              padding-top: 18px;
               display: flex;
               flex-direction: row;
             }

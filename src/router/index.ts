@@ -113,7 +113,22 @@ const routes: Array<RouteRecordRaw> = [
             /* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"
           ),
       },
-
+      {
+        path: "/legalInterpretation",
+        name: "法律解读",
+        redirect: "/learningWorld",
+      },
+      {
+        path: "/knowledgeQA",
+        name: "知识问答",
+        redirect: "/learningWorld",
+      },
+      {
+        path: "/learningWorld",
+        name: "学习天地",
+        component: () =>
+          import(/* learningWorld */ "../views/LearningWorld/index.vue"),
+      },
       {
         path: "/disciplineConvention",
         name: "自律公约",

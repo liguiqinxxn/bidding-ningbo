@@ -8,14 +8,51 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Menu from "./components/Menu.vue";
 import Carousel from "./components/Carousel.vue";
+import { getUserInfoAll } from "@/api/index.js";
+import {
+  setToken,
+  getToken,
+  removeToken,
+  setUid,
+  getUid,
+  removeUid,
+} from "@/utils/cookies.js";
+import _store from "@/store";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
+    onMounted(() => {
+      if (getToken() && getUid()) {
+        const params = {
+          uid: parseInt(getUid()),
+          tokenid: getToken(),
+        };
+        userInfoAll(params);
+      }
+    });
+    // 获取企业信息
+    const userInfoAll = (data: any) => {
+      getUserInfoAll(data).then((res: any) => {
+        if (res.code == "0") {
+          const store = useStore() || _store;
+          const userInfo = {
+            ...res.data.user,
+            ...res.data.user_info,
+            ...res.data.user_mailing_info,
+          };
+          store.commit("setUserInfo", userInfo);
+        } else {
+          removeToken();
+          removeUid();
+        }
+      });
+    };
     return {};
   },
   components: { Header, Footer, Menu, Carousel },

@@ -43,8 +43,6 @@ export const saveUserInfoAll = (data) => {
   );
 };
 
-
-
 // 栏目列表
 export const getColumnList = (data) => {
   return Interface.post("/Home/Index/column_list",
@@ -87,9 +85,30 @@ export const getLinksList = (data) => {
   );
 };
 
+// 学习天地列表
+export const getStudyList = (data) => {
+  return Interface.post("/Home/Index/study_list",
+    data
+  );
+};
+
+// 学习天地详情
+export const getStudyInfo = (data) => {
+  return Interface.post("/Home/Index/study_info",
+    data
+  );
+};
+
 // 上传文件
 export const upload = (data) => {
   return Interface.post("/Home/Upload/upload",
+    data
+  );
+};
+
+// 学习天地提问保存
+export const saveStudy = (data) => {
+  return Interface.post("/Home/User/study_save",
     data
   );
 };
