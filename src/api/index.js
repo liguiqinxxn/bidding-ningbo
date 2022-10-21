@@ -71,6 +71,13 @@ export const getModelInfo = (data) => {
   );
 };
 
+// 获取轮播图 type 1 大图 2 小图
+export const getBannerList = (data) => {
+  return Interface.post("/Home/Index/banner_list",
+    data
+  );
+};
+
 // 会员名单
 export const getMemberList = (data) => {
   return Interface.post("/Home/Index/member_list",

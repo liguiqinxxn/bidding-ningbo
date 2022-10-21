@@ -9,8 +9,8 @@
               <div class="box">
                 <el-carousel height="400px" arrow="never">
                   <el-carousel-item v-for="item in imgs" :key="item">
-                    <img class="carousel-img" :src="item" alt="image" />
-                    <p class="title">协会荣获示范单位称号</p>
+                    <img class="carousel-img" :src="item.logo" alt="image" />
+                    <p class="title">{{ item.title }}</p>
                   </el-carousel-item>
                 </el-carousel>
               </div>
@@ -227,7 +227,6 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import linkImg from "assets/images/links.png";
-import honor from "assets/images/honor.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import ModelList from "./components/ModelList.vue";
@@ -236,6 +235,7 @@ import store from "@/store";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import {
+  getBannerList,
   getLogin,
   getLogout,
   getUserInfoAll,
@@ -256,7 +256,7 @@ export default defineComponent({
     interface props {
       keyword?: string;
       form: { username: any; password: any };
-      imgs?: any;
+      imgs?: Array<any>;
       activeKey?: any;
       memberList?: Array<any>;
       linkList?: Array<any>;
@@ -267,7 +267,7 @@ export default defineComponent({
         username: "",
         password: "",
       },
-      imgs: [honor, honor, honor],
+      imgs: [],
       activeKey: 1,
       memberList: [],
       linkList: [],
@@ -288,6 +288,15 @@ export default defineComponent({
         userInfoAll(params);
       }
     });
+
+    const bannerList = (type: any) => {
+      getBannerList({ type }).then((res: any) => {
+        if (res.code == "0") {
+          state.imgs = res.data;
+        }
+      });
+    };
+    bannerList(2); // 荣誉证书
 
     const login = () => {
       getLogin(state.form).then((res: any) => {

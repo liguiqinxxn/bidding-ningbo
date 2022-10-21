@@ -191,7 +191,13 @@ export default defineComponent({
       limit?: any;
       isShow?: boolean;
       isAskQuestionsShow?: boolean;
-      currentItem?: object;
+      currentItem: {
+        title: string;
+        user_name: string;
+        time: string;
+        content: any;
+        reply_info: any;
+      };
       form: { title: string; content: any };
     }
     let state: props = reactive({
@@ -204,7 +210,13 @@ export default defineComponent({
       limit: 10,
       isShow: false,
       isAskQuestionsShow: false,
-      currentItem: {},
+      currentItem: {
+        title: "",
+        user_name: "",
+        time: "",
+        content: "",
+        reply_info: "",
+      },
       form: { title: "", content: "" },
     });
 
