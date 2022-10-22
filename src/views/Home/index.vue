@@ -242,12 +242,14 @@
           <div class="box-header">
             <div class="sub-title">友情链接</div>
           </div>
-          <div class="linklist">
-            <img
-              v-for="item in linkList"
-              :src="item.logo"
-              @click="toLink(item.url)"
-            />
+          <div class="link-box">
+            <div class="linklist">
+              <img
+                v-for="item in linkList"
+                :src="item.logo"
+                @click="toLink(item.url)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -870,15 +872,19 @@ export default defineComponent({
 
     .links {
       position: relative;
-      .linklist {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        img {
-          width: 100%;
-          height: 80px;
-          margin-top: 20px;
-          padding: 10px;
+      .link-box {
+        overflow-x: auto;
+        width: 100%;
+        position: relative;
+        .linklist {
+          white-space: nowrap;
+          img {
+            width: 33%;
+            height: 80px;
+            margin-top: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+          }
         }
       }
     }
