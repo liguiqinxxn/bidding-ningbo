@@ -33,7 +33,9 @@
                       >工作动态</span
                     >
                   </div>
-                  <span class="more">更多&gt;&gt;</span>
+                  <span class="more" @click="toDynamic(activeKey)"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
 
                 <!-- 活动动态 -->
@@ -48,7 +50,7 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">政策法规</div>
-                  <span class="more">更多&gt;&gt;</span>
+                  <span class="more" @click="toRegulations">更多&gt;&gt;</span>
                 </div>
                 <ModelList type="11"></ModelList>
               </div>
@@ -59,7 +61,9 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">诚信自律</div>
-                  <span class="more">更多&gt;&gt;</span>
+                  <span class="more" @click="toDisciplineConvention"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
                 <ModelList type="18"></ModelList>
               </div>
@@ -79,12 +83,8 @@
                   >
                     <span class="title">{{ levels[i].name }}</span>
                     <div class="imgs">
-                      <img
-                        class="img"
-                        v-for="r in item"
-                        :src="r.logo"
-                        @click="toLink(r.url)"
-                      />
+                      <img class="img" v-for="r in item" :src="r.logo" />
+                      <!-- @click="toLink(r.url)" -->
                     </div>
                     <span class="more">更多&gt;&gt;</span>
                   </div>
@@ -117,7 +117,9 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">会员动态</div>
-                  <span class="more">更多&gt;&gt;</span>
+                  <span class="more" @click="toMemberdynamics"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
                 <!-- <div class="model-title">&nbsp;</div> -->
                 <ModelList type="1"></ModelList>
@@ -129,7 +131,7 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">知识问答</div>
-                  <span class="more">更多&gt;&gt;</span>
+                  <span class="more" @click="toKnowledgeQA">更多&gt;&gt;</span>
                 </div>
                 <!-- <div class="model-title">&nbsp;</div> -->
                 <ModelList type="14"></ModelList>
@@ -218,7 +220,7 @@
               <span class="title">投诉监督</span>
               <span>Complaint supervision</span>
             </div> -->
-            
+
             <div class="info-item contact-us">
               <span class="title">联系我们</span> <span>Contact us</span>
               <div class="contact">
@@ -413,13 +415,53 @@ export default defineComponent({
       state.memberList = res;
     });
 
+    // 跳转协会动态
+    const toDynamic = (activeKey: any) => {
+      if (activeKey == 1) {
+        // 活动动态
+        $router.push({ path: "activityDynamics", query: { type: "8" } });
+      } else {
+        // 工作动态
+        $router.push({ path: "workDynamics", query: { type: "9" } });
+      }
+    };
+
+    // 跳转政策法规
+    const toRegulations = (item: any) => {
+      $router.push({ path: "provincialRegulations", query: { type: "11" } });
+    };
+
+    // 跳转诚信自律
+    const toDisciplineConvention = (item: any) => {
+      $router.push({
+        path: "disciplineConvention",
+        query: { type: "18" },
+      });
+    };
+
+    // 跳转会员目录
     const toMembers = (item: any) => {
       $router.push({ path: "membershiplist", query: { level: item.level } });
     };
 
+    // 跳转会员动态
+    const toMemberdynamics = (item: any) => {
+      $router.push({ path: "memberdynamics", query: { type: "1" } });
+    };
+
+    // 跳转知识问答
+    const toKnowledgeQA = (item: any) => {
+      $router.push({
+        path: "knowledgeQA",
+        query: { type: "14" },
+      });
+    };
+
+    // 跳转友情链接
     const toLink = (url: any) => {
       window.open(url);
     };
+
     const linkListFn = (params: any) => {
       getLinksList(params).then((res: any) => {
         if (res.code == "0") {
@@ -443,7 +485,12 @@ export default defineComponent({
       toPersonalCenter,
       logout,
       tabClick,
+      toDynamic,
+      toRegulations,
+      toDisciplineConvention,
       toMembers,
+      toMemberdynamics,
+      toKnowledgeQA,
       toLink,
     };
   },
