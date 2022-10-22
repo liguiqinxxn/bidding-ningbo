@@ -65,43 +65,11 @@
               </div>
             </el-col>
 
-            <!-- 电子会刊 -->
-            <el-col :span="16">
-              <div class="box">
-                <div class="box-header">
-                  <div class="sub-title">电子会刊</div>
-                  <span class="more">更多&gt;&gt;</span>
-                </div>
-                <el-row>
-                  <el-col :span="12">
-                    <div class="model-title">中国招标投标</div>
-                    <ModelList type="17"></ModelList>
-                  </el-col>
-                  <el-col :span="12">
-                    <div class="model-title">宁波招标投标</div>
-                    <ModelList type="16"></ModelList>
-                  </el-col>
-                </el-row>
-              </div>
-            </el-col>
-
-            <!-- 知识问答 -->
-            <el-col :span="8">
-              <div class="box">
-                <div class="box-header">
-                  <div class="sub-title">知识问答</div>
-                  <span class="more">更多&gt;&gt;</span>
-                </div>
-                <div class="model-title">&nbsp;</div>
-                <ModelList type="14"></ModelList>
-              </div>
-            </el-col>
-
-            <!-- 会员风采 -->
+            <!-- 会员名录 -->
             <el-col :span="24">
               <div class="box">
                 <div class="box-header">
-                  <div class="sub-title">会员风采</div>
+                  <div class="sub-title">会员名录</div>
                 </div>
                 <div class="members">
                   <div
@@ -121,6 +89,50 @@
                     <span class="more">更多&gt;&gt;</span>
                   </div>
                 </div>
+              </div>
+            </el-col>
+
+            <!-- 电子会刊 -->
+            <!-- <el-col :span="16">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">电子会刊</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <el-row>
+                  <el-col :span="12">
+                    <div class="model-title">中国招标投标</div>
+                    <ModelList type="17"></ModelList>
+                  </el-col>
+                  <el-col :span="12">
+                    <div class="model-title">宁波招标投标</div>
+                    <ModelList type="16"></ModelList>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-col> -->
+
+            <!-- 会员动态 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">会员动态</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <!-- <div class="model-title">&nbsp;</div> -->
+                <ModelList type="1"></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 知识问答 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">知识问答</div>
+                  <span class="more">更多&gt;&gt;</span>
+                </div>
+                <!-- <div class="model-title">&nbsp;</div> -->
+                <ModelList type="14"></ModelList>
               </div>
             </el-col>
           </el-row>
@@ -167,8 +179,24 @@
               </el-form-item>
             </el-form>
           </div>
+          <div class="box">
+            <div class="box-header">
+              <div class="sub-title">通知公告</div>
+              <span class="more">更多&gt;&gt;</span>
+            </div>
+            <ModelList type="24"></ModelList>
+          </div>
           <div class="info">
-            <div class="info-item membership-application">
+            <div class="info-item consultant-expert">
+              <span class="title">咨询专家</span>
+              <span>Consultant Expert</span>
+            </div>
+            <div class="info-item training-videos">
+              <span class="title">培训视频列表</span>
+              <span>List of Training Videos</span>
+            </div>
+
+            <!-- <div class="info-item membership-application">
               <span class="title">入会申请</span>
               <span>Membership Application</span>
             </div>
@@ -189,7 +217,8 @@
             <div class="info-item complaint-supervision">
               <span class="title">投诉监督</span>
               <span>Complaint supervision</span>
-            </div>
+            </div> -->
+            
             <div class="info-item contact-us">
               <span class="title">联系我们</span> <span>Contact us</span>
               <div class="contact">
@@ -704,6 +733,14 @@ export default defineComponent({
               line-height: 40px;
               text-shadow: 0px 2px 1px rgba(0, 0, 108, 0.75);
             }
+          }
+
+          .consultant-expert {
+            background-image: url("../../assets/images/bg01.png");
+          }
+
+          .training-videos {
+            background-image: url("../../assets/images/bg02.png");
           }
 
           .membership-application {
