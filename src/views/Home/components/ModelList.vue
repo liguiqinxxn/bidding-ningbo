@@ -10,9 +10,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, watch } from "vue";
 import { getModelList, getStudyList } from "@/api/index.js";
 import { toRefs } from "@vueuse/shared";
+import store from "@/store";
 
 export default defineComponent({
   props: {
@@ -28,30 +29,42 @@ export default defineComponent({
       loading: true,
     });
 
-    let params: any = {
-      type: props.type,
-      page: 1,
-      limit: 10,
+    const init = () => {
+      let params: any = {
+        type: props.type,
+        keyword: store.state.keyword,
+        page: 1,
+        limit: 10,
+      };
+      if (props.type == "14") {
+        // 知识问答
+        params.type = "2";
+        params.role = "0";
+        getStudyList(params).then((res: any) => {
+          state.loading = false;
+          if (res.code == "0") {
+            state.dataSource = res.data || [];
+          }
+        });
+      } else {
+        getModelList(params).then((res: any) => {
+          state.loading = false;
+          if (res.code == "0") {
+            state.dataSource = res.data || [];
+          }
+        });
+      }
     };
 
-    if (props.type == "14") {
-      // 知识问答
-      params.type = "2";
-      params.role = "0";
-      getStudyList(params).then((res: any) => {
-        state.loading = false;
-        if (res.code == "0") {
-          state.dataSource = res.data || [];
+    watch(
+      () => store.state.keyword,
+      (newKeyword, oldKeyword) => {
+        if (newKeyword !== oldKeyword) {
+          init();
         }
-      });
-    } else {
-      getModelList(params).then((res: any) => {
-        state.loading = false;
-        if (res.code == "0") {
-          state.dataSource = res.data || [];
-        }
-      });
-    }
+      },
+      { immediate: true }
+    );
 
     return { ...toRefs(state) };
   },

@@ -9,10 +9,14 @@ export default createStore({
       info: "",
       name: "",
     },
+    keyword: "",
   },
   mutations: {
     setUserInfo(state, value) {
       state.userInfo = value;
+    },
+    setKeyword(state, value) {
+      state.keyword = value;
     },
   },
   actions: {},

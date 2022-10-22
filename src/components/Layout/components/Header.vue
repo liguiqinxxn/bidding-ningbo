@@ -7,11 +7,12 @@
       </div>
       <div class="search">
         <el-input
-          v-model="keywords"
+          v-model="keyword"
           placeholder="请输入你要搜索的内容"
           :prefix-icon="Search"
+          @change="search"
         >
-          <template #append>搜索</template>
+          <template #append><span @click="search">搜索</span></template>
         </el-input>
       </div>
     </div>
@@ -22,11 +23,15 @@ import { defineComponent, reactive, toRefs } from "vue";
 import logo from "assets/images/logo.png";
 import logoTitle from "assets/images/logo_title.png";
 import { Search } from "@element-plus/icons-vue";
+import store from "@/store";
 
 export default defineComponent({
   setup() {
-    let state = reactive({ keywords: "" });
-    return { ...toRefs(state), logo, logoTitle, Search };
+    let state = reactive({ keyword: "" });
+    const search = () => {
+      store.commit("setKeyword", state.keyword);
+    };
+    return { ...toRefs(state), logo, logoTitle, Search, search };
   },
 });
 </script>
