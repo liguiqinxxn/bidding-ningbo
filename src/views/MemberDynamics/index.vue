@@ -29,6 +29,17 @@
           </div>
           <div class="content">
             <div v-if="!isShow">
+              <div class="tools">
+                <div class="right">
+                  <span class="label">关键字：</span>
+                  <el-input
+                    class="input"
+                    v-model="keyword"
+                    placeholder="请输入关键字"
+                  />
+                  <el-button type="primary" @click="init">搜索</el-button>
+                </div>
+              </div>
               <div class="list">
                 <div
                   v-if="list?.length"
@@ -74,6 +85,7 @@ export default defineComponent({
       type?: any;
       menuList?: Array<any>;
       list?: Array<any>;
+      keyword?: string;
       total?: any;
       page?: any;
       limit?: any;
@@ -84,6 +96,7 @@ export default defineComponent({
       type: "0",
       menuList: [],
       list: [],
+      keyword: "",
       total: 0,
       page: 1,
       limit: 10,
@@ -94,9 +107,9 @@ export default defineComponent({
     // 获取会员风采栏目
     getColumnOneList({ pid: 1 }).then((res: any) => {
       if (res.code == "0") {
-          // state.menuList = [...res.data];
-          state.menuList = [res.data[1]];
-    } else {
+        // state.menuList = [...res.data];
+        state.menuList = [res.data[1]];
+      } else {
         ElMessage.error(res.msg);
       }
     });
@@ -131,12 +144,13 @@ export default defineComponent({
       state.type = item.type;
       $router.push({ query: ($route.query, { type: item.type }) });
       state.isShow = false;
+      state.keyword = "";
     };
 
     const modelListFn = async (type: any) => {
       const params = {
         type,
-        keyword: "",
+        keyword: state.keyword,
         page: state.page,
         limit: state.limit,
       };
@@ -186,6 +200,7 @@ export default defineComponent({
       triangleIcon,
       activeIndex,
       sidebarclick,
+      init,
       currentChange,
       openDetails,
     };
@@ -264,6 +279,30 @@ export default defineComponent({
           display: flex;
           flex-direction: column;
           padding: 30px 0;
+
+          .tools {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 14px 20px;
+            .el-button.el-button--primary {
+              background-color: #19478b;
+            }
+            .right {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              .label {
+                width: 110px;
+                font-size: 16px;
+                font-weight: 600;
+              }
+              .input {
+                margin-right: 14px;
+              }
+            }
+          }
+
           .list {
             width: 100%;
             min-height: 300px;

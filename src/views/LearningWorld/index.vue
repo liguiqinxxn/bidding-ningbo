@@ -541,8 +541,7 @@ export default defineComponent({
             .el-button.el-button--primary {
               background-color: #19478b;
             }
-            .left {
-            }
+
             .right {
               display: flex;
               flex-direction: row;
