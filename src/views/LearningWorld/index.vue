@@ -97,12 +97,14 @@
             </div>
             <!-- 列表 -->
             <div v-else>
-              <div class="tools">
+              <div class="tools" v-if="role == '0'">
                 <div class="left" v-if="store.state.userInfo.uid">
                   <el-button type="primary" @click="showAskQuestions"
                     >提问</el-button
                   >
-                  <el-button type="primary">我的提问</el-button>
+                  <el-button type="primary" @click="myQuestions"
+                    >我的提问</el-button
+                  >
                 </div>
                 <div class="right">
                   <span class="label">关键字：</span>
@@ -171,13 +173,8 @@ import store from "@/store";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { IToolbarConfig } from "@wangeditor/editor";
-import { getToken, removeToken, getUid, removeUid } from "@/utils/cookies.js";
-import type {
-  FormInstance,
-  FormRules,
-  UploadProps,
-  UploadUserFile,
-} from "element-plus";
+import { getToken, getUid } from "@/utils/cookies.js";
+import type { FormInstance, FormRules } from "element-plus";
 
 export default defineComponent({
   setup() {
@@ -191,6 +188,7 @@ export default defineComponent({
       limit?: any;
       isShow?: boolean;
       isAskQuestionsShow?: boolean;
+      role?: any;
       currentItem: {
         title: string;
         user_name: string;
@@ -210,6 +208,7 @@ export default defineComponent({
       limit: 10,
       isShow: false,
       isAskQuestionsShow: false,
+      role: "0", // 0 所有问题 1 自己的问题
       currentItem: {
         title: "",
         user_name: "",
@@ -277,15 +276,21 @@ export default defineComponent({
       state.isShow = false;
       state.isAskQuestionsShow = false;
       state.keyword = "";
+      state.role = "0";
     };
 
     const studyListFn = async (type: any) => {
-      const params = {
+      let params: any = {
         type: type == "13" ? "1" : "2", // 1 法律解答 2 知识问答
         keyword: state.keyword,
         page: state.page,
         limit: state.limit,
+        role: state.role,
       };
+      if (state.role == "1") {
+        params.uid = getUid();
+        params.tokenid = getToken();
+      }
       return await getStudyList(params).then((res: any) => {
         if (res.code == "0") {
           return res;
@@ -332,6 +337,12 @@ export default defineComponent({
     const showAskQuestions = () => {
       state.isShow = false;
       state.isAskQuestionsShow = true;
+    };
+
+    // 我的提问
+    const myQuestions = () => {
+      state.role = "1";
+      init();
     };
 
     // 编辑器实例，必须用 shallowRef
@@ -448,6 +459,7 @@ export default defineComponent({
       currentChange,
       openDetails,
       showAskQuestions,
+      myQuestions,
       editorRef,
       valueHtml,
       mode: "default", // 或 'simple'
