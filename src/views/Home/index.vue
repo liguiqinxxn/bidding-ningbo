@@ -184,7 +184,7 @@
           <div class="box">
             <div class="box-header">
               <div class="sub-title">通知公告</div>
-              <span class="more">更多&gt;&gt;</span>
+              <span class="more" @click="toAnnouncements">更多&gt;&gt;</span>
             </div>
             <ModelList type="24"></ModelList>
           </div>
@@ -459,6 +459,14 @@ export default defineComponent({
       });
     };
 
+    // 跳转通知公告
+    const toAnnouncements = (item: any) => {
+      $router.push({
+        path: "announcements",
+        query: { type: "24", heavy: "0" },
+      });
+    };
+
     // 跳转咨询专家
     const toConsultant = (item: any) => {
       $router.push({
@@ -508,6 +516,7 @@ export default defineComponent({
       toMembers,
       toMemberdynamics,
       toKnowledgeQA,
+      toAnnouncements,
       toConsultant,
       toTrainingVideos,
       toLink,
