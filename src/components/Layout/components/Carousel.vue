@@ -1,7 +1,7 @@
 <template>
   <div class="carousel">
     <el-carousel height="490px" :interval="5000">
-      <el-carousel-item v-for="item in imgs" :key="item">
+      <el-carousel-item v-for="item in imgs" :key="item.id">
         <img class="carousel-img" :src="item.logo" alt="image" />
       </el-carousel-item>
     </el-carousel>
@@ -11,13 +11,17 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
 import { getBannerList } from "@/api/index.js";
+import Img1 from "assets/images/img01.png";
+import Img2 from "assets/images/img01.png";
 
 export default defineComponent({
   setup() {
     interface props {
       imgs?: Array<any>;
     }
-    let state: props = reactive({ imgs: [] });
+    let state: props = reactive({
+      imgs: [],
+    });
     const bannerList = (type: any) => {
       getBannerList({ type }).then((res: any) => {
         if (res.code == "0") {
