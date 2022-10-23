@@ -50,7 +50,7 @@
                   <img class="triangle" :src="triangleIcon" />
 
                   <span class="title">{{ item.title }}</span>
-                  <span class="time">{{ item.time }}</span>
+                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
                 </div>
                 <el-empty v-else :image-size="150" description="暂无数据" />
               </div>

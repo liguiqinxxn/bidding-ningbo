@@ -3,7 +3,7 @@
     <div v-if="dataSource?.length" class="model-list">
       <div class="model-item" v-for="item in dataSource">
         <span class="title">{{ item.title }}</span>
-        <span class="time">{{ item.time.split(" ")[0] }}</span>
+        <span class="time">{{ item?.time?.split(" ")[0].split(" ")[0] }}</span>
       </div>
     </div>
     <el-empty v-else :image-size="150" description="暂无数据" />
@@ -92,10 +92,11 @@ export default defineComponent({
       white-space: nowrap;
     }
     .time {
-      width: 60px;
+      width: 80px;
       font-size: 12px;
       line-height: 28px;
       color: #bdbdbd;
+      text-align: right;
     }
   }
 }

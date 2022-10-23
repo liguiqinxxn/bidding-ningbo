@@ -189,11 +189,11 @@
             <ModelList type="24"></ModelList>
           </div>
           <div class="info">
-            <div class="info-item consultant-expert">
+            <div class="info-item consultant-expert" @click="toConsultant">
               <span class="title">咨询专家</span>
               <span>Consultant Expert</span>
             </div>
-            <div class="info-item training-videos">
+            <div class="info-item training-videos" @click="toTrainingVideos">
               <span class="title">培训视频列表</span>
               <span>List of Training Videos</span>
             </div>
@@ -459,6 +459,21 @@ export default defineComponent({
       });
     };
 
+    // 跳转咨询专家
+    const toConsultant = (item: any) => {
+      $router.push({
+        path: "managementMeasures",
+        query: { type: "15" },
+      });
+    };
+
+    // 跳转培训视频
+    const toTrainingVideos = (item: any) => {
+      $router.push({
+        path: "trainingVideos",
+        query: { type: "2" },
+      });
+    };
     // 跳转友情链接
     const toLink = (url: any) => {
       window.open(url);
@@ -493,6 +508,8 @@ export default defineComponent({
       toMembers,
       toMemberdynamics,
       toKnowledgeQA,
+      toConsultant,
+      toTrainingVideos,
       toLink,
     };
   },
@@ -767,6 +784,7 @@ export default defineComponent({
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
 
             span {
               font-size: 15px;

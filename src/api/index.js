@@ -119,3 +119,11 @@ export const saveStudy = (data) => {
     data
   );
 };
+
+
+// 视频列表
+export const getVideoList = (data) => {
+  return Interface.post("/Home/Index/video_list",
+    data
+  );
+};

@@ -1,12 +1,12 @@
 <template>
-  <div class="integrity-self-discipline">
+  <div class="consultant-expert">
     <div class="container">
       <div class="content">
         <div class="left">
           <Sidebar
             :dataSource="menuList"
-            title="诚信自律"
-            subTitle="Integrity Self-Discipline"
+            title="咨询专家"
+            subTitle="Consultant Expert"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>
@@ -22,7 +22,7 @@
                 <el-breadcrumb-item :to="{ path: '/home' }"
                   >首页</el-breadcrumb-item
                 >
-                <el-breadcrumb-item>诚信自律</el-breadcrumb-item>
+                <el-breadcrumb-item>咨询专家</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
           </div>
@@ -103,8 +103,8 @@ export default defineComponent({
       currentItem: {},
     });
 
-    // 获取诚信自律栏目
-    getColumnOneList({ pid: 27 }).then((res: any) => {
+    // 获取咨询专家栏目
+    getColumnOneList({ pid: 21 }).then((res: any) => {
       if (res.code == "0") {
         state.menuList = [...res.data];
       } else {
@@ -205,7 +205,7 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
-.integrity-self-discipline {
+.consultant-expert {
   width: 100%;
   height: auto;
   background: #fff;
@@ -298,6 +298,7 @@ export default defineComponent({
               }
             }
           }
+
           .list {
             width: 100%;
             min-height: 300px;

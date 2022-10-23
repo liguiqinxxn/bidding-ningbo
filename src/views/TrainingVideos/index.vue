@@ -1,12 +1,12 @@
 <template>
-  <div class="integrity-self-discipline">
+  <div class="training-videos">
     <div class="container">
       <div class="content">
         <div class="left">
           <Sidebar
             :dataSource="menuList"
-            title="诚信自律"
-            subTitle="Integrity Self-Discipline"
+            title="培训视频"
+            subTitle="Consultant Expert"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>
@@ -22,7 +22,7 @@
                 <el-breadcrumb-item :to="{ path: '/home' }"
                   >首页</el-breadcrumb-item
                 >
-                <el-breadcrumb-item>诚信自律</el-breadcrumb-item>
+                <el-breadcrumb-item>培训视频</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
           </div>
@@ -39,17 +39,22 @@
                   <el-button type="primary" @click="init">搜索</el-button>
                 </div>
               </div>
-              <div class="list">
+              <div class="video-list">
                 <div
                   v-if="list?.length"
                   class="item"
                   v-for="item in list"
                   @click="openDetails(item)"
                 >
-                  <img class="triangle" :src="triangleIcon" />
-
-                  <span class="title">{{ item.title }}</span>
-                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
+                  <img class="img" :src="item.img" />
+                  <el-tooltip
+                    class="box-item"
+                    effect="light"
+                    :content="item.title"
+                    placement="bottom"
+                  >
+                    <p class="title">{{ item.title }}</p>
+                  </el-tooltip>
                 </div>
                 <el-empty v-else :image-size="150" description="暂无数据" />
               </div>
@@ -62,8 +67,11 @@
                 />
               </div>
             </div>
-            <div v-else class="details">
-              <p v-html="currentItem?.content"></p>
+            <div v-else class="video-details">
+              <h3 class="title">{{ currentItem?.title }}</h3>
+              <video class="video" controls>
+                <source :src="currentItem?.url" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
@@ -73,7 +81,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed, watch } from "vue";
-import { getColumnOneList, getModelList, getModelInfo } from "@/api/index.js";
+import { getVideoList, getModelInfo } from "@/api/index.js";
 import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
@@ -92,8 +100,17 @@ export default defineComponent({
       currentItem?: object;
     }
     let state: props = reactive({
-      type: "0",
-      menuList: [],
+      type: "1",
+      menuList: [
+        {
+          name: "操作视频",
+          type: "1",
+        },
+        {
+          name: "培训视频",
+          type: "2",
+        },
+      ],
       list: [],
       keyword: "",
       total: 0,
@@ -101,15 +118,6 @@ export default defineComponent({
       limit: 10,
       isShow: false,
       currentItem: {},
-    });
-
-    // 获取诚信自律栏目
-    getColumnOneList({ pid: 27 }).then((res: any) => {
-      if (res.code == "0") {
-        state.menuList = [...res.data];
-      } else {
-        ElMessage.error(res.msg);
-      }
     });
 
     const activeIndex = computed(() => {
@@ -143,14 +151,14 @@ export default defineComponent({
       state.keyword = "";
     };
 
-    const modelListFn = async (type: any) => {
+    const videoListFn = async (type: any) => {
       const params = {
         type,
         keyword: state.keyword,
         page: state.page,
         limit: state.limit,
       };
-      return await getModelList(params).then((res: any) => {
+      return await getVideoList(params).then((res: any) => {
         if (res.code == "0") {
           return res;
         }
@@ -158,7 +166,7 @@ export default defineComponent({
     };
 
     const init = () => {
-      modelListFn(state.type).then((res) => {
+      videoListFn(state.type).then((res) => {
         state.list = res.data || [];
         state.total = Number(res.count);
       });
@@ -180,15 +188,9 @@ export default defineComponent({
       }
     );
 
-    const ModelInfo = (id: any) => {
-      getModelInfo({ id }).then((res: any) => {
-        state.currentItem = res.data;
-      });
-    };
-
     const openDetails = (item: any) => {
       state.isShow = true;
-      ModelInfo(item.id);
+      state.currentItem = item;
     };
 
     return {
@@ -205,7 +207,7 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
-.integrity-self-discipline {
+.training-videos {
   width: 100%;
   height: auto;
   background: #fff;
@@ -298,47 +300,57 @@ export default defineComponent({
               }
             }
           }
-          .list {
-            width: 100%;
-            min-height: 300px;
-            .item {
+        }
+        .video-list {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          .item {
+            width: 25%;
+            padding: 15px;
+            box-sizing: border-box;
+            cursor: pointer;
+            .img {
               width: 100%;
-              height: 48px;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              border-bottom: 1px solid #f4f4f4;
-              cursor: pointer;
-              .triangle {
-                width: 14px;
-                height: 14px;
-                padding: 0 20px;
-              }
-              .title {
-                width: calc(100% - 194px);
-                font-size: 14px;
-                line-height: 40px;
-                color: #000000;
-              }
-              .time {
-                width: 180px;
-                font-size: 14px;
-                line-height: 40px;
-                color: #000000;
-                text-align: right;
-              }
             }
-            .el-empty {
-              margin-top: 60px;
+            .title {
+              height: 52px;
+              font-size: 15px;
+              font-family: SimSun;
+              font-weight: 400;
+              color: #656565;
+              line-height: 26px;
+              margin: 15px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
             }
           }
-          .pagination {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        }
+
+        .pagination {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+        .video-details {
+          padding: 0 30px;
+          .title {
+            width: 100%;
+            font-size: 25px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #000000;
+            line-height: 40px;
+            padding-bottom: 20px;
           }
-          .details {
-            padding: 20px;
+          .video {
+            // width: 80%;
+            width: auto;
+            height: auto;
+            max-height: 500px;
           }
         }
       }

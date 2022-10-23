@@ -189,11 +189,33 @@ const routes: Array<RouteRecordRaw> = [
         path: "/personalCenter",
         name: "个人中心",
         component: () =>
-          import(/* Member */ "../views/PersonalCenter/index.vue"),
+          import(/* personalCenter */ "../views/PersonalCenter/index.vue"),
+      },
+      {
+        path: "/managementMeasures",
+        name: "管理办法",
+        redirect: "/consultantExpert",
+      },
+      {
+        path: "/expertsList",
+        name: "专家名单",
+        redirect: "/consultantExpert",
+      },
+      {
+        path: "/consultantExpert",
+        name: "咨询专家",
+        component: () =>
+          import(/* consultantExpert */ "../views/ConsultantExpert/index.vue"),
+      },
+      {
+        path: "/trainingVideos",
+        name: "培训视频",
+        component: () =>
+          import(/* trainingVideos */ "../views/TrainingVideos/index.vue"),
       },
     ],
   },
-  // {P
+  // {
   //   path: "/about",
   //   name: "About",
   //   // route level code-splitting
