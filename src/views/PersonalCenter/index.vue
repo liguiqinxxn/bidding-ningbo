@@ -14,6 +14,13 @@
               </div>
               <div class="name">{{ userInfo.name }}</div>
               <div class="level">{{ levelName }}</div>
+              <div class="invoiceInfo" @click="InvoiceInfo">【发票信息】</div>
+              <div
+                class="changePassword"
+                @click="openPassword(rulePasswordFormRef)"
+              >
+                【修改密码】
+              </div>
               <div class="logout" @click="logout">【退出】</div>
             </div>
           </div>
@@ -242,8 +249,59 @@
           </div>
         </div>
       </div>
+      <!-- 图片查看弹窗 -->
       <el-dialog v-model="dialogVisible">
         <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      </el-dialog>
+
+      <!-- 修改密码 -->
+      <el-dialog
+        v-model="dialogPasswordVisible"
+        title="修改密码"
+        width="30%"
+        top="30vh"
+        :close-on-click-modal="false"
+        :before-close="handlePasswordClose"
+      >
+        <el-form
+          :model="form"
+          label-width="80px"
+          ref="rulePasswordFormRef"
+          :rules="passwordRules"
+        >
+          <el-form-item label="旧密码" prop="password">
+            <el-input
+              type="password"
+              v-model="form.password"
+              autocomplete="off"
+            />
+          </el-form-item>
+          <el-form-item label="新密码" prop="new_password">
+            <el-input
+              type="password"
+              v-model="form.new_password"
+              autocomplete="off"
+            />
+          </el-form-item>
+          <el-form-item label="确认密码" prop="confirm_password">
+            <el-input
+              type="password"
+              v-model="form.confirm_password"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="handlePasswordClose">取消</el-button>
+            <el-button
+              type="primary"
+              @click="savePassword(rulePasswordFormRef)"
+            >
+              保存
+            </el-button>
+          </span>
+        </template>
       </el-dialog>
     </div>
   </div>
@@ -258,10 +316,11 @@ import {
   ref,
 } from "vue";
 import {
+  userInvoiceInfo,
+  updateUserPassword,
   getLogout,
   getUserInfoAll,
   saveUserInfoAll,
-  upload,
 } from "@/api/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import store from "@/store";
@@ -272,6 +331,7 @@ import type {
   FormRules,
   UploadProps,
   UploadUserFile,
+  Action,
 } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 
@@ -300,6 +360,11 @@ export default defineComponent({
         honors_qualifications: string;
         info: string;
       };
+      form: {
+        password: string;
+        new_password: string;
+        confirm_password: string;
+      };
     }
     let state: props = reactive({
       userInfo: {
@@ -323,6 +388,11 @@ export default defineComponent({
         team_style: "",
         honors_qualifications: "",
         info: "",
+      },
+      form: {
+        password: "",
+        new_password: "",
+        confirm_password: "",
       },
     });
     const ruleFormRef = ref<FormInstance>();
@@ -464,6 +534,106 @@ export default defineComponent({
       });
     };
 
+    // 发票信息
+    const open = (content: string) => {
+      ElMessageBox.alert(content, "发票信息", {
+        confirmButtonText: "确认",
+      });
+    };
+    const InvoiceInfo = () => {
+      const params = {
+        uid: getUid(),
+        tokenid: getToken(),
+      };
+      userInvoiceInfo(params).then((res: any) => {
+        if (res.code == "0") {
+          open(res.data.invoice_info);
+        }
+      });
+    };
+
+    // 修改密码
+    const rulePasswordFormRef = ref<FormInstance>();
+    const dialogPasswordVisible = ref(false);
+    const validatePass = (rule: any, value: any, callback: any) => {
+      if (value === "") {
+        callback(new Error("请输入新密码"));
+      } else {
+        if (state.form.confirm_password !== "") {
+          if (!rulePasswordFormRef.value) return;
+          rulePasswordFormRef.value.validateField(
+            "confirm_password",
+            () => null
+          );
+        }
+        callback();
+      }
+    };
+    const validatePass2 = (rule: any, value: any, callback: any) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== state.form.new_password) {
+        callback(new Error("密码不一致！"));
+      } else {
+        callback();
+      }
+    };
+    const passwordRules = reactive<FormRules>({
+      password: [
+        {
+          required: true,
+          message: "请输入旧密码",
+          trigger: "blur",
+        },
+      ],
+      new_password: [
+        {
+          required: true,
+          message: "请输入新密码",
+          trigger: "blur",
+        },
+        { validator: validatePass, trigger: "blur" },
+      ],
+      confirm_password: [
+        {
+          required: true,
+          message: "请再次输入新密码",
+          trigger: "blur",
+        },
+        { validator: validatePass2, trigger: "blur" },
+      ],
+    });
+    const openPassword = (formEl: FormInstance | undefined) => {
+      dialogPasswordVisible.value = true;
+      if (!formEl) return;
+      formEl?.resetFields();
+    };
+    const handlePasswordClose = () => {
+      dialogPasswordVisible.value = false;
+    };
+    const savePassword = async (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      await formEl.validate((valid, fields) => {
+        if (valid) {
+          const params = {
+            uid: getUid(),
+            tokenid: getToken(),
+            password: state.form.password,
+            new_password: state.form.new_password,
+          };
+          updateUserPassword(params).then((res: any) => {
+            if (res.code == "0") {
+              ElMessage({
+                message: "修改成功！",
+                type: "success",
+              });
+              handlePasswordClose();
+            }
+          });
+        }
+      });
+    };
+
     // 退出
     const logout = () => {
       ElMessageBox.confirm("请确认退出？", {
@@ -581,7 +751,7 @@ export default defineComponent({
               .join(";"),
           };
           saveUserInfoAll(params).then((res: any) => {
-            if (res.code == 0) {
+            if (res.code == "0") {
               ElMessage({
                 message: "保存成功！",
                 type: "success",
@@ -605,6 +775,13 @@ export default defineComponent({
       dialogVisible,
       team_style_arr,
       honors_qualifications_arr,
+      InvoiceInfo,
+      rulePasswordFormRef,
+      dialogPasswordVisible,
+      passwordRules,
+      openPassword,
+      handlePasswordClose,
+      savePassword,
       logout,
       handleAvatarSuccess,
       beforeAvatarUpload,
@@ -703,12 +880,20 @@ export default defineComponent({
             }
             .name,
             .level,
+            .invoiceInfo,
+            .changePassword,
             .logout {
               font-size: 16px;
               font-family: SimSun;
               font-weight: 400;
               color: #000000;
               line-height: 52px;
+            }
+
+            .invoiceInfo,
+            .changePassword,
+            .logout {
+              cursor: pointer;
             }
           }
         }

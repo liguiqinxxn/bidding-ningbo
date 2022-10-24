@@ -14,6 +14,19 @@ export const getLogout = (data) => {
   );
 };
 
+// 企业个人中心企业发票下载
+export const userInvoiceInfo = (data) => {
+  return Interface.post("/Home/User/user_invoice_info",
+    data
+  );
+};
+
+// 修改密码
+export const updateUserPassword = (data) => {
+  return Interface.post("/Home/User/update_user_password",
+    data
+  );
+};
 
 // 获取个人中心详情
 export const getUser = (data) => {
