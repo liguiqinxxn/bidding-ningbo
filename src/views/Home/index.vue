@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Floating></Floating>
     <div class="container">
       <div class="content">
         <div class="left">
@@ -215,6 +216,7 @@
             <ModelList
               type="24"
               path="announcements"
+              heavy="0"
               @toDetails="toDetails"
             ></ModelList>
           </div>
@@ -313,6 +315,7 @@ import {
   getUid,
   removeUid,
 } from "@/utils/cookies.js";
+import Floating from "./components/Floating.vue";
 
 export default defineComponent({
   setup() {
@@ -569,7 +572,7 @@ export default defineComponent({
       toLink,
     };
   },
-  components: { ModelList },
+  components: { ModelList, Floating },
 });
 </script>
 

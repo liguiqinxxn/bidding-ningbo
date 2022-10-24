@@ -23,6 +23,8 @@ export default defineComponent({
   props: {
     type: String,
     path: String,
+    heavy: String,
+    limit: Number,
   },
   setup(props, { emit }) {
     interface props {
@@ -39,7 +41,7 @@ export default defineComponent({
         type: props.type,
         keyword: store.state.keyword,
         page: 1,
-        limit: 10,
+        limit: props.limit ? props.limit : 10,
       };
       if (props.type == "14") {
         // 知识问答
@@ -52,6 +54,9 @@ export default defineComponent({
           }
         });
       } else {
+        if (props.heavy) {
+          params.heavy = props.heavy;
+        }
         getModelList(params).then((res: any) => {
           state.loading = false;
           if (res.code == "0") {
@@ -81,7 +86,7 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 .model-list {
-  min-height: 200px;
+  min-height: 50px;
   max-height: 400px;
   overflow-y: auto;
   .model-item {
