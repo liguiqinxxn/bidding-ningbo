@@ -39,9 +39,19 @@
                 </div>
 
                 <!-- 活动动态 -->
-                <ModelList v-if="activeKey == 1" type="8"></ModelList>
+                <ModelList
+                  v-if="activeKey == 1"
+                  type="8"
+                  path="activityDynamics"
+                  @toDetails="toDetails"
+                ></ModelList>
                 <!-- 工作动态 -->
-                <ModelList v-else type="9"></ModelList>
+                <ModelList
+                  v-else
+                  type="9"
+                  path="workDynamics"
+                  @toDetails="toDetails"
+                ></ModelList>
               </div>
             </el-col>
 
@@ -52,7 +62,11 @@
                   <div class="sub-title">政策法规</div>
                   <span class="more" @click="toRegulations">更多&gt;&gt;</span>
                 </div>
-                <ModelList type="11"></ModelList>
+                <ModelList
+                  type="11"
+                  path="provincialRegulations"
+                  @toDetails="toDetails"
+                ></ModelList>
               </div>
             </el-col>
 
@@ -65,7 +79,11 @@
                     >更多&gt;&gt;</span
                   >
                 </div>
-                <ModelList type="18"></ModelList>
+                <ModelList
+                  type="18"
+                  path="disciplineConvention"
+                  @toDetails="toDetails"
+                ></ModelList>
               </div>
             </el-col>
 
@@ -102,11 +120,11 @@
                 <el-row>
                   <el-col :span="12">
                     <div class="model-title">中国招标投标</div>
-                    <ModelList type="17"></ModelList>
+                    <ModelList type="17" path="" @toDetails="toDetails"></ModelList>
                   </el-col>
                   <el-col :span="12">
                     <div class="model-title">宁波招标投标</div>
-                    <ModelList type="16"></ModelList>
+                    <ModelList type="16" path="" @toDetails="toDetails"></ModelList>
                   </el-col>
                 </el-row>
               </div>
@@ -122,7 +140,11 @@
                   >
                 </div>
                 <!-- <div class="model-title">&nbsp;</div> -->
-                <ModelList type="1"></ModelList>
+                <ModelList
+                  type="1"
+                  path="memberdynamics"
+                  @toDetails="toDetails"
+                ></ModelList>
               </div>
             </el-col>
 
@@ -134,7 +156,11 @@
                   <span class="more" @click="toKnowledgeQA">更多&gt;&gt;</span>
                 </div>
                 <!-- <div class="model-title">&nbsp;</div> -->
-                <ModelList type="14"></ModelList>
+                <ModelList
+                  type="14"
+                  path="knowledgeQA"
+                  @toDetails="toDetails"
+                ></ModelList>
               </div>
             </el-col>
           </el-row>
@@ -186,7 +212,11 @@
               <div class="sub-title">通知公告</div>
               <span class="more" @click="toAnnouncements">更多&gt;&gt;</span>
             </div>
-            <ModelList type="24"></ModelList>
+            <ModelList
+              type="24"
+              path="announcements"
+              @toDetails="toDetails"
+            ></ModelList>
           </div>
           <div class="info">
             <div class="info-item consultant-expert" @click="toConsultant">
@@ -482,6 +512,22 @@ export default defineComponent({
         query: { type: "2" },
       });
     };
+
+    // 跳转到文章详情
+    const toDetails = (path: any, type: any, item: any) => {
+      if (type == "24") {
+        $router.push({
+          path: path,
+          query: { type, heavy: "0", articleId: item.id },
+        });
+      } else {
+        $router.push({
+          path: path,
+          query: { type, articleId: item.id },
+        });
+      }
+    };
+
     // 跳转友情链接
     const toLink = (url: any) => {
       window.open(url);
@@ -519,6 +565,7 @@ export default defineComponent({
       toAnnouncements,
       toConsultant,
       toTrainingVideos,
+      toDetails,
       toLink,
     };
   },

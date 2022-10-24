@@ -1,8 +1,12 @@
 <template>
   <div v-loading="loading">
     <div v-if="dataSource?.length" class="model-list">
-      <div class="model-item" v-for="item in dataSource">
-        <span class="title">{{ item.title }}</span>
+      <div
+        class="model-item"
+        v-for="item in dataSource"
+        @click="toDetails(item)"
+      >
+        <span class="title">{{ item?.title }}</span>
         <span class="time">{{ item?.time?.split(" ")[0].split(" ")[0] }}</span>
       </div>
     </div>
@@ -18,8 +22,9 @@ import store from "@/store";
 export default defineComponent({
   props: {
     type: String,
+    path: String,
   },
-  setup(props) {
+  setup(props, { emit }) {
     interface props {
       dataSource: Array<any>;
     }
@@ -56,6 +61,10 @@ export default defineComponent({
       }
     };
 
+    const toDetails = (item: any) => {
+      emit("toDetails", props.path, props.type, item);
+    };
+
     watch(
       () => store.state.keyword,
       (newKeyword, oldKeyword) => {
@@ -66,7 +75,7 @@ export default defineComponent({
       { immediate: true }
     );
 
-    return { ...toRefs(state) };
+    return { ...toRefs(state), toDetails };
   },
 });
 </script>
@@ -81,6 +90,7 @@ export default defineComponent({
     justify-content: space-between;
     padding: 4px 10px;
     box-sizing: border-box;
+    cursor: pointer;
     .title {
       width: calc(100% - 80px);
       font-size: 14px;
@@ -91,12 +101,20 @@ export default defineComponent({
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     .time {
       width: 80px;
       font-size: 12px;
       line-height: 28px;
       color: #bdbdbd;
       text-align: right;
+    }
+  }
+  .model-item:hover {
+    background: rgba(25, 71, 139, 0.1);
+    border-radius: 4px;
+    .title {
+      color: #19478b;
     }
   }
 }

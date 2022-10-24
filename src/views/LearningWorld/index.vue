@@ -180,6 +180,7 @@ export default defineComponent({
   setup() {
     interface props {
       type?: any;
+      articleId?: any;
       menuList?: Array<any>;
       list?: Array<any>;
       keyword?: string;
@@ -200,6 +201,7 @@ export default defineComponent({
     }
     let state: props = reactive({
       type: "0",
+      articleId: "",
       menuList: [],
       list: [],
       keyword: "",
@@ -258,17 +260,6 @@ export default defineComponent({
 
     const $route = useRoute();
     const $router = useRouter();
-    watch(
-      () => $route.query,
-      (newQuery, oldQuery) => {
-        if (newQuery?.type !== oldQuery?.type) {
-          if ($route.query.type) {
-            state.type = $route.query.type;
-          }
-        }
-      },
-      { immediate: true }
-    );
 
     const sidebarclick = (item: any) => {
       state.type = item.type;
@@ -331,7 +322,26 @@ export default defineComponent({
       state.isShow = true;
       state.isAskQuestionsShow = false;
       StudyInfo(item.id);
+      $router.push({
+        query: ($route.query, { type: state.type, articleId: item.id }),
+      });
     };
+
+    watch(
+      () => $route.query,
+      (newQuery, oldQuery) => {
+        if (newQuery?.type !== oldQuery?.type) {
+          if ($route.query.type) {
+            state.type = $route.query.type;
+          }
+          if ($route.query.articleId) {
+            state.articleId = $route.query.articleId;
+            openDetails({ id: state.articleId });
+          }
+        }
+      },
+      { immediate: true }
+    );
 
     // 显示提问页面
     const showAskQuestions = () => {
@@ -611,14 +621,17 @@ export default defineComponent({
                 margin-left: 14px;
               }
               .title {
-                width: calc(100% - 194px);
+                width: calc(100% - 144px);
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;
                 margin-left: 14px;
+                overflow: hidden; //超出的文本隐藏
+                text-overflow: ellipsis; //溢出用省略号显示
+                white-space: nowrap; // 默认不换行；
               }
               .time {
-                width: 180px;
+                width: 80px;
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;

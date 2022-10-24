@@ -63,6 +63,7 @@
               </div>
             </div>
             <div v-else class="details">
+              <h2 class="title">{{ currentItem?.title }}</h2>
               <p v-html="currentItem?.content"></p>
             </div>
           </div>
@@ -82,6 +83,7 @@ export default defineComponent({
   setup() {
     interface props {
       type?: any;
+      articleId?: any;
       heavy?: any;
       menuList?: Array<any>;
       list?: Array<any>;
@@ -90,10 +92,11 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
-      currentItem?: object;
+      currentItem: { title: any; content: any };
     }
     let state: props = reactive({
       type: "0",
+      articleId: "",
       heavy: "0",
       menuList: [
         {
@@ -113,7 +116,7 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
-      currentItem: {},
+      currentItem: { title: "", content: "" },
     });
 
     // // 获取关于协会栏目
@@ -137,18 +140,13 @@ export default defineComponent({
 
     const $route = useRoute();
     const $router = useRouter();
-    watch(
-      () => $route.query,
-      (newQuery, oldQuery) => {
-        if (newQuery?.heavy !== oldQuery?.heavy) {
-          if ($route.query.heavy && $route.query.type) {
-            state.heavy = $route.query.heavy;
-            state.type = $route.query.type;
-          }
-        }
-      },
-      { immediate: true }
-    );
+    
+    if ($route.query.type) {
+      state.type = $route.query.type;
+    }
+    if ($route.query.heavy) {
+      state.heavy = $route.query.heavy;
+    }
 
     const sidebarclick = (item: any) => {
       state.type = item.type;
@@ -207,7 +205,31 @@ export default defineComponent({
     const openDetails = (item: any) => {
       state.isShow = true;
       ModelInfo(item.id);
+      $router.push({
+        query:
+          ($route.query,
+          { type: state.type, heavy: state.heavy, articleId: item.id }),
+      });
     };
+
+    watch(
+      () => $route.query,
+      (newQuery, oldQuery) => {
+        if (newQuery !== oldQuery) {
+          if ($route.query.type) {
+            state.type = $route.query.type;
+          }
+          if ($route.query.heavy) {
+            state.heavy = $route.query.heavy;
+          }
+          if ($route.query.articleId) {
+            state.articleId = $route.query.articleId;
+            openDetails({ id: state.articleId });
+          }
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       ...toRefs(state),
@@ -333,13 +355,16 @@ export default defineComponent({
                 padding: 0 20px;
               }
               .title {
-                width: calc(100% - 194px);
+                width: calc(100% - 144px);
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;
+                overflow: hidden; //超出的文本隐藏
+                text-overflow: ellipsis; //溢出用省略号显示
+                white-space: nowrap; // 默认不换行；
               }
               .time {
-                width: 180px;
+                width: 80px;
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;
@@ -357,6 +382,13 @@ export default defineComponent({
           }
           .details {
             padding: 20px;
+            .title {
+              font-size: 24px;
+              font-family: SimSun;
+              font-weight: bold;
+              text-align: center;
+              margin-bottom: 20px;
+            }
           }
         }
       }
