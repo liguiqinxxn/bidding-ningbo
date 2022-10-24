@@ -621,7 +621,7 @@ export default defineComponent({
                 margin-left: 14px;
               }
               .title {
-                width: calc(100% - 144px);
+                width: calc(100% - 164px);
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;
@@ -631,7 +631,7 @@ export default defineComponent({
                 white-space: nowrap; // 默认不换行；
               }
               .time {
-                width: 80px;
+                width: 100px;
                 font-size: 14px;
                 line-height: 40px;
                 color: #000000;
