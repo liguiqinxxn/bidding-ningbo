@@ -67,7 +67,7 @@ export default defineComponent({
   background-color: #fff;
   position: fixed;
   left: 12px;
-  top: 35vh;
+  top: 10vh;
   z-index: 999;
   border-radius: 6px;
   padding: 0 16px;

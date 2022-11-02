@@ -65,7 +65,7 @@
                 <div class="sub-title">
                   <span>业务范围</span>
                 </div>
-                <!-- <p>{{currentItem?.}}</p> -->
+                <p class="business">{{ currentItem?.business }}</p>
               </div>
               <div class="team">
                 <div class="sub-title">
@@ -122,7 +122,14 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
-      currentItem?: object;
+      currentItem?: {
+        logo: string;
+        name: string;
+        info: string;
+        business: string;
+        team_style: string;
+        honors_qualifications: string;
+      };
     }
     let state: props = reactive({
       level: "3",
@@ -131,7 +138,14 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
-      currentItem: {},
+      currentItem: {
+        logo: "",
+        name: "",
+        info: "",
+        business: "",
+        team_style: "",
+        honors_qualifications: "",
+      },
     });
     const memberShipList = [
       { name: "常务理事", level: "3" },
@@ -373,7 +387,8 @@ export default defineComponent({
               top: 26px;
               z-index: 0;
             }
-            .info {
+            .info,
+            .business {
               font-size: 12px;
               line-height: 40px;
               color: #000000;

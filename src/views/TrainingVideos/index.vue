@@ -102,10 +102,10 @@ export default defineComponent({
     let state: props = reactive({
       type: "1",
       menuList: [
-        {
-          name: "操作视频",
-          type: "1",
-        },
+        // {
+        //   name: "操作视频",
+        //   type: "1",
+        // },
         {
           name: "培训视频",
           type: "2",

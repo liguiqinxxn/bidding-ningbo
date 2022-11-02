@@ -236,6 +236,18 @@
                     />
                   </el-form-item>
                 </el-col>
+                <el-col :span="24">
+                  <el-form-item label="业务范围" prop="business">
+                    <el-input
+                      v-model="userInfo.business"
+                      type="textarea"
+                      :rows="6"
+                      maxlength="1000"
+                      show-word-limit
+                      placeholder="请输入业务范围"
+                    />
+                  </el-form-item>
+                </el-col>
 
                 <el-col :span="24">
                   <el-form-item label=" ">
@@ -359,6 +371,7 @@ export default defineComponent({
         team_style: string;
         honors_qualifications: string;
         info: string;
+        business: string;
       };
       form: {
         password: string;
@@ -388,6 +401,7 @@ export default defineComponent({
         team_style: "",
         honors_qualifications: "",
         info: "",
+        business: "",
       },
       form: {
         password: "",
@@ -466,10 +480,24 @@ export default defineComponent({
           trigger: "blur",
         },
       ],
+      logo: [
+        {
+          required: true,
+          message: "请上传公司logo",
+          trigger: "change",
+        },
+      ],
       info: [
         {
           required: true,
           message: "请输入企业简介",
+          trigger: "blur",
+        },
+      ],
+      business: [
+        {
+          required: true,
+          message: "请输入业务范围",
           trigger: "blur",
         },
       ],
@@ -509,22 +537,22 @@ export default defineComponent({
             ...res.data.user_info,
             ...res.data.user_mailing_info,
           };
-          team_style_arr.value = userInfo.team_style
-            ?.split(";")
-            .map((r: any, index: Number) => {
+          team_style_arr.value =
+            userInfo.team_style?.split(";").map((r: any, index: Number) => {
               return {
                 name: "name" + index,
                 url: r,
               };
-            });
-          honors_qualifications_arr.value = userInfo.honors_qualifications
-            ?.split(";")
-            .map((r: any, index: Number) => {
-              return {
-                name: "name" + index,
-                url: r,
-              };
-            });
+            }) || [];
+          honors_qualifications_arr.value =
+            userInfo.honors_qualifications
+              ?.split(";")
+              .map((r: any, index: Number) => {
+                return {
+                  name: "name" + index,
+                  url: r,
+                };
+              }) || [];
           store.commit("setUserInfo", userInfo);
           state.userInfo = userInfo;
         } else {
@@ -745,13 +773,15 @@ export default defineComponent({
             uid: getUid(),
             tokenid: getToken(),
             ...state.userInfo,
-            team_style: team_style_arr.value.map((r) => r.url).join(";"),
-            honors_qualifications: honors_qualifications_arr.value
-              .map((r) => r.url)
-              .join(";"),
+            team_style:
+              team_style_arr.value?.map((r) => r.url).join(";") || null,
+            honors_qualifications:
+              honors_qualifications_arr.value?.map((r) => r.url).join(";") ||
+              null,
           };
           saveUserInfoAll(params).then((res: any) => {
             if (res.code == "0") {
+              debugger
               ElMessage({
                 message: "保存成功！",
                 type: "success",

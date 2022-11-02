@@ -6,7 +6,7 @@
       <span class="footer-col">技术支持：宁波市峰承科技有限公司</span>
     </div>
     <div class="footer-row">
-     <span class="footer-col">地址：宁波市宁穿路1901号312办公室（宁波市行政服务中心）</span>
+     <span class="footer-col">地址：宁波市宁穿路1901号312办公室</span>
      <span class="footer-col">邮编：315040</span>
      <span class="footer-col">传真：87187123</span>
      <span class="footer-col">办公室：0574-87187928</span>
@@ -43,6 +43,7 @@ export default defineComponent({
       .footer-col{
         color: #fffefe;
         line-height: 20px;
+        padding-right: 12px;
       }
     }
   }

@@ -150,16 +150,32 @@
             </el-col>
 
             <!-- 知识问答 -->
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">知识问答</div>
                   <span class="more" @click="toKnowledgeQA">更多&gt;&gt;</span>
                 </div>
-                <!-- <div class="model-title">&nbsp;</div> -->
                 <ModelList
                   type="14"
                   path="knowledgeQA"
+                  @toDetails="toDetails"
+                ></ModelList>
+              </div>
+            </el-col> -->
+
+            <!-- 法律解读 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">法律解读</div>
+                  <span class="more" @click="toLegalInterpretation"
+                    >更多&gt;&gt;</span
+                  >
+                </div>
+                <ModelList
+                  type="13"
+                  path="legalInterpretation"
                   @toDetails="toDetails"
                 ></ModelList>
               </div>
@@ -492,6 +508,14 @@ export default defineComponent({
       });
     };
 
+    // 跳转法律解读
+    const toLegalInterpretation = (item: any) => {
+      $router.push({
+        path: "legalInterpretation",
+        query: { type: "13" },
+      });
+    };
+
     // 跳转通知公告
     const toAnnouncements = (item: any) => {
       $router.push({
@@ -565,6 +589,7 @@ export default defineComponent({
       toMembers,
       toMemberdynamics,
       toKnowledgeQA,
+      toLegalInterpretation,
       toAnnouncements,
       toConsultant,
       toTrainingVideos,
