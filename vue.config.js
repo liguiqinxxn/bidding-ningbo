@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack')
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -60,6 +61,15 @@ module.exports = {
       .set("components", resolve("src/components"))
       .set("base", resolve("baseConfig"))
       .set("public", resolve("public"));
+    // 配置Jquery
+    config.plugin('provide').use(webpack.ProvidePlugin, [
+      {
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']
+      }
+    ]);
   },
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="floating">
+  <div class="floating" v-show="store.state.isFloating">
     <div class="box">
       <div class="box-header">
         <div class="sub-title">重要通知</div>
@@ -16,9 +16,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import ModelList from "./ModelList.vue";
+import store from "@/store";
 export default defineComponent({
   setup() {
     interface props {
@@ -55,6 +56,7 @@ export default defineComponent({
       ...toRefs(state),
       toDetails,
       toAnnouncements,
+      store,
     };
   },
   components: { ModelList },

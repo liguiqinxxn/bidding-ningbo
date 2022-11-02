@@ -61,6 +61,9 @@ export default defineComponent({
           state.loading = false;
           if (res.code == "0") {
             state.dataSource = res.data || [];
+            if (props.type == "24" && props.heavy == "1") {
+              store.commit("setIsFloating", res.data.length > 0 ? true : false);
+            }
           }
         });
       }

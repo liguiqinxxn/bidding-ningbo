@@ -291,7 +291,7 @@
             <div class="sub-title">友情链接</div>
           </div>
           <div class="link-box">
-            <div class="linklist">
+            <div class="linklist" @mouseover="mouseover" @mouseout="mouseout">
               <img
                 v-for="item in linkList"
                 :src="item.logo"
@@ -306,7 +306,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  onMounted,
+  ref,
+  onBeforeUnmount,
+} from "vue";
 import linkImg from "assets/images/links.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -315,6 +322,7 @@ import _store from "@/store";
 import store from "@/store";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import $ from "jquery";
 import {
   getBannerList,
   getLogin,
@@ -564,6 +572,7 @@ export default defineComponent({
       getLinksList(params).then((res: any) => {
         if (res.code == "0") {
           state.linkList = res.data;
+          run();
         }
       });
     };
@@ -571,6 +580,32 @@ export default defineComponent({
       keyword: state.keyword,
     };
     linkListFn(linkParams);
+
+    const timer = ref<any>(null);
+    const run = () => {
+      let N = 0;
+      const target = $(".linklist");
+      timer.value = setInterval(() => {
+        if (target && target.length) {
+          const width = $(target[0]).width();
+          if (N * 20 > width) {
+            N = 0;
+          }
+          target[0].parentNode.scrollLeft = 20 * N++;
+        }
+      }, 1000);
+    };
+
+    onBeforeUnmount(() => {
+      clearInterval(timer.value);
+    });
+
+    const mouseover = () => {
+      clearInterval(timer.value);
+    };
+    const mouseout = () => {
+      run();
+    };
 
     return {
       ...toRefs(state),
@@ -595,6 +630,8 @@ export default defineComponent({
       toTrainingVideos,
       toDetails,
       toLink,
+      mouseover,
+      mouseout,
     };
   },
   components: { ModelList, Floating },
@@ -633,14 +670,14 @@ export default defineComponent({
         .el-carousel {
           .carousel-img {
             width: 100%;
-            height: 90%;
+            height: 80%;
             padding-right: 20px;
           }
 
           .title {
-            width: calc(100% - 38px);
+            width: 100%;
             position: absolute;
-            bottom: -10px;
+            bottom: 0px;
             text-align: center;
             font-size: 16px;
             font-family: Microsoft YaHei;
@@ -649,7 +686,6 @@ export default defineComponent({
             background-color: #19478b;
             line-height: 36px;
             padding-bottom: 30px;
-            margin-left: 36px;
           }
 
           .el-carousel__indicators {
@@ -980,6 +1016,7 @@ export default defineComponent({
         position: relative;
         .linklist {
           white-space: nowrap;
+          padding-bottom: 20px;
           img {
             width: 33%;
             height: 80px;

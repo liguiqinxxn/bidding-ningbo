@@ -10,6 +10,7 @@ export default createStore({
       name: "",
     },
     keyword: "",
+    isFloating: false
   },
   mutations: {
     setUserInfo(state, value) {
@@ -17,6 +18,9 @@ export default createStore({
     },
     setKeyword(state, value) {
       state.keyword = value;
+    },
+    setIsFloating(state, value) {
+      state.isFloating = value;
     },
   },
   actions: {},
