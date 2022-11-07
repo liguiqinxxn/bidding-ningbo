@@ -55,6 +55,16 @@
                 <img :src="currentItem?.logo" alt="logo" />
                 <span>{{ currentItem?.name }}</span>
               </div>
+
+              <!-- <div class="info">
+                <span class="info-item"
+                  >发布时间：<span>{{ currentItem?.time }} </span>
+                </span>
+                <span class="info-item"
+                  >阅读量：<span> {{ currentItem?.hits }}次 </span></span
+                >
+              </div> -->
+
               <div class="details-info">
                 <div class="sub-title">
                   <span>企业简介</span>
@@ -125,6 +135,8 @@ export default defineComponent({
       currentItem?: {
         logo: string;
         name: string;
+        time: string;
+        hits: any;
         info: string;
         business: string;
         team_style: string;
@@ -141,6 +153,8 @@ export default defineComponent({
       currentItem: {
         logo: "",
         name: "",
+        time: "",
+        hits: 0,
         info: "",
         business: "",
         team_style: "",

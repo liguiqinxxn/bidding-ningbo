@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 
 const Interface = axios.create({
   // baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_REQUEST_URL : process.env.VUE_APP_BASE_API, // baseURL这里单词要特别注意一下
-  timeout: 20000,
+  timeout: 30000,
 });
 // 调用接口的拦截器进行一些处理
 Interface.interceptors.request.use(config => {

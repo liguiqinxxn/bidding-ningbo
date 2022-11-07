@@ -20,7 +20,16 @@ export default defineComponent({
       imgs?: Array<any>;
     }
     let state: props = reactive({
-      imgs: [],
+      imgs: [
+        {
+          id: "7",
+          logo: "http://1259019747.vod2.myqcloud.com/c04205f6vodsh1259019747/ae23b0a2387702308023354240/EJpg9YFh8OYA.jpg",
+        },
+        {
+          id: "8",
+          logo: "http://1259019747.vod2.myqcloud.com/c04205f6vodsh1259019747/addcfccd387702308023317486/PSAMXMExp3AA.jpg",
+        },
+      ],
     });
     const bannerList = (type: any) => {
       getBannerList({ type }).then((res: any) => {

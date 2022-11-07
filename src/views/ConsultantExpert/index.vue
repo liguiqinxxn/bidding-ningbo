@@ -62,10 +62,11 @@
                 />
               </div>
             </div>
-            <div v-else class="details">
-              <h2 class="title">{{ currentItem?.title }}</h2>
-              <p v-html="currentItem?.content"></p>
-            </div>
+            <Details
+              v-else
+              :current-item="currentItem"
+              :loading="loading"
+            ></Details>
           </div>
         </div>
       </div>
@@ -77,6 +78,7 @@ import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { getColumnOneList, getModelList, getModelInfo } from "@/api/index.js";
 import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
+import Details from "@/components/Details/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
@@ -91,6 +93,7 @@ export default defineComponent({
       limit?: any;
       isShow?: boolean;
       currentItem: { title: any; content: any };
+      loading?: boolean;
     }
     let state: props = reactive({
       type: "0",
@@ -102,6 +105,7 @@ export default defineComponent({
       limit: 10,
       isShow: false,
       currentItem: { title: "", content: "" },
+      loading: true,
     });
 
     // 获取咨询专家栏目
@@ -184,11 +188,14 @@ export default defineComponent({
     const ModelInfo = (id: any) => {
       getModelInfo({ id }).then((res: any) => {
         state.currentItem = res.data;
+        state.loading = false;
       });
     };
 
     const openDetails = (item: any) => {
       state.isShow = true;
+      state.loading = true;
+      state.currentItem = { title: "", content: "" };
       ModelInfo(item.id);
     };
 
@@ -202,7 +209,7 @@ export default defineComponent({
       openDetails,
     };
   },
-  components: { Sidebar },
+  components: { Sidebar, Details },
 });
 </script>
 <style lang="less" scoped>
@@ -341,16 +348,6 @@ export default defineComponent({
             display: flex;
             flex-direction: row;
             justify-content: center;
-          }
-          .details {
-            padding: 20px;
-            .title {
-              font-size: 24px;
-              font-family: SimSun;
-              font-weight: bold;
-              text-align: center;
-              margin-bottom: 20px;
-            }
           }
         }
       }

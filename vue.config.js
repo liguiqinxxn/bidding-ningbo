@@ -11,21 +11,24 @@ module.exports = {
     open: true, // vue项目启动时自动打开浏览器
     proxy: {
       '/Home': {
-        target: "http://zbxh.nbbidding.com/Home",
+        // target: "http://zbxh.nbbidding.com/Home", // 测试
+        target: "http://www.nbtba.org.cn/Home", // 生产
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Home': ""
         }
       },
       '/Public': {
-        target: "http://zbxh.nbbidding.com/Public",
+        // target: "http://zbxh.nbbidding.com/Public", // 测试
+        target: "http://www.nbtba.org.cn/Public", // 生产
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Public': ""
         }
       },
       '/ueditor': {
-        target: "http://zbxh.nbbidding.com/ueditor",
+        // target: "http://zbxh.nbbidding.com/ueditor", // 测试
+        target: "http://www.nbtba.org.cn/ueditor", // 生产
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/ueditor': ""
