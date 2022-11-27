@@ -84,7 +84,9 @@
                 <div class="imgs">
                   <img
                     :src="item"
-                    v-for="item in currentItem?.team_style.split(';')"
+                    v-for="item in currentItem?.team_style
+                      .split(';')
+                      .filter((r) => r)"
                     alt="team"
                   />
                 </div>
@@ -95,10 +97,10 @@
                 </div>
                 <div class="imgs">
                   <img
-                    :src="item"
-                    v-for="item in currentItem?.honors_qualifications.split(
-                      ';'
-                    )"
+                    v-for="item in currentItem?.honors_qualifications
+                      .split(';')
+                      .filter((r) => r)"
+                    :src="item ? item : ''"
                     alt="honors"
                   />
                 </div>

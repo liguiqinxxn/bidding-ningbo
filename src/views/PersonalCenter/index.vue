@@ -252,7 +252,10 @@
                 <el-col :span="24">
                   <el-form-item label=" ">
                     <el-button type="primary" @click="save(ruleFormRef)"
-                      >保存</el-button
+                      >保存草稿</el-button
+                    >
+                    <el-button type="primary" @click="submit(ruleFormRef)"
+                      >提交审核</el-button
                     >
                   </el-form-item>
                 </el-col>
@@ -333,6 +336,7 @@ import {
   getLogout,
   getUserInfoAll,
   saveUserInfoAll,
+  userInfoExamine
 } from "@/api/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import store from "@/store";
@@ -781,9 +785,38 @@ export default defineComponent({
           };
           saveUserInfoAll(params).then((res: any) => {
             if (res.code == "0") {
-              debugger
               ElMessage({
                 message: "保存成功！",
+                type: "success",
+              });
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+            }
+          });
+        }
+      });
+    };
+
+    // 提交
+    const submit = async (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      await formEl.validate((valid, fields) => {
+        if (valid) {
+          const params = {
+            uid: getUid(),
+            tokenid: getToken(),
+            ...state.userInfo,
+            team_style:
+              team_style_arr.value?.map((r) => r.url).join(";") || null,
+            honors_qualifications:
+              honors_qualifications_arr.value?.map((r) => r.url).join(";") ||
+              null,
+          };
+          userInfoExamine(params).then((res: any) => {
+            if (res.code == "0") {
+              ElMessage({
+                message: "提交成功！",
                 type: "success",
               });
               setTimeout(() => {
@@ -822,6 +855,7 @@ export default defineComponent({
       handleRemove,
       handlePictureCardPreview,
       save,
+      submit,
     };
   },
   components: { Plus },

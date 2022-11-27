@@ -17,8 +17,8 @@
               </div>
             </el-col>
 
-            <!-- 活动动态|工作动态 -->
-            <el-col :span="12">
+            <!-- 其他资讯|工作动态 -->
+            <!-- <el-col :span="12">
               <div class="box">
                 <div class="box-header">
                   <div class="tabs">
@@ -26,7 +26,7 @@
                       class="tab"
                       :class="{ active: activeKey == 1 }"
                       @click="tabClick(1)"
-                      >活动动态</span
+                      >其他资讯</span
                     >|<span
                       class="tab"
                       :class="{ active: activeKey == 2 }"
@@ -39,14 +39,14 @@
                   >
                 </div>
 
-                <!-- 活动动态 -->
+                其他资讯
                 <ModelList
                   v-if="activeKey == 1"
                   type="8"
                   path="activityDynamics"
                   @toDetails="toDetails"
                 ></ModelList>
-                <!-- 工作动态 -->
+                工作动态
                 <ModelList
                   v-else
                   type="9"
@@ -54,35 +54,51 @@
                   @toDetails="toDetails"
                 ></ModelList>
               </div>
-            </el-col>
+            </el-col> -->
 
-            <!-- 政策法规 -->
+            <!-- 工作动态 -->
             <el-col :span="12">
               <div class="box">
                 <div class="box-header">
-                  <div class="sub-title">政策法规</div>
-                  <span class="more" @click="toRegulations">更多&gt;&gt;</span>
+                  <div class="sub-title">工作动态</div>
+                  <span class="more" @click="toDynamic(2)">更多&gt;&gt;</span>
                 </div>
                 <ModelList
-                  type="11"
-                  path="provincialRegulations"
+                  type="9"
+                  path="workDynamics"
                   @toDetails="toDetails"
                 ></ModelList>
               </div>
             </el-col>
 
-            <!-- 诚信自律 -->
+            <!-- 会员动态 -->
             <el-col :span="12">
               <div class="box">
                 <div class="box-header">
-                  <div class="sub-title">诚信自律</div>
-                  <span class="more" @click="toDisciplineConvention"
+                  <div class="sub-title">会员动态</div>
+                  <span class="more" @click="toMemberdynamics"
                     >更多&gt;&gt;</span
                   >
                 </div>
+                <!-- <div class="model-title">&nbsp;</div> -->
                 <ModelList
-                  type="18"
-                  path="disciplineConvention"
+                  type="1"
+                  path="memberdynamics"
+                  @toDetails="toDetails"
+                ></ModelList>
+              </div>
+            </el-col>
+
+            <!-- 其他资讯 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">其他资讯</div>
+                  <span class="more" @click="toDynamic(1)">更多&gt;&gt;</span>
+                </div>
+                <ModelList
+                  type="8"
+                  path="activityDynamics"
                   @toDetails="toDetails"
                 ></ModelList>
               </div>
@@ -131,24 +147,6 @@
               </div>
             </el-col> -->
 
-            <!-- 会员动态 -->
-            <el-col :span="12">
-              <div class="box">
-                <div class="box-header">
-                  <div class="sub-title">会员动态</div>
-                  <span class="more" @click="toMemberdynamics"
-                    >更多&gt;&gt;</span
-                  >
-                </div>
-                <!-- <div class="model-title">&nbsp;</div> -->
-                <ModelList
-                  type="1"
-                  path="memberdynamics"
-                  @toDetails="toDetails"
-                ></ModelList>
-              </div>
-            </el-col>
-
             <!-- 知识问答 -->
             <!-- <el-col :span="12">
               <div class="box">
@@ -163,6 +161,21 @@
                 ></ModelList>
               </div>
             </el-col> -->
+
+            <!-- 政策法规 -->
+            <el-col :span="12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="sub-title">政策法规</div>
+                  <span class="more" @click="toRegulations">更多&gt;&gt;</span>
+                </div>
+                <ModelList
+                  type="11"
+                  path="provincialRegulations"
+                  @toDetails="toDetails"
+                ></ModelList>
+              </div>
+            </el-col>
 
             <!-- 法律解读 -->
             <el-col :span="12">
@@ -224,6 +237,7 @@
               </el-form-item>
             </el-form>
           </div>
+          <!-- 通知公告 -->
           <div class="box">
             <div class="box-header">
               <div class="sub-title">通知公告</div>
@@ -281,9 +295,22 @@
               </div>
             </div>
           </div>
+          <!-- 诚信自律 -->
+          <div class="box">
+            <div class="box-header">
+              <div class="sub-title">诚信自律</div>
+              <span class="more" @click="toDisciplineConvention"
+                >更多&gt;&gt;</span
+              >
+            </div>
+            <ModelList
+              type="18"
+              path="disciplineConvention"
+              @toDetails="toDetails"
+            ></ModelList>
+          </div>
         </div>
       </div>
-
       <!-- 友情链接 -->
       <div class="links">
         <div class="box">
@@ -477,7 +504,7 @@ export default defineComponent({
     // 跳转协会动态
     const toDynamic = (activeKey: any) => {
       if (activeKey == 1) {
-        // 活动动态
+        // 其他资讯
         $router.push({ path: "activityDynamics", query: { type: "8" } });
       } else {
         // 工作动态
@@ -659,7 +686,6 @@ export default defineComponent({
     & > .content {
       display: flex;
       flex-direction: row;
-
       & > .left {
         width: calc(100% - 332px);
         padding: 0 16px;

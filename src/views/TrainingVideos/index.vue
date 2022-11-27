@@ -69,8 +69,11 @@
             </div>
             <div v-else class="video-details">
               <h3 class="title">{{ currentItem?.title }}</h3>
-              <video class="video" controls>
-                <source :src="currentItem?.url" type="video/mp4" />
+              <video class="video" :poster="currentItem?.img" controls controlsList="nodownload">
+                <source
+                  :src="currentItem?.url"
+                  type="video/mp4"
+                />
               </video>
             </div>
           </div>
@@ -82,7 +85,6 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { getVideoList, getModelInfo } from "@/api/index.js";
-import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
@@ -97,7 +99,7 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
-      currentItem?: object;
+      currentItem?: { title: any; url: any; img: any };
     }
     let state: props = reactive({
       type: "1",
@@ -117,7 +119,7 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
-      currentItem: {},
+      currentItem: { title: "", url: "", img: "" },
     });
 
     const activeIndex = computed(() => {
@@ -347,8 +349,8 @@ export default defineComponent({
             padding-bottom: 20px;
           }
           .video {
-            // width: 80%;
             width: auto;
+            max-width: 100%;
             height: auto;
             max-height: 500px;
           }

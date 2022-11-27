@@ -56,6 +56,13 @@ export const saveUserInfoAll = (data) => {
   );
 };
 
+// 提交审核企业个人信息
+export const userInfoExamine = (data) => {
+  return Interface.post("/Home/User/user_info_examine",
+    data
+  );
+};
+
 // 栏目列表
 export const getColumnList = (data) => {
   return Interface.post("/Home/Index/column_list",

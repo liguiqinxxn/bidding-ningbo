@@ -33,6 +33,14 @@ module.exports = {
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/ueditor': ""
         }
+      },
+      '/Uploadfiles': {
+        // target: "http://zbxh.nbbidding.com/Uploadfiles", // 测试
+        target: "http://www.nbtba.org.cn/Uploadfiles", // 生产
+        changeOrigin: true, // 是否跨域
+        pathRewrite: { // pathRewrite 的作用是把实际
+          '^/Uploadfiles': ""
+        }
       }
     }
   },

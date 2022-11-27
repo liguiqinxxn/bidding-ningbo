@@ -63,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
 
       {
         path: "/activityDynamics",
-        name: "活动动态",
+        name: "其他资讯",
         redirect: "/dynamics",
       },
       {
