@@ -85,7 +85,7 @@
                   <img
                     :src="item"
                     v-for="item in currentItem?.team_style
-                      .split(';')
+                      ?.split(';')
                       .filter((r) => r)"
                     alt="team"
                   />
@@ -98,7 +98,7 @@
                 <div class="imgs">
                   <img
                     v-for="item in currentItem?.honors_qualifications
-                      .split(';')
+                      ?.split(';')
                       .filter((r) => r)"
                     :src="item ? item : ''"
                     alt="honors"
