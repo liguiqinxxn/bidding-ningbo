@@ -26,7 +26,52 @@
               </el-breadcrumb>
             </div>
           </div>
-          <div class="content">
+          <div
+            v-if="menuList && menuList[activeIndex]?.name == '法律解读'"
+            class="content1"
+          >
+            <div v-if="!isShow">
+              <div class="tools">
+                <div class="right">
+                  <span class="label">关键字：</span>
+                  <el-input
+                    class="input"
+                    v-model="keyword"
+                    placeholder="请输入关键字"
+                  />
+                  <el-button type="primary" @click="init">搜索</el-button>
+                </div>
+              </div>
+              <div class="list">
+                <div
+                  v-if="list?.length"
+                  class="item"
+                  v-for="item in list"
+                  @click="openDetails(item)"
+                >
+                  <img class="triangle" :src="triangleIcon" />
+
+                  <span class="title">{{ item.title }}</span>
+                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
+                </div>
+                <el-empty v-else :image-size="150" description="暂无数据" />
+              </div>
+              <div v-if="total" class="pagination">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :total="total"
+                  @current-change="currentChange"
+                />
+              </div>
+            </div>
+            <Details
+              v-else
+              :current-item="currentItem"
+              :loading="loading"
+            ></Details>
+          </div>
+          <div v-else class="content">
             <!-- 详情页 -->
             <div v-if="isShow" class="details">
               <div class="details-title">
@@ -163,9 +208,12 @@ import {
   getStudyList,
   getStudyInfo,
   saveStudy,
+  getModelList,
+  getModelInfo,
 } from "@/api/index.js";
 import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
+import Details from "@/components/Details/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
 import store from "@/store";
@@ -191,13 +239,14 @@ export default defineComponent({
       isAskQuestionsShow?: boolean;
       role?: any;
       currentItem: {
-        title: string;
-        user_name: string;
-        time: string;
-        content: any;
-        reply_info: any;
+        title?: string;
+        user_name?: string;
+        time?: string;
+        content?: any;
+        reply_info?: any;
       };
       form: { title: string; content: any };
+      loading?: boolean;
     }
     let state: props = reactive({
       type: "0",
@@ -268,11 +317,28 @@ export default defineComponent({
       state.isAskQuestionsShow = false;
       state.keyword = "";
       state.role = "0";
+      state.list = [];
+      state.total = 0;
+    };
+
+    const modelListFn = async (type: any) => {
+      const params = {
+        type,
+        keyword: state.keyword,
+        page: state.page,
+        limit: state.limit,
+      };
+      return await getModelList(params).then((res: any) => {
+        if (res.code == "0") {
+          return res;
+        }
+      });
     };
 
     const studyListFn = async (type: any) => {
       let params: any = {
-        type: type == "13" ? "1" : "2", // 1 法律解答 2 知识问答
+        // type: type == "13" ? "1" : "2", // 1 法律解答 2 知识问答
+        type: "2",
         keyword: state.keyword,
         page: state.page,
         limit: state.limit,
@@ -290,10 +356,17 @@ export default defineComponent({
     };
 
     const init = () => {
-      studyListFn(state.type).then((res) => {
-        state.list = res.data || [];
-        state.total = Number(res.count);
-      });
+      if (state.type == "13") {
+        modelListFn(state.type).then((res) => {
+          state.list = res.data || [];
+          state.total = Number(res.count);
+        });
+      } else if (state.type == "14") {
+        studyListFn(state.type).then((res) => {
+          state.list = res.data || [];
+          state.total = Number(res.count);
+        });
+      }
     };
 
     const currentChange = (page: any) => {
@@ -312,6 +385,13 @@ export default defineComponent({
       }
     );
 
+    const ModelInfo = (id: any) => {
+      getModelInfo({ id }).then((res: any) => {
+        state.currentItem = res.data;
+        state.loading = false;
+      });
+    };
+
     const StudyInfo = (id: any) => {
       getStudyInfo({ id }).then((res: any) => {
         state.currentItem = res.data;
@@ -319,12 +399,23 @@ export default defineComponent({
     };
 
     const openDetails = (item: any) => {
-      state.isShow = true;
-      state.isAskQuestionsShow = false;
-      StudyInfo(item.id);
-      $router.push({
-        query: ($route.query, { type: state.type, articleId: item.id }),
-      });
+      if (state.type == "13") {
+        state.isShow = true;
+        state.isAskQuestionsShow = false;
+        ModelInfo(item.id);
+        state.loading = true;
+        state.currentItem = { title: "", content: "" };
+        $router.push({
+          query: ($route.query, { type: state.type, articleId: item.id }),
+        });
+      } else if (state.type == "14") {
+        state.isShow = true;
+        state.isAskQuestionsShow = false;
+        StudyInfo(item.id);
+        $router.push({
+          query: ($route.query, { type: state.type, articleId: item.id }),
+        });
+      }
     };
 
     watch(
@@ -480,7 +571,7 @@ export default defineComponent({
       save,
     };
   },
-  components: { Sidebar, Editor, Toolbar },
+  components: { Sidebar, Editor, Toolbar, Details },
 });
 </script>
 <style lang="less" scoped>
@@ -736,6 +827,79 @@ export default defineComponent({
               width: 100%;
               border: 1px solid #ccc;
             }
+          }
+        }
+        & > .content1 {
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          padding: 30px 0;
+
+          .tools {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 14px 20px;
+            .el-button.el-button--primary {
+              background-color: #19478b;
+            }
+            .right {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              .label {
+                width: 110px;
+                font-size: 16px;
+                font-weight: 600;
+              }
+              .input {
+                margin-right: 14px;
+              }
+            }
+          }
+
+          .list {
+            width: 100%;
+            min-height: 300px;
+            .item {
+              width: 100%;
+              height: 48px;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              border-bottom: 1px solid #f4f4f4;
+              cursor: pointer;
+              .triangle {
+                width: 14px;
+                height: 14px;
+                padding: 0 20px;
+              }
+              .title {
+                width: calc(100% - 164px);
+                font-size: 14px;
+                line-height: 40px;
+                color: #000000;
+                overflow: hidden; //超出的文本隐藏
+                text-overflow: ellipsis; //溢出用省略号显示
+                white-space: nowrap; // 默认不换行；
+              }
+              .time {
+                width: 100px;
+                font-size: 14px;
+                line-height: 40px;
+                color: #000000;
+                text-align: right;
+              }
+            }
+            .el-empty {
+              margin-top: 60px;
+            }
+          }
+          .pagination {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
           }
         }
       }
