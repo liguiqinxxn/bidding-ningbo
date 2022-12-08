@@ -69,11 +69,20 @@
             </div>
             <div v-else class="video-details">
               <h3 class="title">{{ currentItem?.title }}</h3>
-              <video class="video" :poster="currentItem?.img" controls controlsList="nodownload">
-                <source
-                  :src="currentItem?.url"
-                  type="video/mp4"
-                />
+              <div class="info">
+                <span class="info-item"
+                  >播放量：<span> {{ currentItem?.hits }}次 </span></span
+                >
+              </div>
+              <video
+                id="video"
+                class="video"
+                :poster="currentItem?.img"
+                controls
+                controlsList="nodownload"
+                :onplay="videoPlay"
+              >
+                <source :src="currentItem?.url" type="video/mp4" />
               </video>
             </div>
           </div>
@@ -84,7 +93,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed, watch } from "vue";
-import { getVideoList, getModelInfo } from "@/api/index.js";
+import { getVideoList, video_play, getModelInfo } from "@/api/index.js";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
@@ -99,7 +108,7 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
-      currentItem?: { title: any; url: any; img: any };
+      currentItem?: { title: any; url: any; img: any; hits: any; id: any };
     }
     let state: props = reactive({
       type: "1",
@@ -119,7 +128,7 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
-      currentItem: { title: "", url: "", img: "" },
+      currentItem: { title: "", url: "", img: "", hits: "0", id: "" },
     });
 
     const activeIndex = computed(() => {
@@ -195,6 +204,13 @@ export default defineComponent({
       state.currentItem = item;
     };
 
+    const videoPlay = (e: any) => {
+      const params = {
+        id: state.currentItem?.id,
+      };
+      video_play(params);
+    };
+
     return {
       ...toRefs(state),
       triangleIcon,
@@ -203,6 +219,7 @@ export default defineComponent({
       init,
       currentChange,
       openDetails,
+      videoPlay,
     };
   },
   components: { Sidebar },
@@ -347,6 +364,23 @@ export default defineComponent({
             color: #000000;
             line-height: 40px;
             padding-bottom: 20px;
+            text-align: center;
+          }
+          .info {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            .info-item {
+              font-size: 16px;
+              font-family: Microsoft YaHei;
+              font-weight: normal;
+              color: #000000;
+              padding: 10px;
+              font-weight: 500;
+              span {
+                font-weight: normal;
+              }
+            }
           }
           .video {
             width: auto;

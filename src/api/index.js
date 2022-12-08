@@ -147,3 +147,10 @@ export const getVideoList = (data) => {
     data
   );
 };
+
+// 视频播放
+export const video_play = (data) => {
+  return Interface.post("/Home/Index/video_play",
+    data
+  );
+};
