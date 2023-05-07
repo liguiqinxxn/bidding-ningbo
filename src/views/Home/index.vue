@@ -119,7 +119,7 @@
                     <span class="title">{{ levels[i].name }}</span>
                     <div class="imgs">
                       <img class="img" v-for="r in item" :src="r.logo" />
-                      <!-- @click="toLink(r.url)" -->
+                      <!-- @click.stop="toMembers(levels[i], r)" -->
                     </div>
                     <span class="more">更多&gt;&gt;</span>
                   </div>
@@ -526,8 +526,15 @@ export default defineComponent({
     };
 
     // 跳转会员目录
-    const toMembers = (item: any) => {
-      $router.push({ path: "membershiplist", query: { level: item.level } });
+    const toMembers = (item: any, r?: any) => {
+      if (r) {
+        $router.push({
+          path: "membershiplist",
+          query: { level: item.level, articleId: r.id },
+        });
+      } else {
+        $router.push({ path: "membershiplist", query: { level: item.level } });
+      }
     };
 
     // 跳转会员动态
@@ -578,15 +585,25 @@ export default defineComponent({
     // 跳转到文章详情
     const toDetails = (path: any, type: any, item: any) => {
       if (type == "24") {
-        $router.push({
+        // $router.push({
+        //   path: path,
+        //   query: { type, heavy: "0", articleId: item.id },
+        // });
+        const to = $router.resolve({
           path: path,
           query: { type, heavy: "0", articleId: item.id },
         });
+        window.open(to.href, "_blank");
       } else {
-        $router.push({
+        // $router.push({
+        //   path: path,
+        //   query: { type, articleId: item.id },
+        // });
+        const to = $router.resolve({
           path: path,
           query: { type, articleId: item.id },
         });
+        window.open(to.href, "_blank");
       }
     };
 

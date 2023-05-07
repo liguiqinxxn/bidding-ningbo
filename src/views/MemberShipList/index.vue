@@ -124,29 +124,31 @@ import {
 import { getMemberList } from "@/api/index.js";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   setup() {
     interface props {
       level?: any;
+      articleId?: any;
       memberList?: Array<any>;
       total?: any;
       page?: any;
       limit?: any;
       isShow?: boolean;
       currentItem?: {
-        logo: string;
-        name: string;
-        time: string;
-        hits: any;
-        info: string;
-        business: string;
-        team_style: string;
-        honors_qualifications: string;
+        logo?: string;
+        name?: string;
+        time?: string;
+        hits?: any;
+        info?: string;
+        business?: string;
+        team_style?: string;
+        honors_qualifications?: string;
       };
     }
     let state: props = reactive({
       level: "3",
+      articleId: "",
       memberList: [],
       total: 0,
       page: 1,
@@ -180,6 +182,7 @@ export default defineComponent({
     });
 
     const $route = useRoute();
+    const $router = useRouter();
     onMounted(() => {
       if ($route.query.level) {
         state.level = $route.query.level;
@@ -229,9 +232,44 @@ export default defineComponent({
     );
 
     const openDetails = (item: any) => {
-      state.isShow = true;
-      state.currentItem = item;
+      // state.isShow = true;
+      // state.currentItem = item;
+      // $router.push({
+      //   query: ($route.query, { level: state.level, articleId: item.id }),
+      //   params: { item: JSON.stringify(item) },
+      // });
+      const to = $router.resolve({
+        path: $route.path,
+        query:
+          ($route.query,
+          {
+            level: state.level,
+            articleId: item.id,
+          }),
+      });
+      localStorage.setItem("currentItem", JSON.stringify(item));
+      window.open(to.href, "_blank");
     };
+
+    watch(
+      () => $route.query,
+      (newQuery, oldQuery) => {
+        if (newQuery?.level !== oldQuery?.level) {
+          if ($route.query.level) {
+            state.level = $route.query.level;
+          }
+          if ($route.query.articleId) {
+            state.articleId = $route.query.articleId;
+            state.isShow = true;
+            state.currentItem = JSON.parse(
+              localStorage.getItem("currentItem") || "null"
+            );
+            // openDetails({ id: state.articleId });
+          }
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       ...toRefs(state),

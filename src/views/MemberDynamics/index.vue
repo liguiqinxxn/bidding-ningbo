@@ -188,13 +188,18 @@ export default defineComponent({
     };
 
     const openDetails = (item: any) => {
-      state.isShow = true;
-      ModelInfo(item.id);
-      state.loading = true;
-      state.currentItem = { title: "", content: "" };
-      $router.push({
+      // state.isShow = true;
+      // ModelInfo(item.id);
+      // state.loading = true;
+      // state.currentItem = { title: "", content: "" };
+      // $router.push({
+      //   query: ($route.query, { type: state.type, articleId: item.id }),
+      // });
+      const to = $router.resolve({
+        path: $route.path,
         query: ($route.query, { type: state.type, articleId: item.id }),
       });
+      window.open(to.href, "_blank");
     };
 
     watch(
@@ -206,7 +211,10 @@ export default defineComponent({
           }
           if ($route.query.articleId) {
             state.articleId = $route.query.articleId;
-            openDetails({ id: state.articleId });
+            state.isShow = true;
+            ModelInfo(state.articleId);
+            state.loading = true;
+            // openDetails({ id: state.articleId });
           }
         }
       },

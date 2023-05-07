@@ -405,16 +405,26 @@ export default defineComponent({
         ModelInfo(item.id);
         state.loading = true;
         state.currentItem = { title: "", content: "" };
-        $router.push({
+        // $router.push({
+        //   query: ($route.query, { type: state.type, articleId: item.id }),
+        // });
+        const to = $router.resolve({
+          path: $route.path,
           query: ($route.query, { type: state.type, articleId: item.id }),
         });
+        window.open(to.href, "_blank");
       } else if (state.type == "14") {
         state.isShow = true;
         state.isAskQuestionsShow = false;
         StudyInfo(item.id);
-        $router.push({
+        // $router.push({
+        //   query: ($route.query, { type: state.type, articleId: item.id }),
+        // });
+        const to = $router.resolve({
+          path: $route.path,
           query: ($route.query, { type: state.type, articleId: item.id }),
         });
+        window.open(to.href, "_blank");
       }
     };
 
@@ -427,7 +437,17 @@ export default defineComponent({
           }
           if ($route.query.articleId) {
             state.articleId = $route.query.articleId;
-            openDetails({ id: state.articleId });
+            state.isShow = true;
+            ModelInfo(state.articleId);
+            state.loading = true;
+            state.isShow = true;
+            state.isAskQuestionsShow = false;
+            if (state.type == "13") {
+              ModelInfo(state.articleId);
+            } else if (state.type == "14") {
+              StudyInfo(state.articleId);
+            }
+            // openDetails({ id: state.articleId });
           }
         }
       },
