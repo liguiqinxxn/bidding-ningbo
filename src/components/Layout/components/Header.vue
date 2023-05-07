@@ -75,8 +75,7 @@ export default defineComponent({
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
-
-      /deep/ .el-input {
+      :deep(.el-input ) {
         width: 368px;
         height: 42px;
         border: 1px solid #5e7eae;

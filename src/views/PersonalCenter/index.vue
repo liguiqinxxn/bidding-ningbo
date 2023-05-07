@@ -1015,7 +1015,7 @@ export default defineComponent({
               display: flex;
               flex-direction: row;
             }
-            /deep/ .el-form-item__content {
+            :deep(.el-form-item__content) {
               min-width: 300px;
               width: 100%;
             }

@@ -105,7 +105,7 @@ export default defineComponent({
       border-color: transparent;
     }
 
-    /deep/ .el-sub-menu.is-active .el-sub-menu__title {
+    :deep(.el-sub-menu.is-active .el-sub-menu__title) {
       background: #3c70be !important;
       border: none !important;
     }

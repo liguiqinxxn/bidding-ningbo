@@ -735,12 +735,12 @@ export default defineComponent({
             background: transparent;
           }
 
-          /deep/ .el-carousel__button {
+          :deep(.el-carousel__button) {
             width: 5px;
             height: 5px;
           }
 
-          /deep/ .is-active .el-carousel__button {
+          :deep(.is-active .el-carousel__button) {
             width: 10px;
             height: 10px;
           }
@@ -883,7 +883,7 @@ export default defineComponent({
           }
         }
 
-        /deep/ .el-form {
+        :deep(.el-form) {
           padding: 10px 24px;
           margin-top: 20px;
 
@@ -904,12 +904,12 @@ export default defineComponent({
           }
         }
 
-        /deep/ .el-button--primary {
+        :deep(.el-button--primary) {
           --el-button-bg-color: #19478b;
           --el-button-border-color: #19478b;
         }
 
-        /deep/ .el-button {
+        :deep(.el-button) {
           width: 186px;
           height: 50px;
           border-radius: 22px;
