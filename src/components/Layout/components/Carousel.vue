@@ -2,7 +2,7 @@
   <div class="carousel">
     <el-carousel height="490px" :interval="5000">
       <el-carousel-item v-for="item in imgs" :key="item.id">
-        <img class="carousel-img" :src="item.logo" alt="image" />
+        <img class="carousel-img" :src="item.logo" />
       </el-carousel-item>
     </el-carousel>
   </div>

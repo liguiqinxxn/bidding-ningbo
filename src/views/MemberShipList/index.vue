@@ -52,7 +52,7 @@
             </div>
             <div v-else class="details">
               <div class="details-title">
-                <img :src="currentItem?.logo" alt="logo" />
+                <img :src="currentItem?.logo" />
                 <span>{{ currentItem?.name }}</span>
               </div>
 
@@ -87,7 +87,6 @@
                     v-for="item in currentItem?.team_style
                       ?.split(';')
                       .filter((r) => r)"
-                    alt="team"
                   />
                 </div>
               </div>
@@ -101,7 +100,6 @@
                       ?.split(';')
                       .filter((r) => r)"
                     :src="item ? item : ''"
-                    alt="honors"
                   />
                 </div>
               </div>

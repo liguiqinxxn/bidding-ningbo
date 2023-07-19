@@ -10,7 +10,7 @@
               <div class="box">
                 <el-carousel height="400px" arrow="never">
                   <el-carousel-item v-for="item in imgs" :key="item">
-                    <img class="carousel-img" :src="item.logo" alt="image" />
+                    <img class="carousel-img" :src="item.logo" />
                     <p class="title">{{ item.title }}</p>
                   </el-carousel-item>
                 </el-carousel>

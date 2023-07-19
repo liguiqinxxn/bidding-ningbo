@@ -266,7 +266,7 @@
       </div>
       <!-- 图片查看弹窗 -->
       <el-dialog v-model="dialogVisible">
-        <img w-full :src="dialogImageUrl" alt="Preview Image" />
+        <img w-full :src="dialogImageUrl" />
       </el-dialog>
 
       <!-- 修改密码 -->

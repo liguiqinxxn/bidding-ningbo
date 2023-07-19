@@ -3,7 +3,7 @@
     <div class="container">
       <div class="logo">
         <img class="logoImg" :src="logo" alt="logo" />
-        <img class="logoTitle" :src="logoTitle" alt="logo" />
+        <img class="logoTitle" :src="logoTitle" />
       </div>
       <div class="search">
         <el-input
