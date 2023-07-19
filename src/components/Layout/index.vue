@@ -1,11 +1,13 @@
 <template>
-  <div class="layout">
-    <Header></Header>
-    <Menu></Menu>
-    <Carousel></Carousel>
-    <router-view></router-view>
-    <Footer></Footer>
-  </div>
+  <el-scrollbar height="100vh">
+    <div class="layout">
+      <Header></Header>
+      <Menu></Menu>
+      <Carousel></Carousel>
+      <router-view></router-view>
+      <Footer></Footer>
+    </div>
+  </el-scrollbar>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
