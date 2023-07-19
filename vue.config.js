@@ -13,7 +13,8 @@ module.exports = {
       '/Home': {
         // target: "http://zbxh.nbbidding.com/Home", // 测试
         // target: "http://www.nbtba.org.cn/Home", // 生产
-        target: "http://admin.nbtba.org.cn/Home", // 生产-新
+        // target: "http://admin.nbtba.org.cn/Home", // 生产-新
+        target: "https://www.nbtba.org.cn/Home", // 生产-新
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Home': ""
@@ -22,7 +23,8 @@ module.exports = {
       '/Public': {
         // target: "http://zbxh.nbbidding.com/Public", // 测试
         // target: "http://www.nbtba.org.cn/Public", // 生产
-        target: "http://admin.nbtba.org.cn/Public", // 生产-新
+        // target: "http://admin.nbtba.org.cn/Public", // 生产-新
+        target: "https://www.nbtba.org.cn/Public", // 生产-新
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Public': ""
@@ -31,7 +33,8 @@ module.exports = {
       '/ueditor': {
         // target: "http://zbxh.nbbidding.com/ueditor", // 测试
         // target: "http://www.nbtba.org.cn/ueditor", // 生产
-        target: "http://admin.nbtba.org.cn/ueditor", // 生产-新
+        // target: "http://admin.nbtba.org.cn/ueditor", // 生产-新
+        target: "https://www.nbtba.org.cn/ueditor", // 生产-新
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/ueditor': ""
@@ -40,7 +43,8 @@ module.exports = {
       '/Uploadfiles': {
         // target: "http://zbxh.nbbidding.com/Uploadfiles", // 测试
         // target: "http://www.nbtba.org.cn/Uploadfiles", // 生产
-        target: "http://admin.nbtba.org.cn/Uploadfiles", // 生产-新
+        // target: "http://admin.nbtba.org.cn/Uploadfiles", // 生产-新
+        target: "https://www.nbtba.org.cn/Uploadfiles", // 生产-新
         changeOrigin: true, // 是否跨域
         pathRewrite: { // pathRewrite 的作用是把实际
           '^/Uploadfiles': ""

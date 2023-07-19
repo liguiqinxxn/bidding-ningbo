@@ -385,7 +385,8 @@ export default defineComponent({
               margin-top: 60px;
             }
           }
-          .pagination {
+          .pagination { 
+            margin-top:6px;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -446,6 +447,7 @@ export default defineComponent({
               color: #000000;
               font-weight: 400;
               padding: 20px;
+              white-space: pre-line;
             }
             .imgs {
               width: 100%;
