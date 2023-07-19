@@ -115,11 +115,10 @@
                     class="member"
                     v-for="(item, i) in memberList"
                     @click="toMembers(levels[i])"
-                  >
+                    >
                     <span class="title">{{ levels[i].name }}</span>
                     <div class="imgs">
-                      <img class="img" v-for="r in item" :src="r.logo" />
-                      <!-- @click.stop="toMembers(levels[i], r)" -->
+                      <img class="img" v-for="r in item" :src="r.logo" @click.stop="toMembers(levels[i], r)" />
                     </div>
                     <span class="more">更多&gt;&gt;</span>
                   </div>
@@ -793,11 +792,13 @@ export default defineComponent({
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
+            overflow: hidden;
             padding: 24px;
             .img {
               width: 52px;
               height: 52px;
               margin: 0 20px;
+              cursor: pointer;
             }
           }
 
