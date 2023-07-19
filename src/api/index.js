@@ -105,6 +105,13 @@ export const getMemberList = (data) => {
   );
 };
 
+// 会员名单详情
+export const getMemberInfo = (data) => {
+  return Interface.post("/Home/Index/member_info",
+    data
+  );
+};
+
 // 友情链接
 export const getLinksList = (data) => {
   return Interface.post("/Home/Index/links_list",

@@ -24,7 +24,7 @@
               </el-breadcrumb>
             </div>
           </div>
-          <div class="content">
+          <div class="content" :loaing="loading">
             <div v-if="!isShow">
               <div class="list">
                 <div
@@ -119,7 +119,7 @@ import {
   watch,
   computed,
 } from "vue";
-import { getMemberList } from "@/api/index.js";
+import { getMemberList, getMemberInfo } from "@/api/index.js";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
 import { useRoute, useRouter } from "vue-router";
@@ -133,6 +133,7 @@ export default defineComponent({
       page?: any;
       limit?: any;
       isShow?: boolean;
+      loading?: boolean;
       currentItem?: {
         logo?: string;
         name?: string;
@@ -152,6 +153,7 @@ export default defineComponent({
       page: 1,
       limit: 10,
       isShow: false,
+      loading: true,
       currentItem: {
         logo: "",
         name: "",
@@ -229,6 +231,13 @@ export default defineComponent({
       }
     );
 
+    const MemberInfo = (id: any) => {
+      getMemberInfo({ id }).then((res: any) => {
+        state.currentItem = res.data;
+        state.loading = false;
+      });
+    };
+
     const openDetails = (item: any) => {
       // state.isShow = true;
       // state.currentItem = item;
@@ -245,7 +254,7 @@ export default defineComponent({
             articleId: item.id,
           }),
       });
-      localStorage.setItem("currentItem", JSON.stringify(item));
+      // localStorage.setItem("currentItem", JSON.stringify(item));
       window.open(to.href, "_blank");
     };
 
@@ -259,9 +268,11 @@ export default defineComponent({
           if ($route.query.articleId) {
             state.articleId = $route.query.articleId;
             state.isShow = true;
-            state.currentItem = JSON.parse(
-              localStorage.getItem("currentItem") || "null"
-            );
+            MemberInfo(state.articleId);
+            state.loading = true;
+            // state.currentItem = JSON.parse(
+            //   localStorage.getItem("currentItem") || "null"
+            // );
             // openDetails({ id: state.articleId });
           }
         }
@@ -385,8 +396,8 @@ export default defineComponent({
               margin-top: 60px;
             }
           }
-          .pagination { 
-            margin-top:6px;
+          .pagination {
+            margin-top: 6px;
             display: flex;
             flex-direction: row;
             justify-content: center;
