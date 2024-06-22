@@ -6,7 +6,7 @@
           <Sidebar
             :dataSource="menuList"
             title="培训视频"
-            subTitle="Consultant Expert"
+            subTitle="List of Training Videos"
             :activeIndex="activeIndex"
             @sidebarclick="sidebarclick"
           ></Sidebar>

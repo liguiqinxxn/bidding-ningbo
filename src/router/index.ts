@@ -214,6 +214,12 @@ const routes: Array<RouteRecordRaw> = [
           import(/* trainingVideos */ "../views/TrainingVideos/index.vue"),
       },
       {
+        path: "/transactionData",
+        name: "招投标交易数据",
+        component: () =>
+          import(/* trainingVideos */ "../views/TransactionData/index.vue"),
+      },
+      {
         path: "/announcements",
         name: "通知公告",
         component: () =>

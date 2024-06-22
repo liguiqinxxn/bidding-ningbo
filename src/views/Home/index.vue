@@ -263,6 +263,10 @@
               <span class="title">培训视频列表</span>
               <span>List of Training Videos</span>
             </div>
+            <div class="info-item transaction-data" @click="toTransactionData">
+              <span class="title">招投标交易数据</span>
+              <span>Bidding And Transaction Data</span>
+            </div>
 
             <!-- <div class="info-item membership-application">
               <span class="title">入会申请</span>
@@ -586,6 +590,14 @@ export default defineComponent({
       });
     };
 
+    // 跳转培训视频
+    const toTransactionData = (item: any) => {
+      $router.push({
+        path: "transactionData",
+        query: { type: "27" },
+      });
+    };
+
     // 跳转到文章详情
     const toDetails = (path: any, type: any, item: any) => {
       if (type == "24") {
@@ -676,6 +688,7 @@ export default defineComponent({
       toAnnouncements,
       toConsultant,
       toTrainingVideos,
+      toTransactionData,
       toDetails,
       toLink,
       mouseover,
@@ -977,6 +990,10 @@ export default defineComponent({
 
           .training-videos {
             background-image: url("../../assets/images/bg02.png");
+          }
+
+          .transaction-data {
+            background-image: url("../../assets/images/bg01.png");
           }
 
           .membership-application {
