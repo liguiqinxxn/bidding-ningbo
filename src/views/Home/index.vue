@@ -8,12 +8,12 @@
             <!-- 荣誉证书 -->
             <el-col :span="12">
               <div class="box">
-                <el-carousel height="400px" arrow="never">
-                  <el-carousel-item v-for="item in imgs" :key="item">
-                    <img class="carousel-img" :src="item.logo" />
-                    <p class="title">{{ item.title }}</p>
-                  </el-carousel-item>
-                </el-carousel>
+                <SmoothCarousel 
+                  :items="imgs" 
+                  height="400px" 
+                  :interval="3000"
+                  :show-indicators="false"
+                />
               </div>
             </el-col>
 
@@ -114,13 +114,15 @@
                   <div
                     class="member"
                     v-for="(item, i) in memberList"
+                    :key="i"
                     @click="toMembers(levels[i])"
                   >
                     <span class="title">{{ levels[i].name }}</span>
                     <div class="imgs">
                       <img
                         class="img"
-                        v-for="r in item"
+                        v-for="(r, idx) in item"
+                        :key="idx"
                         :src="r.logo"
                         @click.stop="toMembers(levels[i], r)"
                       />
@@ -328,7 +330,8 @@
           <div class="link-box">
             <div class="linklist" @mouseover="mouseover" @mouseout="mouseout">
               <img
-                v-for="item in linkList"
+                v-for="(item, index) in linkList"
+                :key="index"
                 :src="item.logo"
                 @click="toLink(item.url)"
               />
@@ -353,6 +356,7 @@ import linkImg from "assets/images/links.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import ModelList from "./components/ModelList.vue";
+import SmoothCarousel from "@/components/SmoothCarousel.vue";
 import _store from "@/store";
 import store from "@/store";
 import { useStore } from "vuex";
@@ -414,7 +418,56 @@ export default defineComponent({
       }
     });
 
+    // Mock数据用于测试轮播图效果
+    const mockImgs = [
+      {
+        logo: "https://picsum.photos/800/400?random=1",
+        title: "荣誉证书1"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=2",
+        title: "荣誉证书2"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=3",
+        title: "荣誉证书3"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=4",
+        title: "荣誉证书4"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=5",
+        title: "荣誉证书5"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=6",
+        title: "荣誉证书6"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=7",
+        title: "荣誉证书7"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=8",
+        title: "荣誉证书8"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=9",
+        title: "荣誉证书9"
+      },
+      {
+        logo: "https://picsum.photos/800/400?random=10",
+        title: "荣誉证书10"
+      }
+    ];
+
     const bannerList = (type: any) => {
+      // 为了测试效果，我们使用mock数据
+      // state.imgs = mockImgs;
+      // debugger
+      
+      // 如果需要使用真实数据，可以取消下面的注释
       getBannerList({ type }).then((res: any) => {
         if (res.code == "0") {
           state.imgs = res.data;
@@ -695,7 +748,7 @@ export default defineComponent({
       mouseout,
     };
   },
-  components: { ModelList, Floating },
+  components: { ModelList, Floating, SmoothCarousel },
 });
 </script>
 
@@ -760,6 +813,11 @@ export default defineComponent({
           :deep(.is-active .el-carousel__button) {
             width: 10px;
             height: 10px;
+          }
+          
+          // 添加平滑过渡效果
+          :deep(.el-carousel__container) {
+            transition: transform 0.5s ease-in-out;
           }
         }
 
@@ -1094,5 +1152,4 @@ export default defineComponent({
       }
     }
   }
-}
-</style>
+}</style>
