@@ -19,9 +19,7 @@
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
-                <el-breadcrumb-item :to="{ path: '/home' }"
-                  >首页</el-breadcrumb-item
-                >
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>培训视频</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
@@ -36,7 +34,11 @@
                     v-model="keyword"
                     placeholder="请输入关键字"
                   />
-                  <el-button type="primary" @click="init">搜索</el-button>
+                  <el-button
+                    type="primary"
+                    @click="init"
+                    >搜索</el-button
+                  >
                 </div>
               </div>
               <div class="video-list">
@@ -46,7 +48,10 @@
                   v-for="item in list"
                   @click="openDetails(item)"
                 >
-                  <img class="img" :src="item.img" />
+                  <img
+                    class="img"
+                    :src="item.img"
+                  />
                   <el-tooltip
                     class="box-item"
                     effect="light"
@@ -56,9 +61,16 @@
                     <p class="title">{{ item.title }}</p>
                   </el-tooltip>
                 </div>
-                <el-empty v-else :image-size="150" description="暂无数据" />
+                <el-empty
+                  v-else
+                  :image-size="150"
+                  description="暂无数据"
+                />
               </div>
-              <div v-if="total" class="pagination">
+              <div
+                v-if="total"
+                class="pagination"
+              >
                 <el-pagination
                   background
                   layout="prev, pager, next"
@@ -67,7 +79,10 @@
                 />
               </div>
             </div>
-            <div v-else class="video-details">
+            <div
+              v-else
+              class="video-details"
+            >
               <h3 class="title">{{ currentItem?.title }}</h3>
               <div class="info">
                 <span class="info-item"
@@ -82,7 +97,10 @@
                 controlsList="nodownload"
                 :onplay="videoPlay"
               >
-                <source :src="currentItem?.url" type="video/mp4" />
+                <source
+                  :src="currentItem?.url"
+                  type="video/mp4"
+                />
               </video>
             </div>
           </div>
@@ -152,7 +170,7 @@ export default defineComponent({
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     const sidebarclick = (item: any) => {
@@ -196,7 +214,7 @@ export default defineComponent({
         if (type != prevType) {
           init();
         }
-      }
+      },
     );
 
     const openDetails = (item: any) => {
@@ -349,8 +367,8 @@ export default defineComponent({
           }
         }
 
-        .pagination { 
-          margin-top:6px;
+        .pagination {
+          margin-top: 6px;
           display: flex;
           flex-direction: row;
           justify-content: center;

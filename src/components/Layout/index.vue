@@ -16,14 +16,7 @@ import Footer from "./components/Footer.vue";
 import Menu from "./components/Menu.vue";
 import Carousel from "./components/Carousel.vue";
 import { getUserInfoAll } from "@/api/index.js";
-import {
-  setToken,
-  getToken,
-  removeToken,
-  setUid,
-  getUid,
-  removeUid,
-} from "@/utils/cookies.js";
+import { setToken, getToken, removeToken, setUid, getUid, removeUid } from "@/utils/cookies.js";
 import _store from "@/store";
 import { useStore } from "vuex";
 

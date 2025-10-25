@@ -2,8 +2,15 @@
   <div class="header">
     <div class="container">
       <div class="logo">
-        <img class="logoImg" :src="logo" alt="logo" />
-        <img class="logoTitle" :src="logoTitle" />
+        <img
+          class="logoImg"
+          :src="logo"
+          alt="logo"
+        />
+        <img
+          class="logoTitle"
+          :src="logoTitle"
+        />
       </div>
       <div class="search">
         <el-input
@@ -75,7 +82,7 @@ export default defineComponent({
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
-      :deep(.el-input ) {
+      :deep(.el-input) {
         width: 368px;
         height: 42px;
         border: 1px solid #5e7eae;

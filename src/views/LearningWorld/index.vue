@@ -19,9 +19,7 @@
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
-                <el-breadcrumb-item :to="{ path: '/home' }"
-                  >首页</el-breadcrumb-item
-                >
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>学习天地</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
@@ -39,7 +37,11 @@
                     v-model="keyword"
                     placeholder="请输入关键字"
                   />
-                  <el-button type="primary" @click="init">搜索</el-button>
+                  <el-button
+                    type="primary"
+                    @click="init"
+                    >搜索</el-button
+                  >
                 </div>
               </div>
               <div class="list">
@@ -49,14 +51,24 @@
                   v-for="item in list"
                   @click="openDetails(item)"
                 >
-                  <img class="triangle" :src="triangleIcon" />
+                  <img
+                    class="triangle"
+                    :src="triangleIcon"
+                  />
 
                   <span class="title">{{ item.title }}</span>
                   <span class="time">{{ item?.time?.split(" ")[0] }}</span>
                 </div>
-                <el-empty v-else :image-size="150" description="暂无数据" />
+                <el-empty
+                  v-else
+                  :image-size="150"
+                  description="暂无数据"
+                />
               </div>
-              <div v-if="total" class="pagination">
+              <div
+                v-if="total"
+                class="pagination"
+              >
                 <el-pagination
                   background
                   layout="prev, pager, next"
@@ -71,9 +83,15 @@
               :loading="loading"
             ></Details>
           </div>
-          <div v-else class="content">
+          <div
+            v-else
+            class="content"
+          >
             <!-- 详情页 -->
-            <div v-if="isShow" class="details">
+            <div
+              v-if="isShow"
+              class="details"
+            >
               <div class="details-title">
                 <span class="title">{{ currentItem?.title }}</span>
                 <br />
@@ -111,10 +129,16 @@
                   :rules="rules"
                   label-width="100px"
                 >
-                  <el-form-item label="标题" prop="title">
+                  <el-form-item
+                    label="标题"
+                    prop="title"
+                  >
                     <el-input v-model="form.title" />
                   </el-form-item>
-                  <el-form-item label="详细内容" prop="content">
+                  <el-form-item
+                    label="详细内容"
+                    prop="content"
+                  >
                     <div class="editor">
                       <Toolbar
                         style="border-bottom: 1px solid #ccc"
@@ -133,7 +157,9 @@
                     </div>
                   </el-form-item>
                   <el-form-item label=" ">
-                    <el-button type="primary" @click="save(ruleFormRef)"
+                    <el-button
+                      type="primary"
+                      @click="save(ruleFormRef)"
                       >发表提问</el-button
                     >
                   </el-form-item>
@@ -142,12 +168,22 @@
             </div>
             <!-- 列表 -->
             <div v-else>
-              <div class="tools" v-if="role == '0'">
-                <div class="left" v-if="store.state.userInfo.uid">
-                  <el-button type="primary" @click="showAskQuestions"
+              <div
+                class="tools"
+                v-if="role == '0'"
+              >
+                <div
+                  class="left"
+                  v-if="store.state.userInfo.uid"
+                >
+                  <el-button
+                    type="primary"
+                    @click="showAskQuestions"
                     >提问</el-button
                   >
-                  <el-button type="primary" @click="myQuestions"
+                  <el-button
+                    type="primary"
+                    @click="myQuestions"
                     >我的提问</el-button
                   >
                 </div>
@@ -158,7 +194,11 @@
                     v-model="keyword"
                     placeholder="请输入关键字"
                   />
-                  <el-button type="primary" @click="init">搜索</el-button>
+                  <el-button
+                    type="primary"
+                    @click="init"
+                    >搜索</el-button
+                  >
                 </div>
               </div>
               <div class="list">
@@ -169,15 +209,33 @@
                   @click="openDetails(item)"
                 >
                   <!-- <img class="triangle" :src="triangleIcon" /> -->
-                  <span class="top" v-if="item.is_top == '1'">顶</span>
-                  <span class="hot" v-else-if="item.is_hot == '1'">热</span>
-                  <span class="empty" v-else></span>
+                  <span
+                    class="top"
+                    v-if="item.is_top == '1'"
+                    >顶</span
+                  >
+                  <span
+                    class="hot"
+                    v-else-if="item.is_hot == '1'"
+                    >热</span
+                  >
+                  <span
+                    class="empty"
+                    v-else
+                  ></span>
                   <span class="title">{{ item.title }}</span>
                   <span class="time">{{ item?.time?.split(" ")[0] }}</span>
                 </div>
-                <el-empty v-else :image-size="150" description="暂无数据" />
+                <el-empty
+                  v-else
+                  :image-size="150"
+                  description="暂无数据"
+                />
               </div>
-              <div v-if="total" class="pagination">
+              <div
+                v-if="total"
+                class="pagination"
+              >
                 <el-pagination
                   background
                   layout="prev, pager, next"
@@ -193,24 +251,8 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  computed,
-  watch,
-  onBeforeUnmount,
-  shallowRef,
-  ref,
-} from "vue";
-import {
-  getColumnOneList,
-  getStudyList,
-  getStudyInfo,
-  saveStudy,
-  getModelList,
-  getModelInfo,
-} from "@/api/index.js";
+import { defineComponent, reactive, toRefs, computed, watch, onBeforeUnmount, shallowRef, ref } from "vue";
+import { getColumnOneList, getStudyList, getStudyInfo, saveStudy, getModelList, getModelInfo } from "@/api/index.js";
 import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
 import Details from "@/components/Details/index.vue";
@@ -382,7 +424,7 @@ export default defineComponent({
         if (type != prevType) {
           init();
         }
-      }
+      },
     );
 
     const ModelInfo = (id: any) => {
@@ -451,7 +493,7 @@ export default defineComponent({
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // 显示提问页面
@@ -491,11 +533,7 @@ export default defineComponent({
               ElMessage.error("上传文件失败，" + res.message);
               return;
             }
-            insertFn(
-              res.data.file.path_url,
-              res.data.file.name,
-              res.data.file.path_url
-            );
+            insertFn(res.data.file.path_url, res.data.file.name, res.data.file.path_url);
           },
           metaWithUrl: true,
           // 单个文件上传成功之后
@@ -753,8 +791,8 @@ export default defineComponent({
               margin-top: 60px;
             }
           }
-          .pagination { 
-            margin-top:6px;
+          .pagination {
+            margin-top: 6px;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -917,7 +955,8 @@ export default defineComponent({
               margin-top: 60px;
             }
           }
-          .pagination { margin-top:6px;
+          .pagination {
+            margin-top: 6px;
             display: flex;
             flex-direction: row;
             justify-content: center;

@@ -14,14 +14,24 @@
               </div>
               <div class="name">{{ userInfo.name }}</div>
               <div class="level">{{ levelName }}</div>
-              <div class="invoiceInfo" @click="InvoiceInfo">【发票信息】</div>
+              <div
+                class="invoiceInfo"
+                @click="InvoiceInfo"
+              >
+                【发票信息】
+              </div>
               <div
                 class="changePassword"
                 @click="openPassword(rulePasswordFormRef)"
               >
                 【修改密码】
               </div>
-              <div class="logout" @click="logout">【退出】</div>
+              <div
+                class="logout"
+                @click="logout"
+              >
+                【退出】
+              </div>
             </div>
           </div>
         </div>
@@ -31,9 +41,7 @@
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
-                <el-breadcrumb-item :to="{ path: '/home' }"
-                  >首页</el-breadcrumb-item
-                >
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>个人中心</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
@@ -50,7 +58,10 @@
             >
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label="法定代表人" prop="legal_person_name">
+                  <el-form-item
+                    label="法定代表人"
+                    prop="legal_person_name"
+                  >
                     <el-input
                       v-model="userInfo.legal_person_name"
                       placeholder="法定代表人"
@@ -58,7 +69,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label=" " label-width="50px">
+                  <el-form-item
+                    label=" "
+                    label-width="50px"
+                  >
                     <el-input
                       v-model="userInfo.legal_person_tel"
                       placeholder="电话"
@@ -66,7 +80,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label="主管负责人" prop="person_charge_name">
+                  <el-form-item
+                    label="主管负责人"
+                    prop="person_charge_name"
+                  >
                     <el-input
                       v-model="userInfo.person_charge_name"
                       placeholder="主管负责人"
@@ -74,7 +91,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label=" " label-width="50px">
+                  <el-form-item
+                    label=" "
+                    label-width="50px"
+                  >
                     <el-input
                       v-model="userInfo.person_charge_tel"
                       placeholder="电话"
@@ -82,7 +102,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label="联系人" prop="contacts_name">
+                  <el-form-item
+                    label="联系人"
+                    prop="contacts_name"
+                  >
                     <el-input
                       v-model="userInfo.contacts_name"
                       placeholder="联系人"
@@ -90,7 +113,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label=" " label-width="50px">
+                  <el-form-item
+                    label=" "
+                    label-width="50px"
+                  >
                     <el-input
                       v-model="userInfo.contacts_tel"
                       placeholder="电话"
@@ -99,12 +125,21 @@
                 </el-col>
                 <el-col :span="12">
                   <el-form-item label=" ">
-                    <el-input v-model="userInfo.website" placeholder="网址" />
+                    <el-input
+                      v-model="userInfo.website"
+                      placeholder="网址"
+                    />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label=" " label-width="50px">
-                    <el-input v-model="userInfo.email" placeholder="邮箱" />
+                  <el-form-item
+                    label=" "
+                    label-width="50px"
+                  >
+                    <el-input
+                      v-model="userInfo.email"
+                      placeholder="邮箱"
+                    />
                   </el-form-item>
                 </el-col>
                 <!-- <el-col :span="12">
@@ -127,7 +162,10 @@
                   <h4 class="billing-info">开票信息：</h4>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="统一社会信用代码" prop="duty_paragraph">
+                  <el-form-item
+                    label="统一社会信用代码"
+                    prop="duty_paragraph"
+                  >
                     <el-input
                       v-model="userInfo.duty_paragraph"
                       placeholder="统一社会信用代码"
@@ -135,12 +173,21 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="开户银行" prop="bank">
-                    <el-input v-model="userInfo.bank" placeholder="名称" />
+                  <el-form-item
+                    label="开户银行"
+                    prop="bank"
+                  >
+                    <el-input
+                      v-model="userInfo.bank"
+                      placeholder="名称"
+                    />
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="开户银行账号" prop="bank_number">
+                  <el-form-item
+                    label="开户银行账号"
+                    prop="bank_number"
+                  >
                     <el-input
                       v-model="userInfo.bank_number"
                       placeholder="账号"
@@ -148,12 +195,21 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="联系电话" prop="landline">
-                    <el-input v-model="userInfo.landline" placeholder="电话" />
+                  <el-form-item
+                    label="联系电话"
+                    prop="landline"
+                  >
+                    <el-input
+                      v-model="userInfo.landline"
+                      placeholder="电话"
+                    />
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="注册地址" prop="area_info">
+                  <el-form-item
+                    label="注册地址"
+                    prop="area_info"
+                  >
                     <el-input
                       v-model="userInfo.area_info"
                       placeholder="请输入营业执照上营业上的注册地址"
@@ -161,7 +217,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="邮寄地址" prop="mailing_area">
+                  <el-form-item
+                    label="邮寄地址"
+                    prop="mailing_area"
+                  >
                     <el-input
                       v-model="userInfo.mailing_area"
                       placeholder="请输入省市区详细收件地址"
@@ -169,7 +228,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="公司logo" prop="logo">
+                  <el-form-item
+                    label="公司logo"
+                    prop="logo"
+                  >
                     <el-upload
                       class="avatar-uploader"
                       action="/Home/Upload/upload"
@@ -182,7 +244,9 @@
                         :src="userInfo.logo"
                         class="avatar"
                       />
-                      <el-icon v-else class="avatar-uploader-icon"
+                      <el-icon
+                        v-else
+                        class="avatar-uploader-icon"
                         ><Plus
                       /></el-icon>
                     </el-upload>
@@ -190,7 +254,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="团队风采" prop="team_style_arr">
+                  <el-form-item
+                    label="团队风采"
+                    prop="team_style_arr"
+                  >
                     <el-upload
                       :file-list="team_style_arr"
                       list-type="picture-card"
@@ -225,7 +292,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="企业简介" prop="info">
+                  <el-form-item
+                    label="企业简介"
+                    prop="info"
+                  >
                     <el-input
                       v-model="userInfo.info"
                       type="textarea"
@@ -237,7 +307,10 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                  <el-form-item label="业务范围" prop="business">
+                  <el-form-item
+                    label="业务范围"
+                    prop="business"
+                  >
                     <el-input
                       v-model="userInfo.business"
                       type="textarea"
@@ -251,10 +324,14 @@
 
                 <el-col :span="24">
                   <el-form-item label=" ">
-                    <el-button type="primary" @click="save(ruleFormRef)"
+                    <el-button
+                      type="primary"
+                      @click="save(ruleFormRef)"
                       >保存草稿</el-button
                     >
-                    <el-button type="primary" @click="submit(ruleFormRef)"
+                    <el-button
+                      type="primary"
+                      @click="submit(ruleFormRef)"
                       >提交审核</el-button
                     >
                   </el-form-item>
@@ -266,7 +343,10 @@
       </div>
       <!-- 图片查看弹窗 -->
       <el-dialog v-model="dialogVisible">
-        <img w-full :src="dialogImageUrl" />
+        <img
+          w-full
+          :src="dialogImageUrl"
+        />
       </el-dialog>
 
       <!-- 修改密码 -->
@@ -284,21 +364,30 @@
           ref="rulePasswordFormRef"
           :rules="passwordRules"
         >
-          <el-form-item label="旧密码" prop="password">
+          <el-form-item
+            label="旧密码"
+            prop="password"
+          >
             <el-input
               type="password"
               v-model="form.password"
               autocomplete="off"
             />
           </el-form-item>
-          <el-form-item label="新密码" prop="new_password">
+          <el-form-item
+            label="新密码"
+            prop="new_password"
+          >
             <el-input
               type="password"
               v-model="form.new_password"
               autocomplete="off"
             />
           </el-form-item>
-          <el-form-item label="确认密码" prop="confirm_password">
+          <el-form-item
+            label="确认密码"
+            prop="confirm_password"
+          >
             <el-input
               type="password"
               v-model="form.confirm_password"
@@ -322,33 +411,20 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  computed,
-  onMounted,
-  ref,
-} from "vue";
+import { defineComponent, reactive, toRefs, computed, onMounted, ref } from "vue";
 import {
   userInvoiceInfo,
   updateUserPassword,
   getLogout,
   getUserInfoAll,
   saveUserInfoAll,
-  userInfoExamine
+  userInfoExamine,
 } from "@/api/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import store from "@/store";
 import { getToken, removeToken, getUid, removeUid } from "@/utils/cookies.js";
 import router from "@/router";
-import type {
-  FormInstance,
-  FormRules,
-  UploadProps,
-  UploadUserFile,
-  Action,
-} from "element-plus";
+import type { FormInstance, FormRules, UploadProps, UploadUserFile, Action } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 
 export default defineComponent({
@@ -549,14 +625,12 @@ export default defineComponent({
               };
             }) || [];
           honors_qualifications_arr.value =
-            userInfo.honors_qualifications
-              ?.split(";")
-              .map((r: any, index: Number) => {
-                return {
-                  name: "name" + index,
-                  url: r,
-                };
-              }) || [];
+            userInfo.honors_qualifications?.split(";").map((r: any, index: Number) => {
+              return {
+                name: "name" + index,
+                url: r,
+              };
+            }) || [];
           store.commit("setUserInfo", userInfo);
           state.userInfo = userInfo;
         } else {
@@ -593,10 +667,7 @@ export default defineComponent({
       } else {
         if (state.form.confirm_password !== "") {
           if (!rulePasswordFormRef.value) return;
-          rulePasswordFormRef.value.validateField(
-            "confirm_password",
-            () => null
-          );
+          rulePasswordFormRef.value.validateField("confirm_password", () => null);
         }
         callback();
       }
@@ -777,11 +848,8 @@ export default defineComponent({
             uid: getUid(),
             tokenid: getToken(),
             ...state.userInfo,
-            team_style:
-              team_style_arr.value?.map((r) => r.url).join(";") || null,
-            honors_qualifications:
-              honors_qualifications_arr.value?.map((r) => r.url).join(";") ||
-              null,
+            team_style: team_style_arr.value?.map((r) => r.url).join(";") || null,
+            honors_qualifications: honors_qualifications_arr.value?.map((r) => r.url).join(";") || null,
           };
           saveUserInfoAll(params).then((res: any) => {
             if (res.code == "0") {
@@ -807,11 +875,8 @@ export default defineComponent({
             uid: getUid(),
             tokenid: getToken(),
             ...state.userInfo,
-            team_style:
-              team_style_arr.value?.map((r) => r.url).join(";") || null,
-            honors_qualifications:
-              honors_qualifications_arr.value?.map((r) => r.url).join(";") ||
-              null,
+            team_style: team_style_arr.value?.map((r) => r.url).join(";") || null,
+            honors_qualifications: honors_qualifications_arr.value?.map((r) => r.url).join(";") || null,
           };
           userInfoExamine(params).then((res: any) => {
             if (res.code == "0") {

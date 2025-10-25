@@ -8,9 +8,9 @@
             <!-- 荣誉证书 -->
             <el-col :span="12">
               <div class="box">
-                <SmoothCarousel 
-                  :items="imgs" 
-                  height="400px" 
+                <SmoothCarousel
+                  :items="imgs"
+                  height="400px"
                   :interval="3000"
                   :show-indicators="false"
                 />
@@ -61,7 +61,11 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">工作动态</div>
-                  <span class="more" @click="toDynamic(2)">更多&gt;&gt;</span>
+                  <span
+                    class="more"
+                    @click="toDynamic(2)"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
                 <ModelList
                   type="9"
@@ -76,7 +80,9 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">会员动态</div>
-                  <span class="more" @click="toMemberdynamics"
+                  <span
+                    class="more"
+                    @click="toMemberdynamics"
                     >更多&gt;&gt;</span
                   >
                 </div>
@@ -94,7 +100,11 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">其他资讯</div>
-                  <span class="more" @click="toDynamic(1)">更多&gt;&gt;</span>
+                  <span
+                    class="more"
+                    @click="toDynamic(1)"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
                 <ModelList
                   type="8"
@@ -173,7 +183,11 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">政策法规</div>
-                  <span class="more" @click="toRegulations">更多&gt;&gt;</span>
+                  <span
+                    class="more"
+                    @click="toRegulations"
+                    >更多&gt;&gt;</span
+                  >
                 </div>
                 <ModelList
                   type="11"
@@ -188,7 +202,9 @@
               <div class="box">
                 <div class="box-header">
                   <div class="sub-title">法律解读</div>
-                  <span class="more" @click="toLegalInterpretation"
+                  <span
+                    class="more"
+                    @click="toLegalInterpretation"
                     >更多&gt;&gt;</span
                   >
                 </div>
@@ -207,21 +223,25 @@
             <div class="box-header">
               <div class="sub-title">会员登录</div>
             </div>
-            <div v-if="store.state.userInfo.uid" class="user-info">
-              <span class="level">{{
-                levels?.filter((r) => r.level == store.state.userInfo.level)[0]
-                  .name
-              }}</span>
-              <img class="logo" :src="store.state.userInfo.logo" />
+            <div
+              v-if="store.state.userInfo.uid"
+              class="user-info"
+            >
+              <span class="level">{{ levels?.filter((r) => r.level == store.state.userInfo.level)[0].name }}</span>
+              <img
+                class="logo"
+                :src="store.state.userInfo.logo"
+              />
               <p class="name">{{ store.state.userInfo.name }}</p>
               <p class="info_link">
-                <span @click="toPersonalCenter">【个人中心】</span>/<span
-                  @click="logout"
-                  >【退出】</span
-                >
+                <span @click="toPersonalCenter">【个人中心】</span>/<span @click="logout">【退出】</span>
               </p>
             </div>
-            <el-form :model="form" label-width="0px" v-else>
+            <el-form
+              :model="form"
+              label-width="0px"
+              v-else
+            >
               <el-form-item label="">
                 <el-input
                   v-model="form.username"
@@ -239,7 +259,11 @@
                 />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
+                <el-button
+                  type="primary"
+                  @click="login"
+                  >登录</el-button
+                >
               </el-form-item>
             </el-form>
           </div>
@@ -247,7 +271,11 @@
           <div class="box">
             <div class="box-header">
               <div class="sub-title">通知公告</div>
-              <span class="more" @click="toAnnouncements">更多&gt;&gt;</span>
+              <span
+                class="more"
+                @click="toAnnouncements"
+                >更多&gt;&gt;</span
+              >
             </div>
             <ModelList
               type="24"
@@ -257,15 +285,24 @@
             ></ModelList>
           </div>
           <div class="info">
-            <div class="info-item consultant-expert" @click="toConsultant">
+            <div
+              class="info-item consultant-expert"
+              @click="toConsultant"
+            >
               <span class="title">咨询专家</span>
               <span>Consultant Expert</span>
             </div>
-            <div class="info-item training-videos" @click="toTrainingVideos">
+            <div
+              class="info-item training-videos"
+              @click="toTrainingVideos"
+            >
               <span class="title">培训视频列表</span>
               <span>List of Training Videos</span>
             </div>
-            <div class="info-item transaction-data" @click="toTransactionData">
+            <div
+              class="info-item transaction-data"
+              @click="toTransactionData"
+            >
               <span class="title">招投标交易数据</span>
               <span>Bidding And Transaction Data</span>
             </div>
@@ -309,7 +346,9 @@
           <div class="box">
             <div class="box-header">
               <div class="sub-title">诚信自律</div>
-              <span class="more" @click="toDisciplineConvention"
+              <span
+                class="more"
+                @click="toDisciplineConvention"
                 >更多&gt;&gt;</span
               >
             </div>
@@ -328,7 +367,11 @@
             <div class="sub-title">友情链接</div>
           </div>
           <div class="link-box">
-            <div class="linklist" @mouseover="mouseover" @mouseout="mouseout">
+            <div
+              class="linklist"
+              @mouseover="mouseover"
+              @mouseout="mouseout"
+            >
               <img
                 v-for="(item, index) in linkList"
                 :key="index"
@@ -344,14 +387,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  onMounted,
-  ref,
-  onBeforeUnmount,
-} from "vue";
+import { defineComponent, reactive, toRefs, onMounted, ref, onBeforeUnmount } from "vue";
 import linkImg from "assets/images/links.png";
 import { Iphone, Lock } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -362,22 +398,8 @@ import store from "@/store";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import $ from "jquery";
-import {
-  getBannerList,
-  getLogin,
-  getLogout,
-  getUserInfoAll,
-  getMemberList,
-  getLinksList,
-} from "@/api/index.js";
-import {
-  setToken,
-  getToken,
-  removeToken,
-  setUid,
-  getUid,
-  removeUid,
-} from "@/utils/cookies.js";
+import { getBannerList, getLogin, getLogout, getUserInfoAll, getMemberList, getLinksList } from "@/api/index.js";
+import { setToken, getToken, removeToken, setUid, getUid, removeUid } from "@/utils/cookies.js";
 import Floating from "./components/Floating.vue";
 
 export default defineComponent({
@@ -422,51 +444,51 @@ export default defineComponent({
     const mockImgs = [
       {
         logo: "https://picsum.photos/800/400?random=1",
-        title: "荣誉证书1"
+        title: "荣誉证书1",
       },
       {
         logo: "https://picsum.photos/800/400?random=2",
-        title: "荣誉证书2"
+        title: "荣誉证书2",
       },
       {
         logo: "https://picsum.photos/800/400?random=3",
-        title: "荣誉证书3"
+        title: "荣誉证书3",
       },
       {
         logo: "https://picsum.photos/800/400?random=4",
-        title: "荣誉证书4"
+        title: "荣誉证书4",
       },
       {
         logo: "https://picsum.photos/800/400?random=5",
-        title: "荣誉证书5"
+        title: "荣誉证书5",
       },
       {
         logo: "https://picsum.photos/800/400?random=6",
-        title: "荣誉证书6"
+        title: "荣誉证书6",
       },
       {
         logo: "https://picsum.photos/800/400?random=7",
-        title: "荣誉证书7"
+        title: "荣誉证书7",
       },
       {
         logo: "https://picsum.photos/800/400?random=8",
-        title: "荣誉证书8"
+        title: "荣誉证书8",
       },
       {
         logo: "https://picsum.photos/800/400?random=9",
-        title: "荣誉证书9"
+        title: "荣誉证书9",
       },
       {
         logo: "https://picsum.photos/800/400?random=10",
-        title: "荣誉证书10"
-      }
+        title: "荣誉证书10",
+      },
     ];
 
     const bannerList = (type: any) => {
       // 为了测试效果，我们使用mock数据
       // state.imgs = mockImgs;
       // debugger
-      
+
       // 如果需要使用真实数据，可以取消下面的注释
       getBannerList({ type }).then((res: any) => {
         if (res.code == "0") {
@@ -814,7 +836,7 @@ export default defineComponent({
             width: 10px;
             height: 10px;
           }
-          
+
           // 添加平滑过渡效果
           :deep(.el-carousel__container) {
             transition: transform 0.5s ease-in-out;
@@ -1152,4 +1174,5 @@ export default defineComponent({
       }
     }
   }
-}</style>
+}
+</style>

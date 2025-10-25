@@ -19,9 +19,7 @@
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
-                <el-breadcrumb-item :to="{ path: '/home' }"
-                  >首页</el-breadcrumb-item
-                >
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>会员风采</el-breadcrumb-item>
                 <el-breadcrumb-item>会员动态</el-breadcrumb-item>
               </el-breadcrumb>
@@ -37,7 +35,11 @@
                     v-model="keyword"
                     placeholder="请输入关键字"
                   />
-                  <el-button type="primary" @click="init">搜索</el-button>
+                  <el-button
+                    type="primary"
+                    @click="init"
+                    >搜索</el-button
+                  >
                 </div>
               </div>
               <div class="list">
@@ -47,14 +49,24 @@
                   v-for="item in list"
                   @click="openDetails(item)"
                 >
-                  <img class="triangle" :src="triangleIcon" />
+                  <img
+                    class="triangle"
+                    :src="triangleIcon"
+                  />
 
                   <span class="title">{{ item.title }}</span>
                   <span class="time">{{ item?.time?.split(" ")[0] }}</span>
                 </div>
-                <el-empty v-else :image-size="150" description="暂无数据" />
+                <el-empty
+                  v-else
+                  :image-size="150"
+                  description="暂无数据"
+                />
               </div>
-              <div v-if="total" class="pagination">
+              <div
+                v-if="total"
+                class="pagination"
+              >
                 <el-pagination
                   background
                   layout="prev, pager, next"
@@ -177,7 +189,7 @@ export default defineComponent({
         if (type != prevType) {
           init();
         }
-      }
+      },
     );
 
     const ModelInfo = (id: any) => {
@@ -218,7 +230,7 @@ export default defineComponent({
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
@@ -366,8 +378,8 @@ export default defineComponent({
               margin-top: 60px;
             }
           }
-          .pagination { 
-            margin-top:6px;
+          .pagination {
+            margin-top: 6px;
             display: flex;
             flex-direction: row;
             justify-content: center;

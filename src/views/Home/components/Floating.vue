@@ -1,15 +1,22 @@
 <template>
-  <div class="floating" v-show="store.state.isFloating">
+  <div
+    class="floating"
+    v-show="store.state.isFloating"
+  >
     <div class="box">
       <div class="box-header">
         <div class="sub-title">重要通知</div>
-        <span class="more" @click="toAnnouncements">更多&gt;&gt;</span>
+        <span
+          class="more"
+          @click="toAnnouncements"
+          >更多&gt;&gt;</span
+        >
       </div>
       <ModelList
         type="24"
-				heavy="1"
+        heavy="1"
         path="announcements"
-				:limit="3"
+        :limit="3"
         @toDetails="toDetails"
       ></ModelList>
     </div>
@@ -73,8 +80,8 @@ export default defineComponent({
   z-index: 999;
   border-radius: 6px;
   padding: 0 16px;
-  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1), 4px -4px 2px rgba(0, 0, 0, 0.1),
-    -4px 4px 2px rgba(0, 0, 0, 0.1), -4px -4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1), 4px -4px 2px rgba(0, 0, 0, 0.1), -4px 4px 2px rgba(0, 0, 0, 0.1),
+    -4px -4px 2px rgba(0, 0, 0, 0.1);
   .box {
     margin: 10px 0;
     .box-header {

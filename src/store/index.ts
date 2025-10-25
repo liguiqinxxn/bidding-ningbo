@@ -10,7 +10,7 @@ export default createStore({
       name: "",
     },
     keyword: "",
-    isFloating: false
+    isFloating: false,
   },
   mutations: {
     setUserInfo(state, value) {

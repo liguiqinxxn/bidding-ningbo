@@ -57,8 +57,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/association",
         name: "关于协会",
-        component: () =>
-          import(/* association */ "../views/Association/index.vue"),
+        component: () => import(/* association */ "../views/Association/index.vue"),
       },
 
       {
@@ -80,14 +79,12 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/membershiplist",
         name: "会员名单",
-        component: () =>
-          import(/* membershiplist */ "../views/MemberShipList/index.vue"),
+        component: () => import(/* membershiplist */ "../views/MemberShipList/index.vue"),
       },
       {
         path: "/memberdynamics",
         name: "会员动态",
-        component: () =>
-          import(/* memberdynamics */ "../views/MemberDynamics/index.vue"),
+        component: () => import(/* memberdynamics */ "../views/MemberDynamics/index.vue"),
       },
 
       {
@@ -108,10 +105,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/policiesRegulations",
         name: "政策法规",
-        component: () =>
-          import(
-            /* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"
-          ),
+        component: () => import(/* PoliciesRegulations */ "../views/PoliciesRegulations/index.vue"),
       },
       {
         path: "/legalInterpretation",
@@ -126,8 +120,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/learningWorld",
         name: "学习天地",
-        component: () =>
-          import(/* learningWorld */ "../views/LearningWorld/index.vue"),
+        component: () => import(/* learningWorld */ "../views/LearningWorld/index.vue"),
       },
       {
         path: "/disciplineConvention",
@@ -142,10 +135,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/integritySelfDiscipline",
         name: "诚信自律",
-        component: () =>
-          import(
-            /* IntegritySelfDiscipline */ "../views/IntegritySelfDiscipline/index.vue"
-          ),
+        component: () => import(/* IntegritySelfDiscipline */ "../views/IntegritySelfDiscipline/index.vue"),
       },
 
       {
@@ -161,8 +151,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/proceedings",
         name: "电子会刊",
-        component: () =>
-          import(/* PoliciesRegulations */ "../views/Proceedings/index.vue"),
+        component: () => import(/* PoliciesRegulations */ "../views/Proceedings/index.vue"),
       },
 
       {
@@ -188,8 +177,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/personalCenter",
         name: "个人中心",
-        component: () =>
-          import(/* personalCenter */ "../views/PersonalCenter/index.vue"),
+        component: () => import(/* personalCenter */ "../views/PersonalCenter/index.vue"),
       },
       {
         path: "/managementMeasures",
@@ -204,26 +192,22 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/consultantExpert",
         name: "咨询专家",
-        component: () =>
-          import(/* consultantExpert */ "../views/ConsultantExpert/index.vue"),
+        component: () => import(/* consultantExpert */ "../views/ConsultantExpert/index.vue"),
       },
       {
         path: "/trainingVideos",
         name: "培训视频",
-        component: () =>
-          import(/* trainingVideos */ "../views/TrainingVideos/index.vue"),
+        component: () => import(/* trainingVideos */ "../views/TrainingVideos/index.vue"),
       },
       {
         path: "/transactionData",
         name: "招投标交易数据",
-        component: () =>
-          import(/* trainingVideos */ "../views/TransactionData/index.vue"),
+        component: () => import(/* trainingVideos */ "../views/TransactionData/index.vue"),
       },
       {
         path: "/announcements",
         name: "通知公告",
-        component: () =>
-          import(/* announcements */ "../views/Announcements/index.vue"),
+        component: () => import(/* announcements */ "../views/Announcements/index.vue"),
       },
     ],
   },

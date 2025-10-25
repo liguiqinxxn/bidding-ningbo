@@ -1,6 +1,9 @@
 <template>
   <div v-loading="loading">
-    <div v-if="dataSource?.length" class="model-list">
+    <div
+      v-if="dataSource?.length"
+      class="model-list"
+    >
       <div
         class="model-item"
         v-for="item in dataSource"
@@ -10,7 +13,11 @@
         <span class="time">{{ item?.time?.split(" ")[0].split(" ")[0] }}</span>
       </div>
     </div>
-    <el-empty v-else :image-size="150" description="暂无数据" />
+    <el-empty
+      v-else
+      :image-size="150"
+      description="暂无数据"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -80,7 +87,7 @@ export default defineComponent({
           init();
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return { ...toRefs(state), toDetails };

@@ -1,14 +1,19 @@
 <template>
-  <div class="details" v-loading="loading" background="#fff">
+  <div
+    class="details"
+    v-loading="loading"
+    background="#fff"
+  >
     <h2 class="title">{{ currentItem?.title }}</h2>
-    <div class="info" v-if="!loading">
+    <div
+      class="info"
+      v-if="!loading"
+    >
       <span class="info-item"
         >发布时间：<span>{{ currentItem?.time }} </span>
       </span>
       <span class="info-item"
-        >阅读量：<span>
-          {{ currentItem?.hits }}次
-        </span></span
+        >阅读量：<span> {{ currentItem?.hits }}次 </span></span
       >
     </div>
     <p v-html="currentItem?.content"></p>

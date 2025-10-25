@@ -1,24 +1,39 @@
 <template>
-  <div class="smooth-carousel" ref="carouselRef">
-    <div 
-      class="carousel-wrapper" 
+  <div
+    class="smooth-carousel"
+    ref="carouselRef"
+  >
+    <div
+      class="carousel-wrapper"
       :style="{ transform: `translateX(${offset}px)` }"
       @mouseenter="pauseAutoPlay"
       @mouseleave="resumeAutoPlay"
     >
-      <div 
-        v-for="(item, index) in clonedItems" 
-        :key="index" 
+      <div
+        v-for="(item, index) in clonedItems"
+        :key="index"
         class="carousel-item"
       >
-        <img class="carousel-img" :src="item.logo" :alt="item.title" />
-        <p class="title" v-if="item.title">{{ item.title }}</p>
+        <img
+          class="carousel-img"
+          :src="item.logo"
+          :alt="item.title"
+        />
+        <p
+          class="title"
+          v-if="item.title"
+        >
+          {{ item.title }}
+        </p>
       </div>
     </div>
     <!-- 指示器 -->
-    <div class="carousel-indicators" v-if="showIndicators && originalItems.length > 1">
-      <span 
-        v-for="(item, index) in originalItems" 
+    <div
+      class="carousel-indicators"
+      v-if="showIndicators && originalItems.length > 1"
+    >
+      <span
+        v-for="(item, index) in originalItems"
         :key="index"
         :class="{ active: currentIndex === index }"
         @click="goToSlide(index)"
@@ -28,31 +43,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue";
 
 export default defineComponent({
-  name: 'SmoothCarousel',
+  name: "SmoothCarousel",
   props: {
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     height: {
       type: String,
-      default: '400px'
+      default: "400px",
     },
     interval: {
       type: Number,
-      default: 3000
+      default: 3000,
     },
     showIndicators: {
       type: Boolean,
-      default: true
+      default: true,
     },
     autoPlay: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props) {
     const carouselRef = ref<HTMLElement | null>(null);
@@ -65,14 +80,14 @@ export default defineComponent({
     // 克隆项目以实现无限循环
     const clonedItems = computed(() => {
       if (!props.items || props.items.length === 0) return [];
-      
+
       // 只有当项目数量大于1时才需要克隆
       if (props.items.length <= 1) {
         return props.items as any[];
       }
-      
+
       // 在开头添加最后一项，在结尾添加第一项
-      const items = [...props.items as any[]];
+      const items = [...(props.items as any[])];
       items.unshift(props.items[props.items.length - 1]); // 在开头添加最后一项
       items.push(props.items[0]); // 在结尾添加第一项
       return items;
@@ -83,7 +98,7 @@ export default defineComponent({
     // 获取单个轮播项的宽度
     const getItemWidth = () => {
       if (carouselRef.value && clonedItems.value.length > 0) {
-        const firstItem = carouselRef.value.querySelector('.carousel-item');
+        const firstItem = carouselRef.value.querySelector(".carousel-item");
         if (firstItem) {
           itemWidth.value = firstItem.clientWidth;
           return itemWidth.value;
@@ -100,13 +115,13 @@ export default defineComponent({
         const newOffset = -width * (currentIndex.value + 1);
         if (immediate) {
           // 立即设置，无过渡效果
-          const wrapper = carouselRef.value?.querySelector('.carousel-wrapper') as HTMLElement;
+          const wrapper = carouselRef.value?.querySelector(".carousel-wrapper") as HTMLElement;
           if (wrapper) {
-            wrapper.style.transition = 'none';
+            wrapper.style.transition = "none";
             offset.value = newOffset;
             // 强制重绘
             wrapper.offsetHeight;
-            wrapper.style.transition = '';
+            wrapper.style.transition = "";
           }
         } else {
           offset.value = newOffset;
@@ -117,7 +132,7 @@ export default defineComponent({
     // 下一张
     const next = () => {
       if (isTransitioning.value || clonedItems.value.length <= 1) return;
-      
+
       isTransitioning.value = true;
       currentIndex.value++;
       updateOffset();
@@ -140,7 +155,7 @@ export default defineComponent({
     // 上一张
     const prev = () => {
       if (isTransitioning.value || clonedItems.value.length <= 1) return;
-      
+
       isTransitioning.value = true;
       currentIndex.value--;
       updateOffset();
@@ -163,11 +178,11 @@ export default defineComponent({
     // 跳转到指定幻灯片
     const goToSlide = (index: number) => {
       if (isTransitioning.value || index === currentIndex.value || index >= props.items.length) return;
-      
+
       isTransitioning.value = true;
       currentIndex.value = index;
       updateOffset();
-      
+
       setTimeout(() => {
         isTransitioning.value = false;
       }, 500);
@@ -176,7 +191,7 @@ export default defineComponent({
     // 开始自动播放
     const startAutoPlay = () => {
       if (!props.autoPlay) return;
-      
+
       if (autoPlayTimer.value) {
         clearInterval(autoPlayTimer.value);
       }
@@ -212,13 +227,17 @@ export default defineComponent({
     };
 
     // 监听items变化
-    watch(() => props.items, () => {
-      nextTick(() => {
-        getItemWidth();
-        currentIndex.value = 0;
-        updateOffset(true);
-      });
-    }, { deep: true });
+    watch(
+      () => props.items,
+      () => {
+        nextTick(() => {
+          getItemWidth();
+          currentIndex.value = 0;
+          updateOffset(true);
+        });
+      },
+      { deep: true },
+    );
 
     // 监听窗口大小变化
     const handleResize = () => {
@@ -228,14 +247,14 @@ export default defineComponent({
 
     onMounted(() => {
       initCarousel();
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
     });
 
     onUnmounted(() => {
       if (autoPlayTimer.value) {
         clearInterval(autoPlayTimer.value);
       }
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     });
 
     return {
@@ -248,9 +267,9 @@ export default defineComponent({
       prev,
       goToSlide,
       pauseAutoPlay,
-      resumeAutoPlay
+      resumeAutoPlay,
     };
-  }
+  },
 });
 </script>
 
@@ -272,7 +291,7 @@ export default defineComponent({
       width: 100%;
       height: 100%;
       flex-shrink: 0;
-      
+
       .carousel-img {
         width: 100%;
         height: 80%;

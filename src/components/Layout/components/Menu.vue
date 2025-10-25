@@ -10,11 +10,12 @@
       text-color="#fff"
       active-text-color="#fff"
     >
-      <template v-for="items in columnList" :key="items.id">
+      <template
+        v-for="items in columnList"
+        :key="items.id"
+      >
         <template v-if="items.son && items.son.length">
-          <el-sub-menu
-            :index="'/' + items.path"
-          >
+          <el-sub-menu :index="'/' + items.path">
             <template #title>{{ items.name }}</template>
             <el-menu-item
               :index="item.path"
@@ -26,9 +27,7 @@
           </el-sub-menu>
         </template>
         <template v-else>
-          <el-menu-item :index="'/' + items.path">{{
-            items.name
-          }}</el-menu-item>
+          <el-menu-item :index="'/' + items.path">{{ items.name }}</el-menu-item>
         </template>
       </template>
     </el-menu>
@@ -36,14 +35,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  ref,
-  toRefs,
-  onUnmounted,
-  onMounted,
-} from "vue";
+import { defineComponent, reactive, ref, toRefs, onUnmounted, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { getColumnList } from "@/api/index.js";
 import { useRouter, useRoute } from "vue-router";

@@ -17,14 +17,15 @@
             <div class="breadcrumb">
               <span>您的当前位置：</span>
               <el-breadcrumb separator=">>">
-                <el-breadcrumb-item :to="{ path: '/home' }"
-                  >首页</el-breadcrumb-item
-                >
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>会员风采</el-breadcrumb-item>
               </el-breadcrumb>
             </div>
           </div>
-          <div class="content" :loaing="loading">
+          <div
+            class="content"
+            :loaing="loading"
+          >
             <div v-if="!isShow">
               <div class="list">
                 <div
@@ -33,15 +34,28 @@
                   v-for="item in memberList"
                   @click="openDetails(item)"
                 >
-                  <img class="triangle" :src="triangleIcon" />
+                  <img
+                    class="triangle"
+                    :src="triangleIcon"
+                  />
 
-                  <img class="logo" :src="item.logo" />
+                  <img
+                    class="logo"
+                    :src="item.logo"
+                  />
                   <span class="name">{{ item.name }}</span>
                 </div>
-                <el-empty v-else :image-size="150" description="暂无数据" />
+                <el-empty
+                  v-else
+                  :image-size="150"
+                  description="暂无数据"
+                />
               </div>
 
-              <div v-if="total" class="pagination">
+              <div
+                v-if="total"
+                class="pagination"
+              >
                 <el-pagination
                   background
                   layout="prev, pager, next"
@@ -50,7 +64,10 @@
                 />
               </div>
             </div>
-            <div v-else class="details">
+            <div
+              v-else
+              class="details"
+            >
               <div class="details-title">
                 <img :src="currentItem?.logo" />
                 <span>{{ currentItem?.name }}</span>
@@ -84,9 +101,7 @@
                 <div class="imgs">
                   <img
                     :src="item"
-                    v-for="item in currentItem?.team_style
-                      ?.split(';')
-                      .filter((r) => r)"
+                    v-for="item in currentItem?.team_style?.split(';').filter((r) => r)"
                   />
                 </div>
               </div>
@@ -96,9 +111,7 @@
                 </div>
                 <div class="imgs">
                   <img
-                    v-for="item in currentItem?.honors_qualifications
-                      ?.split(';')
-                      .filter((r) => r)"
+                    v-for="item in currentItem?.honors_qualifications?.split(';').filter((r) => r)"
                     :src="item ? item : ''"
                   />
                 </div>
@@ -111,14 +124,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  reactive,
-  toRefs,
-  watch,
-  computed,
-} from "vue";
+import { defineComponent, onMounted, reactive, toRefs, watch, computed } from "vue";
 import { getMemberList, getMemberInfo } from "@/api/index.js";
 import Sidebar from "@/components/Sidebar/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
@@ -228,7 +234,7 @@ export default defineComponent({
         if (level != prevLevel) {
           init();
         }
-      }
+      },
     );
 
     const MemberInfo = (id: any) => {
@@ -277,7 +283,7 @@ export default defineComponent({
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     return {
