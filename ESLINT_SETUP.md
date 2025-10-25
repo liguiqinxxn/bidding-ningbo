@@ -16,6 +16,9 @@
 10. `lint-staged` - 对暂存文件运行 linters
 11. `@commitlint/config-conventional` - Commitlint 规范配置
 12. `@commitlint/cli` - Commitlint 命令行工具
+13. `stylelint` - CSS 样式规范检查工具
+14. `stylelint-config-standard` - Stylelint 标准配置
+15. `stylelint-config-recommended-vue` - Vue 文件样式推荐配置
 
 ## 配置文件
 
@@ -65,6 +68,11 @@
    - 强制执行 Conventional Commits 规范
    - 确保提交信息格式统一
 
+7. **Stylelint 集成**：
+   - 集成了 Stylelint 样式规范检查工具
+   - 支持 CSS、Less 和 Vue 文件中的样式检查
+   - 与 husky 和 lint-staged 集成，在 Git 提交时自动检查样式
+
 ## 使用方法
 
 ### 检查代码质量问题
@@ -75,6 +83,15 @@ npm run lint
 ### 自动修复可修复的问题
 ```bash
 npm run lint:fix
+```
+
+### Stylelint 样式检查
+```bash
+# 检查样式问题
+npm run stylelint
+
+# 自动修复样式问题
+npm run stylelint:fix
 ```
 
 ### Commitlint 规范
@@ -106,6 +123,53 @@ npm run lint:fix
 - `no-redeclare`: 错误（禁止重复声明变量）
 - `new-cap`: 错误（要求构造函数首字母大写）
 
+### Stylelint 规则
+
+1. **颜色相关规则**：
+   - `color-hex-length`: 要求颜色值尽可能简写（例如将 `#ffffff` 简写为 `#fff`）
+   - `color-no-invalid-hex`: 禁止使用无效的十六进制颜色值
+
+2. **字体相关规则**：
+   - `font-family-name-quotes`: 要求在字体名称中使用双引号而不是单引号
+   - `font-family-no-duplicate-names`: 禁止重复的字体名称
+
+3. **选择器相关规则**：
+   - `no-descending-specificity`: 禁止低优先级的选择器出现在高优先级的选择器之后
+   - `no-duplicate-selectors`: 禁止使用重复的选择器
+
+4. **属性相关规则**：
+   - `property-no-unknown`: 禁止使用未知的 CSS 属性
+   - `declaration-no-important`: 禁止使用 `!important`
+
+5. **单位相关规则**：
+   - `unit-no-unknown`: 禁止使用未知的单位
+
+6. **代码结构规则**：
+   - `block-no-empty`: 禁止空的规则块
+
+7. **类名规则**：
+   - `selector-class-pattern`: 允许使用 kebab-case 命名和 Element UI 的类名（如 `el-dialog__body`）
+
+8. **其他规则**：
+   - `no-duplicate-at-import-rules`: 禁止使用重复的 `@import`
+
+## Prettier CSS 格式化
+
+Prettier 会自动处理 CSS 文件中的格式化，包括：
+
+1. **冒号空格处理**：
+   - 自动在 CSS 属性声明的冒号后添加空格
+   - 移除冒号前的多余空格
+   - 例如：`color:#FFF` 会被格式化为 `color: #fff`
+
+2. **颜色值格式化**：
+   - 自动将颜色值转换为小写
+   - 尽可能简写颜色值（如 `#FFFFFF` 转换为 `#fff`）
+
+3. **其他格式化**：
+   - 统一缩进和换行
+   - 标准化属性顺序
+
 ## 注意事项
 
 1. 由于项目使用的是较旧版本的 TypeScript (4.1.6)，我们安装了兼容的 ESLint 插件版本
@@ -115,3 +179,6 @@ npm run lint:fix
 5. 配置文件中添加了详细的注释说明，便于理解和维护
 6. 集成了 husky 和 lint-staged，在 Git 提交时自动检查和格式化代码
 7. 集成了 commitlint，强制执行 Conventional Commits 规范
+8. 集成了 stylelint，检查 CSS/Less/Vue 文件中的样式规范
+9. Prettier 会自动格式化 CSS 文件，确保冒号后有空格等格式规范
+10. 修复了 Stylelint 报告的无效位置声明问题，通过禁用 `no-invalid-position-declaration` 规则避免误报

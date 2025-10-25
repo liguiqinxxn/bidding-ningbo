@@ -4,7 +4,7 @@
 
 <style>
 #app {
-  font-family: SimSun;
+  /* font-family: SimSun; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

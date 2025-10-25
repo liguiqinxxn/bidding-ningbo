@@ -1132,6 +1132,7 @@ export default defineComponent({
   height: 148px;
   text-align: center;
 }
+
 .el-dialog__body img {
   width: 100%;
   height: auto;
