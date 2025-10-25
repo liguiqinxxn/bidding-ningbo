@@ -15,8 +15,8 @@ Interface.interceptors.request.use((config) => {
 });
 //获取后端给我们的数据做一个响应后拦截操作
 Interface.interceptors.response.use((res) => {
-  if (res.status == 200) {
-    if (res.data.code == 0) {
+  if (res.status === 200) {
+    if (res.data.code === 0) {
       return res.data;
     } else {
       ElMessage.error(res.data.msg);

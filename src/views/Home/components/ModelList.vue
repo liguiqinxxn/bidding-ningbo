@@ -6,7 +6,8 @@
     >
       <div
         class="model-item"
-        v-for="item in dataSource"
+        v-for="(item, index) in dataSource"
+        :key="index"
         @click="toDetails(item)"
       >
         <span class="title">{{ item?.title }}</span>

@@ -45,20 +45,22 @@
                 </div>
               </div>
               <div class="list">
-                <div
-                  v-if="list?.length"
-                  class="item"
-                  v-for="item in list"
-                  @click="openDetails(item)"
-                >
-                  <img
-                    class="triangle"
-                    :src="triangleIcon"
-                  />
+                <template v-if="list?.length">
+                  <div
+                    class="item"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="openDetails(item)"
+                  >
+                    <img
+                      class="triangle"
+                      :src="triangleIcon"
+                    />
 
-                  <span class="title">{{ item.title }}</span>
-                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
-                </div>
+                    <span class="title">{{ item.title }}</span>
+                    <span class="time">{{ item?.time?.split(" ")[0] }}</span>
+                  </div>
+                </template>
                 <el-empty
                   v-else
                   :image-size="150"
@@ -202,30 +204,32 @@
                 </div>
               </div>
               <div class="list">
-                <div
-                  v-if="list?.length"
-                  class="item"
-                  v-for="item in list"
-                  @click="openDetails(item)"
-                >
-                  <!-- <img class="triangle" :src="triangleIcon" /> -->
-                  <span
-                    class="top"
-                    v-if="item.is_top == '1'"
-                    >顶</span
+                <template v-if="list?.length">
+                  <div
+                    class="item"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="openDetails(item)"
                   >
-                  <span
-                    class="hot"
-                    v-else-if="item.is_hot == '1'"
-                    >热</span
-                  >
-                  <span
-                    class="empty"
-                    v-else
-                  ></span>
-                  <span class="title">{{ item.title }}</span>
-                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
-                </div>
+                    <!-- <img class="triangle" :src="triangleIcon" /> -->
+                    <span
+                      class="top"
+                      v-if="item.is_top == '1'"
+                      >顶</span
+                    >
+                    <span
+                      class="hot"
+                      v-else-if="item.is_hot == '1'"
+                      >热</span
+                    >
+                    <span
+                      class="empty"
+                      v-else
+                    ></span>
+                    <span class="title">{{ item.title }}</span>
+                    <span class="time">{{ item?.time?.split(" ")[0] }}</span>
+                  </div>
+                </template>
                 <el-empty
                   v-else
                   :image-size="150"

@@ -46,6 +46,7 @@
                   v-if="list?.length"
                   class="item"
                   v-for="item in list"
+                  :key="item.id"
                   @click="openDetails(item)"
                 >
                   <img

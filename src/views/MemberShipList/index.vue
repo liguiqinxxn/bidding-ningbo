@@ -28,23 +28,25 @@
           >
             <div v-if="!isShow">
               <div class="list">
-                <div
-                  v-if="memberList?.length"
-                  class="item"
-                  v-for="item in memberList"
-                  @click="openDetails(item)"
-                >
-                  <img
-                    class="triangle"
-                    :src="triangleIcon"
-                  />
+                <template v-if="memberList?.length">
+                  <div
+                    class="item"
+                    v-for="(item, index) in memberList"
+                    :key="index"
+                    @click="openDetails(item)"
+                  >
+                    <img
+                      class="triangle"
+                      :src="triangleIcon"
+                    />
 
-                  <img
-                    class="logo"
-                    :src="item.logo"
-                  />
-                  <span class="name">{{ item.name }}</span>
-                </div>
+                    <img
+                      class="logo"
+                      :src="item.logo"
+                    />
+                    <span class="name">{{ item.name }}</span>
+                  </div>
+                </template>
                 <el-empty
                   v-else
                   :image-size="150"
@@ -101,7 +103,8 @@
                 <div class="imgs">
                   <img
                     :src="item"
-                    v-for="item in currentItem?.team_style?.split(';').filter((r) => r)"
+                    v-for="(item, index) in currentItem?.team_style?.split(';').filter((r) => r)"
+                    :key="index"
                   />
                 </div>
               </div>
@@ -111,7 +114,8 @@
                 </div>
                 <div class="imgs">
                   <img
-                    v-for="item in currentItem?.honors_qualifications?.split(';').filter((r) => r)"
+                    v-for="(item, index) in currentItem?.honors_qualifications?.split(';').filter((r) => r)"
+                    :key="index"
                     :src="item ? item : ''"
                   />
                 </div>

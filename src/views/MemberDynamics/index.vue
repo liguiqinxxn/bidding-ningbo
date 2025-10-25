@@ -43,20 +43,22 @@
                 </div>
               </div>
               <div class="list">
-                <div
-                  v-if="list?.length"
-                  class="item"
-                  v-for="item in list"
-                  @click="openDetails(item)"
-                >
-                  <img
-                    class="triangle"
-                    :src="triangleIcon"
-                  />
+                <template v-if="list?.length">
+                  <div
+                    class="item"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="openDetails(item)"
+                  >
+                    <img
+                      class="triangle"
+                      :src="triangleIcon"
+                    />
 
-                  <span class="title">{{ item.title }}</span>
-                  <span class="time">{{ item?.time?.split(" ")[0] }}</span>
-                </div>
+                    <span class="title">{{ item.title }}</span>
+                    <span class="time">{{ item?.time?.split(" ")[0] }}</span>
+                  </div>
+                </template>
                 <el-empty
                   v-else
                   :image-size="150"

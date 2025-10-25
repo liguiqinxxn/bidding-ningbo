@@ -42,25 +42,27 @@
                 </div>
               </div>
               <div class="video-list">
-                <div
-                  v-if="list?.length"
-                  class="item"
-                  v-for="item in list"
-                  @click="openDetails(item)"
-                >
-                  <img
-                    class="img"
-                    :src="item.img"
-                  />
-                  <el-tooltip
-                    class="box-item"
-                    effect="light"
-                    :content="item.title"
-                    placement="bottom"
+                <template v-if="list?.length">
+                  <div
+                    class="item"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="openDetails(item)"
                   >
-                    <p class="title">{{ item.title }}</p>
-                  </el-tooltip>
-                </div>
+                    <img
+                      class="img"
+                      :src="item.img"
+                    />
+                    <el-tooltip
+                      class="box-item"
+                      effect="light"
+                      :content="item.title"
+                      placement="bottom"
+                    >
+                      <p class="title">{{ item.title }}</p>
+                    </el-tooltip>
+                  </div>
+                </template>
                 <el-empty
                   v-else
                   :image-size="150"

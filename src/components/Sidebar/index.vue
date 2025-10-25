@@ -8,6 +8,7 @@
       <div
         class="sidebar-item"
         v-for="(item, index) in data"
+        :key="item.name"
         :class="{ active: activeIndex == index }"
         @click="sidebarclick(item, index)"
       >
