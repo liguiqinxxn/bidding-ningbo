@@ -12,6 +12,10 @@
 6. `vue-eslint-parser` - Vue 文件解析器
 7. `eslint-config-prettier` - 禁用与 Prettier 冲突的 ESLint 规则
 8. `eslint-plugin-prettier` - 将 Prettier 作为 ESLint 规则运行
+9. `husky` - Git 钩子工具
+10. `lint-staged` - 对暂存文件运行 linters
+11. `@commitlint/config-conventional` - Commitlint 规范配置
+12. `@commitlint/cli` - Commitlint 命令行工具
 
 ## 配置文件
 
@@ -56,6 +60,11 @@
    - 解释了每个配置项的作用和目的
    - 便于团队成员理解和维护
 
+6. **Commitlint 集成**：
+   - 集成了 commitlint 和 husky commit-msg 钩子
+   - 强制执行 Conventional Commits 规范
+   - 确保提交信息格式统一
+
 ## 使用方法
 
 ### 检查代码质量问题
@@ -67,6 +76,11 @@ npm run lint
 ```bash
 npm run lint:fix
 ```
+
+### Commitlint 规范
+- 在执行 `git commit` 时，commitlint 会检查提交信息格式
+- 必须遵循 Conventional Commits 规范：`type(scope): subject`
+- 支持的类型：feat, fix, docs, style, refactor, perf, test, chore, revert, build
 
 ## 规则说明
 
@@ -99,3 +113,5 @@ npm run lint:fix
 3. 配置使用了 ESLint 9 的新扁平配置格式
 4. Prettier 配置文件已重命名为 .prettierrc.cjs 以避免与 ESLint 冲突
 5. 配置文件中添加了详细的注释说明，便于理解和维护
+6. 集成了 husky 和 lint-staged，在 Git 提交时自动检查和格式化代码
+7. 集成了 commitlint，强制执行 Conventional Commits 规范
