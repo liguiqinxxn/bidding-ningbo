@@ -90,7 +90,6 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { getModelList, getModelInfo } from "@/api/index.js";
-import { ElMessage } from "element-plus";
 import Sidebar from "@/components/Sidebar/index.vue";
 import Details from "@/components/Details/index.vue";
 import triangleIcon from "assets/images/triangle_icon.png";
