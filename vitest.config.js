@@ -9,10 +9,18 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./tests/setup.js"],
     include: ["tests/**/*.{test,spec}.{js,ts,jsx,tsx}"],
-    exclude: ["**/.history/**", "**/node_modules/**", "**/dist/**"],
+    exclude: ["**/*.cjs", "**/.history/**", "**/node_modules/**", "**/dist/**"],
     coverage: {
       reporter: ["text", "json", "html"],
-      exclude: ["node_modules/", "tests/", "src/main.ts", "src/shims-vue.d.ts", "**/*.d.ts", "**/.history/**"],
+      exclude: [
+        "node_modules/",
+        "tests/",
+        "src/main.ts",
+        "src/shims-vue.d.ts",
+        "**/*.d.ts",
+        "**/*.cjs",
+        "**/.history/**",
+      ],
     },
   },
   resolve: {
