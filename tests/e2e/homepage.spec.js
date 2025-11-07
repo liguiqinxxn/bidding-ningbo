@@ -8,7 +8,7 @@ test("homepage has correct title and structure", async ({ page }) => {
   await expect(page).toHaveTitle(/宁波市招标投标协会/);
 
   // Check if main container exists
-  const container = page.locator(".container");
+  const container = page.locator(".home > .container");
   await expect(container).toBeVisible();
 
   // Check if left and right sections exist
