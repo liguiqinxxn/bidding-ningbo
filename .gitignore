@@ -23,3 +23,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+test-results/.last-run.json
+test-results/homepage-homepage-has-correct-title-and-structure-chromium/error-context.md
+test-results/homepage-homepage-has-correct-title-and-structure-firefox/error-context.md
+test-results/homepage-homepage-has-correct-title-and-structure-webkit/error-context.md
+playwright-report/
