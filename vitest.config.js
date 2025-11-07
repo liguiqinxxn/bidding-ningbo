@@ -9,7 +9,15 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./tests/setup.js"],
     include: ["tests/**/*.{test,spec}.{js,ts,jsx,tsx}"],
-    exclude: ["**/*.cjs", "**/.history/**", "**/node_modules/**", "**/dist/**", "**/config.js", "**/*.config.js"],
+    exclude: [
+      "**/*.cjs",
+      "**/.history/**",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/config.js",
+      "**/*.config.js",
+      "**/e2e/**",
+    ],
     coverage: {
       reporter: ["text", "json", "html"],
       exclude: [
@@ -22,6 +30,7 @@ export default defineConfig({
         "**/.history/**",
         "**/config.js",
         "**/*.config.js",
+        "**/e2e/**",
       ],
     },
   },
