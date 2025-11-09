@@ -58,11 +58,6 @@ jobs:
         FUNCTIONS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.functions.pct)")
         LINES=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct)")
 
-        # 覆盖率要求：
-        # 语句覆盖（statements）≥ 80%
-        # 分支覆盖（branches）≥ 75%
-        # 函数覆盖（functions）≥ 80%
-        # 行覆盖（lines）≥ 80%
         # 定义阈值
         MIN_STATEMENTS=80
         MIN_BRANCHES=75
@@ -111,7 +106,7 @@ jobs:
   e2e-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    needs: lint
+    needs: unit-test
     steps:
     - uses: actions/checkout@v4
 
