@@ -27,8 +27,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
-import logo from "assets/images/logo.png";
-import logoTitle from "assets/images/logo_title.png";
+import logo from "@/assets/images/logo.png";
+import logoTitle from "@/assets/images/logo_title.png";
 import { Search } from "@element-plus/icons-vue";
 import store from "@/store";
 
