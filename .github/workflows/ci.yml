@@ -41,8 +41,48 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run unit tests
-      run: npm run test:run
+    - name: Run unit tests with coverage
+      run: npm run test:coverage
+
+    - name: Check coverage thresholds
+      run: |
+        # 读取 JSON 报告
+        if [ ! -f "coverage/coverage-summary.json" ]; then
+          echo "❌ Coverage report not found!"
+          exit 1
+        fi
+
+        # 提取覆盖率数据
+        STATEMENTS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.statements.pct)")
+        BRANCHES=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.branches.pct)")
+        FUNCTIONS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.functions.pct)")
+        LINES=$(node -e "console.log(JSON.parse(require('fs').readFileSync('coverage/coverage-summary.json', 'utf8')).total.lines.pct)")
+
+        # 定义阈值
+        MIN_STATEMENTS=80
+        MIN_BRANCHES=75
+        MIN_FUNCTIONS=80
+        MIN_LINES=80
+
+        echo "📊 Coverage Results:"
+        echo "  Statements: $STATEMENTS% (min $MIN_STATEMENTS%)"
+        echo "  Branches:   $BRANCHES% (min $MIN_BRANCHES%)"
+        echo "  Functions:  $FUNCTIONS% (min $MIN_FUNCTIONS%)"
+        echo "  Lines:      $LINES% (min $MIN_LINES%)"
+
+        # 检查是否达标
+        failed=false
+        [[ $(echo "$STATEMENTS < $MIN_STATEMENTS" | bc -l) == "1" ]] && echo "❌ Statements below threshold!" && failed=true
+        [[ $(echo "$BRANCHES < $MIN_BRANCHES" | bc -l) == "1" ]] && echo "❌ Branches below threshold!" && failed=true
+        [[ $(echo "$FUNCTIONS < $MIN_FUNCTIONS" | bc -l) == "1" ]] && echo "❌ Functions below threshold!" && failed=true
+        [[ $(echo "$LINES < $MIN_LINES" | bc -l) == "1" ]] && echo "❌ Lines below threshold!" && failed=true
+
+        if [ "$failed" = true ]; then
+          echo "💥 Coverage threshold not met!"
+          exit 1
+        else
+          echo "✅ All coverage thresholds met!"
+        fi
 
   # 组件测试
   component-test:
