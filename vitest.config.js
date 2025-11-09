@@ -19,7 +19,7 @@ export default defineConfig({
       "**/e2e/**",
     ],
     coverage: {
-      reporter: ["text", "json", "html"],
+      reporter: ["text", "json", "html", "json-summary"],
       exclude: [
         "node_modules/",
         "tests/",
